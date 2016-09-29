@@ -64,7 +64,7 @@ public class AuthLortu {
 
         // This token can be used until the user revokes it.
         System.out.println("Token: " + requestToken.getToken());
-        System.out.println("Secret: " + requestToken.getSecret());
+        System.out.println("Token Secret: " + requestToken.getSecret());
         System.out.println("nsid: " + auth.getUser().getId());
         System.out.println("Realname: " + auth.getUser().getRealName());
         System.out.println("Username: " + auth.getUser().getUsername());
