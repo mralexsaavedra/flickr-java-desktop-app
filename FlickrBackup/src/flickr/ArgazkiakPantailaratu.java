@@ -65,18 +65,18 @@ public class ArgazkiakPantailaratu {
 		   PhotosInterface photosInterface  = f.getPhotosInterface();
 			
 			String userId = properties.getProperty("nsid");
+			String secret = properties.getProperty("secret");
 			
 			try {
-				//Photo photos = photosInterface.getPhoto(userId);
-				Collection<Photo> argazkiak = (Collection<Photo>) photosInterface.getPhoto(userId);
+				Collection<Photo> argazkiak = (Collection<Photo>) photosInterface.getPhoto(userId, secret);
 				
 				for (Photo  argazkia : argazkiak) {
-					System.out.print(argazkia.getTitle() +  ":");
-					System.out.println(argazkia.getDescription() + ":");
-					System.out.println(argazkia.getDateAdded() + ":");
-					System.out.println(argazkia.getDatePosted() + ":");
-					System.out.println(argazkia.getDateTaken() + ":");
-					System.out.println(argazkia.getGeoData() + ":");
+					System.out.print(argazkia.getTitle() +  ": ");
+					System.out.println(argazkia.getDescription() + ": ");
+					System.out.println(argazkia.getDateAdded() + ": ");
+					System.out.println(argazkia.getDatePosted() + ": ");
+					System.out.println(argazkia.getDateTaken() + ": ");
+					System.out.println(argazkia.getGeoData() + ": ");
 					System.out.println(argazkia.getTags());
 				}
 			} catch (FlickrException e) {
