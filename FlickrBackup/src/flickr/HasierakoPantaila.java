@@ -2,7 +2,6 @@ package flickr;
 
 import java.awt.*;
 import java.util.Vector;
-
 import javax.swing.*;
 
 public class HasierakoPantaila extends JPanel{
@@ -11,51 +10,82 @@ public class HasierakoPantaila extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-    JLabel picture;
-    int width = 800;
-    int height = 800;
-    
-    Vector <String> elementuak = new Vector<String>();
-    JPanel jPanel1 = new JPanel();
-    JComboBox jComboBox1;
-    
-    JLabel jLabel2 = new JLabel();
-    JTextField jTextField1 = new JTextField();
-    JLabel jLabel3 = new JLabel();
-    JTextField jTextField2 = new JTextField();
-
+		
+    private JFrame panela; 
+    private Vector <String> elementuak = new Vector<String>();
+    private JComboBox jComboBox;
+    private JPanel hizkuntza;
+    private JLabel picture;
+    private JPanel south;
+    private JPanel goikoa;
+    private JPanel behekoa;  
+    private JLabel email;
+    private JTextField jTextField1;
+    private JLabel pasahitza;
+    private JTextField jTextField2; 
+   
     
     public HasierakoPantaila() {
-        super(new BorderLayout());     
-        
-        this.setLayout(null);
-        this.setSize(400, 300);
-        
-        picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
-        add(picture);
-        picture.setSize(width, height);
-        picture.setLocation(900,80);
-        
-        jPanel1.setBounds(new Rectangle(2350, 0, 333, 170));
+        super(new BorderLayout());
+        goikoPanela();
+        erdikoPanela();
+        behekoPanela();
+
+    }
+    
+    public void goikoPanela(){
+    	hizkuntza = new JPanel();
         elementuak.add("Euskera");
         elementuak.add("Engilsh");
         elementuak.add("Español");
-        jComboBox1 = new JComboBox(elementuak);
-        jPanel1.add(jComboBox1, null);
-        add(jPanel1, null);
-        
-        //jLabel2.setLayout(new FlowLayout());
-        jLabel2.setText("Email");
-        jTextField1.setColumns(30);
-        jLabel3.setText("Pasahitza");
-        jTextField2.setColumns(30);
-        add(jLabel2, null);
-        add(jLabel2, BorderLayout.SOUTH);
-   
+        jComboBox = new JComboBox(elementuak);
+        hizkuntza.setLayout(new FlowLayout());
+        hizkuntza.add(jComboBox);
+        panela.getContentPane().add(hizkuntza, BorderLayout.NORTH);
     }
+        
+    public void erdikoPanela(){
+        picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
+        panela.getContentPane().add(picture, BorderLayout.CENTER);
+    }
+    
+    public void behekoPanela(){  
+    	south = new JPanel();
+    	goikoa = new JPanel();
+    	behekoa = new JPanel();
+    	
+    	email = new JLabel("email");
+    	jTextField1 = new JTextField(15);
+    	pasahitza = new JLabel("pasahitza");
+    	jTextField2 = new JTextField(15); 
 
-    private static void createAndShowGUI() {
+        
+        goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
+        goikoa.add(email);
+        goikoa.add(jTextField1);
+        
+        behekoa.setLayout(new BoxLayout(behekoa, BoxLayout.X_AXIS));
+        behekoa.add(pasahitza);
+        behekoa.add(jTextField2);
+        
+        south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
+        south.add(behekoa);
+        south.add(goikoa);
+        panela.getContentPane().add(south, BorderLayout.SOUTH);
+    }
+    
+    public void panelaEraikitzen(){
+    	panela = new JFrame("FlickrBackup");
+    	panela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    	panela.pack();
+        panela.setVisible(true);
+    } 
+    
+    public static void main(String[] args) {
+    	new HasierakoPantaila();
+    }
+    
+    /*private static void createAndShowGUI() {
         JFrame frame = new JFrame("FlickrBackup");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -73,5 +103,5 @@ public class HasierakoPantaila extends JPanel{
                 createAndShowGUI();
             }
         });
-    }
+    }*/
 }
