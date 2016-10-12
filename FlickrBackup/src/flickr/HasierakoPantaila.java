@@ -23,6 +23,7 @@ public class HasierakoPantaila extends JPanel {
 	private JTextField jTextField1;
 	private JLabel pasahitza;
 	private JTextField jTextField2;
+	private JButton botoia; 
 
 	public HasierakoPantaila() {
 		super(new BorderLayout());
@@ -58,6 +59,7 @@ public class HasierakoPantaila extends JPanel {
 		jTextField1 = new JTextField(15);
 		pasahitza = new JLabel("pasahitza");
 		jTextField2 = new JTextField(15);
+		botoia = new JButton("Sartu");
 
 		goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
 		goikoa.add(email);
@@ -70,11 +72,11 @@ public class HasierakoPantaila extends JPanel {
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 		south.add(goikoa);
 		south.add(behekoa);
+		south.add(botoia);
 		panela.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
 	public void panelaEraikitzen() {
-		// panela = new JFrame("FlickrBackup");
 		panela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panela.pack();
 		panela.setVisible(true);
@@ -85,18 +87,4 @@ public class HasierakoPantaila extends JPanel {
 		h.panelaEraikitzen();
 	}
 
-	/*
-	 * private static void createAndShowGUI() { JFrame frame = new
-	 * JFrame("FlickrBackup");
-	 * frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	 * 
-	 * JComponent newContentPane = new HasierakoPantaila();
-	 * newContentPane.setOpaque(true); frame.setContentPane(newContentPane);
-	 * 
-	 * frame.pack(); frame.setVisible(true); }
-	 * 
-	 * public static void main(String[] args) {
-	 * javax.swing.SwingUtilities.invokeLater(new Runnable() { public void run()
-	 * { createAndShowGUI(); } }); }
-	 */
 }
