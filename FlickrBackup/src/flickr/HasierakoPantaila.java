@@ -11,23 +11,24 @@ public class HasierakoPantaila extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private JFrame panela;
+	private JFrame pantailaNagusia;
 	private Vector<String> elementuak = new Vector<String>();
-	private JComboBox jComboBox;
+	private JComboBox<String> hizkuntzak;
 	private JPanel hizkuntza;
 	private JLabel picture;
 	private JPanel south;
 	private JPanel goikoa;
 	private JPanel behekoa;
-	private JLabel email;
-	private JTextField jTextField1;
+	private JLabel emailLabel;
+	private JTextField emailText;
 	private JLabel pasahitza;
-	private JTextField jTextField2;
-	private JButton botoia; 
-
+	private JPasswordField pasahitzaText;
+	private JButton sartuBotoia; 
+    private final int TAMAINA = 15;
+	
 	public HasierakoPantaila() {
 		super(new BorderLayout());
-		panela = new JFrame("FlickrBackup");
+		pantailaNagusia = new JFrame("FlickrBackup");
 		goikoPanela();
 		erdikoPanela();
 		behekoPanela();
@@ -35,18 +36,18 @@ public class HasierakoPantaila extends JPanel {
 
 	public void goikoPanela() {
 		hizkuntza = new JPanel();
-		elementuak.add("Euskera");
-		elementuak.add("Engilsh");
+		elementuak.add("Euskara");
+		elementuak.add("English");
 		elementuak.add("Español");
-		jComboBox = new JComboBox(elementuak);
+		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
-		hizkuntza.add(jComboBox);
-		panela.getContentPane().add(hizkuntza, BorderLayout.NORTH);
+		hizkuntza.add(hizkuntzak);
+		pantailaNagusia.getContentPane().add(hizkuntza, BorderLayout.NORTH);
 	}
 
 	public void erdikoPanela() {
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
-		panela.getContentPane().add(picture, BorderLayout.CENTER);
+		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 	}
 
 	public void behekoPanela() {
@@ -54,34 +55,36 @@ public class HasierakoPantaila extends JPanel {
 		goikoa = new JPanel();
 		behekoa = new JPanel();
 
-		email = new JLabel("email");
-		jTextField1 = new JTextField(15);
+		emailLabel = new JLabel("email");
+		emailText = new JTextField(TAMAINA);
 		pasahitza = new JLabel("pasahitza");
-		jTextField2 = new JTextField(15);
-		botoia = new JButton("Sartu");
+		pasahitzaText = new JPasswordField(TAMAINA);
+		sartuBotoia = new JButton("Sartu");
 
 		goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
-		goikoa.add(email);
-		goikoa.add(jTextField1);
+		goikoa.add(emailLabel);
+		goikoa.add(emailText);
 
 		behekoa.setLayout(new BoxLayout(behekoa, BoxLayout.X_AXIS));
 		behekoa.add(pasahitza);
-		behekoa.add(jTextField2);
+		behekoa.add(pasahitzaText);
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 		south.add(goikoa);
 		south.add(behekoa);
-		south.add(botoia);
-		panela.getContentPane().add(south, BorderLayout.SOUTH);
+		south.add(sartuBotoia);
+		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
 	public void panelaEraikitzen() {
-		panela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		panela.pack();
-		panela.setVisible(true);
+		
+		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pantailaNagusia.pack();
+		pantailaNagusia.setVisible(true);
 	}
 
 	public static void main(String[] args) {
+		 
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
 	}
