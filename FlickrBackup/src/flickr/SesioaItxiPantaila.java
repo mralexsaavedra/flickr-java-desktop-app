@@ -73,7 +73,7 @@ public class SesioaItxiPantaila extends JPanel {
 	}
 	
 	public static void main(String[] args) {		 
-		HasierakoPantaila h = new HasierakoPantaila();
-		h.panelaEraikitzen();
+		SesioaItxiPantaila s = new SesioaItxiPantaila();
+		s.panelaEraikitzen();
 	}
 }
