@@ -31,7 +31,6 @@ public class HasierakoPantaila extends JPanel {
 		goikoPanela();
 		erdikoPanela();
 		behekoPanela();
-
 	}
 
 	public void goikoPanela() {
