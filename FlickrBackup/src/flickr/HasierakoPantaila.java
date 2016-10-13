@@ -38,7 +38,7 @@ public class HasierakoPantaila extends JPanel {
 		hizkuntza = new JPanel();
 		elementuak.add("Euskara");
 		elementuak.add("English");
-		elementuak.add("Español");
+		elementuak.add("EspaÃ±ol");
 		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
@@ -76,17 +76,14 @@ public class HasierakoPantaila extends JPanel {
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
-	public void panelaEraikitzen() {
-		
+	public void panelaEraikitzen() {		
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
 		pantailaNagusia.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		 
+	public static void main(String[] args) {		 
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
 	}
-
 }
