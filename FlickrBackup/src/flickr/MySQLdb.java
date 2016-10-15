@@ -5,10 +5,10 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class MySQLdb {
-	private String url = "jdbc:mysql://localhost:3306/FlickrBackup";
-	private String user = "root";
-	private String passwd = "asg696ASG";
-	private String driver = "com.mysql.jdbc.Driver";
+	private String url = "jdbc:mysql://localhost:3306/FlickrBackup?autoReconnect=true&useSSL=false";
+	private String user = "";
+	private String passwd = "";
+	private String driver = "com.mysql.cj.jdbc.Driver";
 	private static MySQLdb niremysql;
 
 	private Connection konexioa;
