@@ -1,10 +1,12 @@
 package flickr;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.*;
 
-public class HasierakoPantaila extends JPanel {
+public class HasierakoPantaila extends JPanel implements ActionListener{
 
 	/**
 	 * 
@@ -21,7 +23,7 @@ public class HasierakoPantaila extends JPanel {
 	private JPanel behekoa;
 	private JLabel emailLabel;
 	private JTextField emailText;
-	private JLabel pasahitza;
+	private JLabel pasahitzaLabel;
 	private JPasswordField pasahitzaText;
 	private JButton sartuBotoia; 
     private final int TAMAINA = 15;
@@ -57,22 +59,23 @@ public class HasierakoPantaila extends JPanel {
 
 		emailLabel = new JLabel("email");
 		emailText = new JTextField(TAMAINA);
-		pasahitza = new JLabel("pasahitza");
+		pasahitzaLabel = new JLabel("pasahitza");
 		pasahitzaText = new JPasswordField(TAMAINA);
 		sartuBotoia = new JButton("Sartu");
-
+		
 		goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
 		goikoa.add(emailLabel);
 		goikoa.add(emailText);
 
 		behekoa.setLayout(new BoxLayout(behekoa, BoxLayout.X_AXIS));
-		behekoa.add(pasahitza);
+		behekoa.add(pasahitzaLabel);
 		behekoa.add(pasahitzaText);
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
+		sartuBotoia.addActionListener(this);
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
@@ -85,5 +88,17 @@ public class HasierakoPantaila extends JPanel {
 	public static void main(String[] args) {		 
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		Berifikazioa();
+	}
+	
+	public void Berifikazioa(){
+		String sartutakoEmail = emailText.getText();
+		String sartutakoPasahitza = pasahitzaText.getText();
+		
+		MySQLdb log = new MySQLdb();
+		log.login(sartutakoEmail, sartutakoPasahitza);
 	}
 }
