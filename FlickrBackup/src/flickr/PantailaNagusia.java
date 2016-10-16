@@ -58,19 +58,23 @@ public class PantailaNagusia extends JPanel {
 		hizkuntzaEtaIrten.setLayout(new BoxLayout(hizkuntzaEtaIrten, BoxLayout.X_AXIS));
 		hizkuntzaEtaIrten.add(hizkuntzak);
 		hizkuntzaEtaIrten.add(irtenBotoia);
+		hizkuntzaEtaIrten.setBorder(BorderFactory.createEmptyBorder(10,1200,10,10));
 		
 		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
 		argazkiakJaitsiPanel.setLayout(new BoxLayout(argazkiakJaitsiPanel, BoxLayout.X_AXIS));
 		argazkiakJaitsiPanel.add(argazkiakJaitsiBotoia);
+		argazkiakJaitsiPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,1100));
 		
 		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
 		argazkiakIgoPanel.setLayout(new BoxLayout(argazkiakIgoPanel, BoxLayout.X_AXIS));
 		argazkiakIgoPanel.add(argazkiakIgoBotoia);
+		argazkiakIgoPanel.setBorder(BorderFactory.createEmptyBorder(5,10,10,1100));
 		
 		goikoPanela.setLayout(new BoxLayout(goikoPanela, BoxLayout.Y_AXIS));
 		goikoPanela.add(hizkuntzaEtaIrten);
 		goikoPanela.add(argazkiakJaitsiPanel);
 		goikoPanela.add(argazkiakIgoPanel);
+		goikoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		pantailaNagusia.getContentPane().add(goikoPanela, BorderLayout.NORTH);
 	}
 	
@@ -83,6 +87,7 @@ public class PantailaNagusia extends JPanel {
 		ezkerrekoPanela.setLayout(new BoxLayout(ezkerrekoPanela, BoxLayout.X_AXIS));
 		ezkerrekoPanela.add(bildumak);
 		ezkerrekoPanela.add(argazkiakBotoia);
+		ezkerrekoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,490,10));
 		pantailaNagusia.getContentPane().add(ezkerrekoPanela, BorderLayout.WEST);
 	}
 	
@@ -93,11 +98,13 @@ public class PantailaNagusia extends JPanel {
 		eskumakoPanela.setLayout(new BoxLayout(eskumakoPanela, BoxLayout.X_AXIS));
 		eskumakoPanela.add(bilatuText);
 		eskumakoPanela.add(bilatuBotoia);
+		eskumakoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,490,10));
 		pantailaNagusia.getContentPane().add(eskumakoPanela, BorderLayout.EAST);
 	}
 	
 	public void hegoaldePanela() {
 		behekoPanela = new JPanel();
+		behekoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		pantailaNagusia.getContentPane().add(behekoPanela, BorderLayout.SOUTH);
 	}
 	

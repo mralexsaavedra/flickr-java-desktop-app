@@ -44,6 +44,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
+		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		pantailaNagusia.getContentPane().add(hizkuntza, BorderLayout.NORTH);
 	}
 
@@ -57,24 +58,27 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 		goikoa = new JPanel();
 		behekoa = new JPanel();
 
-		emailLabel = new JLabel("email");
+		emailLabel = new JLabel("Email:");
 		emailText = new JTextField(TAMAINA);
-		pasahitzaLabel = new JLabel("pasahitza");
+		pasahitzaLabel = new JLabel("Pasahitza:");
 		pasahitzaText = new JPasswordField(TAMAINA);
 		sartuBotoia = new JButton("Sartu");
 		
-		goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
+		goikoa.setLayout(new FlowLayout());
 		goikoa.add(emailLabel);
 		goikoa.add(emailText);
+		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
 
-		behekoa.setLayout(new BoxLayout(behekoa, BoxLayout.X_AXIS));
+		behekoa.setLayout(new FlowLayout());
 		behekoa.add(pasahitzaLabel);
 		behekoa.add(pasahitzaText);
+		behekoa.setBorder(BorderFactory.createEmptyBorder(5,10,10,10));
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
+		south.setBorder(BorderFactory.createEmptyBorder(10,100,50,100));
 		sartuBotoia.addActionListener(this);
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}

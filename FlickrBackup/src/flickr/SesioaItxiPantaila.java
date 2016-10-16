@@ -36,6 +36,7 @@ public class SesioaItxiPantaila extends JPanel {
 		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
+		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 		pantailaNagusia.getContentPane().add(hizkuntza, BorderLayout.NORTH);
 	}
 	
@@ -53,16 +54,19 @@ public class SesioaItxiPantaila extends JPanel {
 		berriroSartu = new JLabel("Berriro sartu nahi?");
 		sartuBotoia = new JButton("Sartu");
 
-		goikoa.setLayout(new BoxLayout(goikoa, BoxLayout.X_AXIS));
+		goikoa.setLayout(new FlowLayout());
 		goikoa.add(irtenZara);
+		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
 
-		behekoa.setLayout(new BoxLayout(behekoa, BoxLayout.X_AXIS));
+		behekoa.setLayout(new FlowLayout());
 		behekoa.add(berriroSartu);
+		behekoa.setBorder(BorderFactory.createEmptyBorder(5,10,10,10));
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
+		south.setBorder(BorderFactory.createEmptyBorder(10,10,50,10));
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 	
