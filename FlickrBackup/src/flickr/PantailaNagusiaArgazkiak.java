@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.*;
 
-public class PantailaNagusia extends JPanel {
+public class PantailaNagusiaArgazkiak extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -16,16 +16,17 @@ public class PantailaNagusia extends JPanel {
 	private JComboBox<String> hizkuntzak;
 	private JButton irtenBotoia;
 	private JPanel hizkuntzaEtaIrten;
-	private JButton argazkiakJaitsiBotoia;
-	private JPanel argazkiakJaitsiPanel;
-	private JButton argazkiakIgoBotoia;
-	private JPanel argazkiakIgoPanel;
+	private JButton hasieraraBotoia;
+	private JPanel hasieraraPanel;
 	private JPanel goikoPanela;
 	
 	private Vector<String> bildumaElementuak = new Vector<String>();
 	private JComboBox<String> bildumak;
 	private JButton argazkiakBotoia;
 	private JPanel ezkerrekoPanela;
+	
+	private JButton igoBotoia;
+	private JPanel erdikoPanela;
 	
 	private JTextField bilatuText;
 	private JButton bilatuBotoia;
@@ -34,11 +35,12 @@ public class PantailaNagusia extends JPanel {
 	private JPanel behekoPanela;
 	private final int LUZERA = 20;
 	
-	public PantailaNagusia() {
+	public PantailaNagusiaArgazkiak() {
 		super(new BorderLayout());
 		pantailaNagusia = new JFrame("FlickrBackup");
 		iparraldePanela();
 		mendebaldePanela();
+		zentroPanela();
 		ekialdePanela();
 		hegoaldePanela();
 	}
@@ -47,8 +49,7 @@ public class PantailaNagusia extends JPanel {
 		goikoPanela = new JPanel();
 		
 		hizkuntzaEtaIrten = new JPanel();
-		argazkiakJaitsiPanel = new JPanel();
-		argazkiakIgoPanel = new JPanel();
+		hasieraraPanel = new JPanel();
 		
 		hizkuntzElementuak.add("Euskara");
 		hizkuntzElementuak.add("English");
@@ -59,18 +60,13 @@ public class PantailaNagusia extends JPanel {
 		hizkuntzaEtaIrten.add(hizkuntzak);
 		hizkuntzaEtaIrten.add(irtenBotoia);
 		
-		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
-		argazkiakJaitsiPanel.setLayout(new BoxLayout(argazkiakJaitsiPanel, BoxLayout.X_AXIS));
-		argazkiakJaitsiPanel.add(argazkiakJaitsiBotoia);
-		
-		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
-		argazkiakIgoPanel.setLayout(new BoxLayout(argazkiakIgoPanel, BoxLayout.X_AXIS));
-		argazkiakIgoPanel.add(argazkiakIgoBotoia);
+		hasieraraBotoia = new JButton("Hasierara bueltatu");
+		hasieraraPanel.setLayout(new BoxLayout(hasieraraPanel, BoxLayout.X_AXIS));
+		hasieraraPanel.add(hasieraraBotoia);
 		
 		goikoPanela.setLayout(new BoxLayout(goikoPanela, BoxLayout.Y_AXIS));
 		goikoPanela.add(hizkuntzaEtaIrten);
-		goikoPanela.add(argazkiakJaitsiPanel);
-		goikoPanela.add(argazkiakIgoPanel);
+		goikoPanela.add(hasieraraPanel);
 		pantailaNagusia.getContentPane().add(goikoPanela, BorderLayout.NORTH);
 	}
 	
@@ -84,6 +80,14 @@ public class PantailaNagusia extends JPanel {
 		ezkerrekoPanela.add(bildumak);
 		ezkerrekoPanela.add(argazkiakBotoia);
 		pantailaNagusia.getContentPane().add(ezkerrekoPanela, BorderLayout.WEST);
+	}
+	
+	public void zentroPanela() {
+		erdikoPanela = new JPanel();
+		igoBotoia = new JButton("Argazkiak igo");
+		erdikoPanela.setLayout(new BoxLayout(erdikoPanela, BoxLayout.X_AXIS));
+		erdikoPanela.add(igoBotoia);
+		pantailaNagusia.getContentPane().add(erdikoPanela, BorderLayout.CENTER);
 	}
 	
 	public void ekialdePanela() {
@@ -108,7 +112,7 @@ public class PantailaNagusia extends JPanel {
 	}
 
 	public static void main(String[] args) {		 
-		PantailaNagusia n = new PantailaNagusia();
+		PantailaNagusiaArgazkiak n = new PantailaNagusiaArgazkiak();
 		n.panelaEraikitzen();
 	}
 }
