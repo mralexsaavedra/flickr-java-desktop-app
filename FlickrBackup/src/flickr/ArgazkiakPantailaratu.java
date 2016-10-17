@@ -12,9 +12,7 @@ import com.flickr4java.flickr.RequestContext;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.photos.Photo;
-import com.flickr4java.flickr.photos.PhotoSet;
 import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.util.IOUtilities;
 
 public class ArgazkiakPantailaratu {

@@ -1,8 +1,6 @@
 package flickr;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.*;
 
@@ -31,6 +29,11 @@ public class PantailaNagusia extends JPanel {
 	private JButton bilatuBotoia;
 	private JPanel eskumakoPanela;
 	
+	private JLabel bildumakLabel;
+	private JLabel bildumakGuztira;	
+	private JPanel bildumenPanela;
+	private JPanel logoPanela;
+	private JLabel picture;
 	private JPanel behekoPanela;
 	private final int LUZERA = 20;
 	
@@ -58,7 +61,7 @@ public class PantailaNagusia extends JPanel {
 		hizkuntzaEtaIrten.setLayout(new BoxLayout(hizkuntzaEtaIrten, BoxLayout.X_AXIS));
 		hizkuntzaEtaIrten.add(hizkuntzak);
 		hizkuntzaEtaIrten.add(irtenBotoia);
-		hizkuntzaEtaIrten.setBorder(BorderFactory.createEmptyBorder(10,1200,10,10));
+		hizkuntzaEtaIrten.setBorder(BorderFactory.createEmptyBorder(10,1000,10,10));
 		
 		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
 		argazkiakJaitsiPanel.setLayout(new BoxLayout(argazkiakJaitsiPanel, BoxLayout.X_AXIS));
@@ -87,7 +90,7 @@ public class PantailaNagusia extends JPanel {
 		ezkerrekoPanela.setLayout(new BoxLayout(ezkerrekoPanela, BoxLayout.X_AXIS));
 		ezkerrekoPanela.add(bildumak);
 		ezkerrekoPanela.add(argazkiakBotoia);
-		ezkerrekoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,490,10));
+		ezkerrekoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,450,10));
 		pantailaNagusia.getContentPane().add(ezkerrekoPanela, BorderLayout.WEST);
 	}
 	
@@ -98,13 +101,29 @@ public class PantailaNagusia extends JPanel {
 		eskumakoPanela.setLayout(new BoxLayout(eskumakoPanela, BoxLayout.X_AXIS));
 		eskumakoPanela.add(bilatuText);
 		eskumakoPanela.add(bilatuBotoia);
-		eskumakoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,490,10));
+		eskumakoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,450,10));
 		pantailaNagusia.getContentPane().add(eskumakoPanela, BorderLayout.EAST);
 	}
 	
 	public void hegoaldePanela() {
 		behekoPanela = new JPanel();
-		behekoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		bildumakLabel = new JLabel("Bildumak :   " );
+		bildumakGuztira = new JLabel("bildumenKontaketa()");
+		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
+		
+		bildumenPanela = new JPanel();
+		bildumenPanela.setLayout(new FlowLayout(FlowLayout.LEFT));
+		bildumenPanela.add(bildumakLabel);
+		bildumenPanela.add(bildumakGuztira);
+		
+		logoPanela = new JPanel();
+		logoPanela.setLayout(new FlowLayout(FlowLayout.CENTER));
+		logoPanela.add(picture);
+		
+		behekoPanela.add(bildumenPanela);
+		behekoPanela.add(logoPanela);
+		
+		behekoPanela.setBorder(BorderFactory.createEmptyBorder(10,25,10,10));
 		pantailaNagusia.getContentPane().add(behekoPanela, BorderLayout.SOUTH);
 	}
 	

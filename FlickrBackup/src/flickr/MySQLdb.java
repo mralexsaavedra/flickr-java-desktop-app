@@ -45,18 +45,18 @@ public class MySQLdb {
 				 int valor = rs.getRow();
 				 if(rs.getString(valor).equals(email)){
 				 valor++;
-				 if(rs.getString(valor).equals(pasahitza)){
-				 JOptionPane.showMessageDialog(null, "Eres un usuario registrado");
+				 	if(rs.getString(valor).equals(pasahitza)){
+				 		JOptionPane.showMessageDialog(null, "Eres un usuario registrado");
+				 	}
+				 	else{
+				 		JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+				 	}
+				 	break;
 				 }
 				 else{
-				 JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
+					 JOptionPane.showMessageDialog(null, "No eres un usuario registrado");
 				 }
-				 break;
-				 }
-				 else{
-				 JOptionPane.showMessageDialog(null, "No eres un usuario registrado");
-				 }
-				 break;
+				 	break;
 				 }
 				  
 				 konexioa.close();
