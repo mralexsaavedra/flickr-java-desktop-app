@@ -34,6 +34,8 @@ public class PantailaNagusiaArgazkiak extends JPanel {
 	
 	private JLabel bildumakLabel;
 	private JLabel bildumakGuztira;
+	private JPanel bildumenPanela;
+	private JPanel logoPanela;
 	private JLabel picture;
 	private JPanel behekoPanela;
 	private final int LUZERA = 20;
@@ -115,11 +117,23 @@ public class PantailaNagusiaArgazkiak extends JPanel {
 		bildumakLabel = new JLabel("Bildumak :   " );
 		bildumakGuztira = new JLabel("bildumenKontaketa()");
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
-		behekoPanela.setLayout(new BoxLayout(behekoPanela, BoxLayout.X_AXIS));
-		behekoPanela.add(bildumakLabel);
-		behekoPanela.add(bildumakGuztira);
-		behekoPanela.add(picture);
-		behekoPanela.setBorder(BorderFactory.createEmptyBorder(10,25,10,10));
+		
+		bildumenPanela = new JPanel();
+		bildumenPanela.setLayout(new FlowLayout());
+		bildumenPanela.add(bildumakLabel);
+		bildumenPanela.add(bildumakGuztira);
+		
+		logoPanela = new JPanel();
+		logoPanela.setLayout(new FlowLayout());
+		logoPanela.add(picture);
+		
+		behekoPanela.setLayout(new GridLayout(1,5));
+		behekoPanela.add(bildumenPanela);
+		behekoPanela.add(new JPanel());
+		behekoPanela.add(logoPanela);
+		behekoPanela.add(new JPanel());
+		behekoPanela.add(new JPanel());
+		
 		pantailaNagusia.getContentPane().add(behekoPanela, BorderLayout.SOUTH);
 	}
 	

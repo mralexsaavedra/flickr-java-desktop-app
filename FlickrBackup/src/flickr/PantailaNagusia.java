@@ -30,7 +30,7 @@ public class PantailaNagusia extends JPanel {
 	private JPanel eskumakoPanela;
 	
 	private JLabel bildumakLabel;
-	private JLabel bildumakGuztira;	
+	private JLabel bildumakGuztira;
 	private JPanel bildumenPanela;
 	private JPanel logoPanela;
 	private JLabel picture;
@@ -112,7 +112,7 @@ public class PantailaNagusia extends JPanel {
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
 		
 		bildumenPanela = new JPanel();
-		bildumenPanela.setLayout(new FlowLayout(FlowLayout.LEFT));
+		bildumenPanela.setLayout(new FlowLayout());
 		bildumenPanela.add(bildumakLabel);
 		bildumenPanela.add(bildumakGuztira);
 		
@@ -120,11 +120,13 @@ public class PantailaNagusia extends JPanel {
 		logoPanela.setLayout(new FlowLayout());
 		logoPanela.add(picture);
 		
-		behekoPanela.setLayout(new BoxLayout(behekoPanela, BoxLayout.X_AXIS));
+		behekoPanela.setLayout(new GridLayout(1,5));
 		behekoPanela.add(bildumenPanela);
+		behekoPanela.add(new JPanel());
 		behekoPanela.add(logoPanela);
+		behekoPanela.add(new JPanel());
+		behekoPanela.add(new JPanel());
 		
-		behekoPanela.setBorder(BorderFactory.createEmptyBorder(10,25,10,10));
 		pantailaNagusia.getContentPane().add(behekoPanela, BorderLayout.SOUTH);
 	}
 	
