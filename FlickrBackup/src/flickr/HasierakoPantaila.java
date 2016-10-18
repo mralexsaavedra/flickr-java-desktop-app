@@ -101,8 +101,6 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 	public void Berifikazioa(){
 		String sartutakoEmail = emailText.getText();
 		String sartutakoPasahitza = pasahitzaText.getText();
-		
-		MySQLdb log = new MySQLdb();
-		log.login(sartutakoEmail, sartutakoPasahitza);
 	}
+	
 }
