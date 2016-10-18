@@ -117,9 +117,10 @@ public class PantailaNagusia extends JPanel {
 		bildumenPanela.add(bildumakGuztira);
 		
 		logoPanela = new JPanel();
-		logoPanela.setLayout(new FlowLayout(FlowLayout.CENTER));
+		logoPanela.setLayout(new FlowLayout());
 		logoPanela.add(picture);
 		
+		behekoPanela.setLayout(new BoxLayout(behekoPanela, BoxLayout.X_AXIS));
 		behekoPanela.add(bildumenPanela);
 		behekoPanela.add(logoPanela);
 		
