@@ -3,10 +3,13 @@ package flickr;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Vector;
 import javax.swing.*;
 
-public class HasierakoPantaila extends JPanel implements ActionListener{
+public class HasierakoPantaila extends JPanel implements ActionListener {
 
 	/**
 	 * 
@@ -25,9 +28,9 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 	private JTextField emailText;
 	private JLabel pasahitzaLabel;
 	private JPasswordField pasahitzaText;
-	private JButton sartuBotoia; 
-    private final int TAMAINA = 15;
-	
+	private JButton sartuBotoia;
+	private final int TAMAINA = 15;
+
 	public HasierakoPantaila() {
 		super(new BorderLayout());
 		pantailaNagusia = new JFrame("FlickrBackup");
@@ -44,7 +47,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
-		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		pantailaNagusia.getContentPane().add(hizkuntza, BorderLayout.NORTH);
 	}
 
@@ -63,44 +66,78 @@ public class HasierakoPantaila extends JPanel implements ActionListener{
 		pasahitzaLabel = new JLabel("Pasahitza:");
 		pasahitzaText = new JPasswordField(TAMAINA);
 		sartuBotoia = new JButton("Sartu");
-		
+
 		goikoa.setLayout(new FlowLayout());
 		goikoa.add(emailLabel);
 		goikoa.add(emailText);
-		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
+		goikoa.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
 		behekoa.setLayout(new FlowLayout());
 		behekoa.add(pasahitzaLabel);
 		behekoa.add(pasahitzaText);
-		behekoa.setBorder(BorderFactory.createEmptyBorder(5,10,10,10));
+		behekoa.setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
+		south.setBorder(BorderFactory.createEmptyBorder(10, 100, 50, 100));
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
-		south.setBorder(BorderFactory.createEmptyBorder(10,100,50,100));
 		sartuBotoia.addActionListener(this);
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
-	public void panelaEraikitzen() {		
+	public void actionPerformed(ActionEvent e) {
+		berifikazioa();
+	}
+	
+	public ArrayList<String> fitxategienDatuakLortu() {
+		File fitxategia = new File("/Users/alexander/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
+		ArrayList<String> datuak = new ArrayList<String>();
+		//int kont = 0;
+		try {
+			Scanner scan = new Scanner(fitxategia);
+			while (scan.hasNext()) {
+				String linea = scan.nextLine();
+				datuak.add(linea);
+				//kont++;
+			}
+			
+			 /*String [] datuenArray = new String[kont];
+
+             for (int i=0; i<datuenArray.length; i++){
+            	 datuenArray[i] = datuak.get(i);
+                 System.out.println("Mostrando línea " + (i+1) + " del fichero: " + datuenArray[i]);
+             }*/
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return datuak;
+	}
+	
+	public void berifikazioa() {
+		if (emailText.getText().equals(fitxategienDatuakLortu().get(0))){
+			System.out.println("Email ondo");
+			if (pasahitzaText.getText().equals(fitxategienDatuakLortu().get(1))){
+				new PantailaNagusia();
+			}
+			else{
+				JOptionPane.showMessageDialog(pantailaNagusia, "Pasahitza txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	public void panelaEraikitzen() {
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
 		pantailaNagusia.setVisible(true);
 	}
 
-	public static void main(String[] args) {		 
+	public static void main(String[] args) {
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
+		System.out.println(h.fitxategienDatuakLortu().get(0));
+		System.out.println(h.fitxategienDatuakLortu().get(1));
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		Berifikazioa();
-	}
-	
-	public void Berifikazioa(){
-		String sartutakoEmail = emailText.getText();
-		String sartutakoPasahitza = pasahitzaText.getText();
-	}
-	
 }
