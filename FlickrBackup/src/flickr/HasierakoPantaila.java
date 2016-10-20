@@ -3,6 +3,8 @@ package flickr;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +13,7 @@ import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.*;
 
-public class HasierakoPantaila extends JPanel implements ActionListener {
+public class HasierakoPantaila extends JPanel implements ActionListener, KeyListener {
 
 	/**
 	 * 
@@ -33,7 +35,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	private JButton sartuBotoia;
 	private final int TAMAINA = 15;
 	private ArrayList<String> datuak;
-	
+
 	public HasierakoPantaila() {
 		super(new BorderLayout());
 		pantailaNagusia = new JFrame("FlickrBackup");
@@ -71,6 +73,9 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 		pasahitzaText = new JPasswordField(TAMAINA);
 		sartuBotoia = new JButton("Sartu");
 
+		emailText.addKeyListener(this);
+		pasahitzaText.addKeyListener(this);
+
 		goikoa.setLayout(new FlowLayout());
 		goikoa.add(emailLabel);
 		goikoa.add(emailText);
@@ -93,37 +98,33 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		berifikazioa();
 	}
-	
+
 	public void fitxategienDatuakLortu() {
-		File fitxategia = new File(System.getProperty("user.home") + "/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
+		File fitxategia = new File(
+				System.getProperty("user.home") + "/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
 		try {
 			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
 			String lerroa;
-			while ((lerroa = bf.readLine()) != null) {				
+			while ((lerroa = bf.readLine()) != null) {
 				datuak.add(lerroa.trim());
-			}	
+			}
 			bf.close();
-			System.out.println(datuak.get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void berifikazioa() {
 		this.fitxategienDatuakLortu();
-		System.out.println("Berifiazioan gaude");
-		if (emailText.getText().equals(datuak.get(0))){
-			System.out.println("Email ondo");
-			if (Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())){
-				//new PantailaNagusia();
-				System.out.println("Email eta pasahitza ondo");
-			}
-			else{
-				JOptionPane.showMessageDialog(pantailaNagusia, "Pasahitza txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
-			}
-		}
-		else{
-			JOptionPane.showMessageDialog(pantailaNagusia, "Email txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
+		
+		if (emailText.getText().equals(datuak.get(0))
+				&& Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())) {
+			pantailaNagusia.dispose();
+			PantailaNagusia p = new PantailaNagusia();
+			p.panelaEraikitzen();
+
+		} else {
+			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -137,6 +138,17 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	public static void main(String[] args) {
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
+	}
+
+	public void keyTyped(KeyEvent e) {
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_ENTER)
+			berifikazioa();
+	}
+
+	public void keyReleased(KeyEvent e) {
 	}
 
 }
