@@ -39,6 +39,19 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	public HasierakoPantaila() {
 		super(new BorderLayout());
 		pantailaNagusia = new JFrame("FlickrBackup");
+		hizkuntza = new JPanel();
+		hizkuntzak = new JComboBox<String>(elementuak);
+		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
+		south = new JPanel();
+		goikoa = new JPanel();
+		behekoa = new JPanel();
+		emailLabel = new JLabel("Email:");
+		emailText = new JTextField(TAMAINA);
+		pasahitzaLabel = new JLabel("Pasahitza:");
+		pasahitzaText = new JPasswordField(TAMAINA);
+		sartuBotoia = new JButton("Sartu");
+		emailText.addKeyListener(this);
+		pasahitzaText.addKeyListener(this);
 		datuak = new ArrayList<String>();
 		goikoPanela();
 		erdikoPanela();
@@ -46,11 +59,9 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	}
 
 	public void goikoPanela() {
-		hizkuntza = new JPanel();
 		elementuak.add("Euskara");
 		elementuak.add("English");
 		elementuak.add("Español");
-		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
 		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -58,24 +69,10 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	}
 
 	public void erdikoPanela() {
-		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
 		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 	}
 
 	public void behekoPanela() {
-		south = new JPanel();
-		goikoa = new JPanel();
-		behekoa = new JPanel();
-
-		emailLabel = new JLabel("Email:");
-		emailText = new JTextField(TAMAINA);
-		pasahitzaLabel = new JLabel("Pasahitza:");
-		pasahitzaText = new JPasswordField(TAMAINA);
-		sartuBotoia = new JButton("Sartu");
-
-		emailText.addKeyListener(this);
-		pasahitzaText.addKeyListener(this);
-
 		goikoa.setLayout(new FlowLayout());
 		goikoa.add(emailLabel);
 		goikoa.add(emailText);
