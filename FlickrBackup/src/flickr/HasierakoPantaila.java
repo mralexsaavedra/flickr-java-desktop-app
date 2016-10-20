@@ -21,7 +21,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	private static final long serialVersionUID = 1L;
 
 	private JFrame pantailaNagusia;
-	private Vector<String> elementuak = new Vector<String>();
+	private Vector<String> elementuak;
 	private JComboBox<String> hizkuntzak;
 	private JPanel hizkuntza;
 	private JLabel picture;
@@ -33,14 +33,14 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	private JLabel pasahitzaLabel;
 	private JPasswordField pasahitzaText;
 	private JButton sartuBotoia;
-	private final int TAMAINA = 15;
 	private ArrayList<String> datuak;
+	private final int TAMAINA = 15;
 
 	public HasierakoPantaila() {
 		super(new BorderLayout());
+		
 		pantailaNagusia = new JFrame("FlickrBackup");
 		hizkuntza = new JPanel();
-		hizkuntzak = new JComboBox<String>(elementuak);
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
 		south = new JPanel();
 		goikoa = new JPanel();
@@ -50,18 +50,24 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 		pasahitzaLabel = new JLabel("Pasahitza:");
 		pasahitzaText = new JPasswordField(TAMAINA);
 		sartuBotoia = new JButton("Sartu");
+		datuak = new ArrayList<String>();
+		
+		elementuak = new Vector<String>();
+		elementuak.add("Euskara");
+		elementuak.add("English");
+		elementuak.add("Español");
+		hizkuntzak = new JComboBox<String>(elementuak);
+		
+		sartuBotoia.addActionListener(this);
 		emailText.addKeyListener(this);
 		pasahitzaText.addKeyListener(this);
-		datuak = new ArrayList<String>();
+		
 		goikoPanela();
 		erdikoPanela();
 		behekoPanela();
 	}
 
 	public void goikoPanela() {
-		elementuak.add("Euskara");
-		elementuak.add("English");
-		elementuak.add("Español");
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
 		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -88,7 +94,6 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
-		sartuBotoia.addActionListener(this);
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 
@@ -97,8 +102,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	}
 
 	public void fitxategienDatuakLortu() {
-		File fitxategia = new File(
-				System.getProperty("user.home") + "/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
+		File fitxategia = new File("/Users/alexander/git/FlickrBackup/FlickrBackup/src/fitxategia.txt");
 		try {
 			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
 			String lerroa;
