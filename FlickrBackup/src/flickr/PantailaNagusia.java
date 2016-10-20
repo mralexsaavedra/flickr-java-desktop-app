@@ -12,7 +12,7 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	
 	private JFrame pantailaNagusia;
 	
-	private Vector<String> hizkuntzElementuak = new Vector<String>();
+	private Vector<String> hizkuntzElementuak;
 	private JComboBox<String> hizkuntzak;
 	private JButton irtenBotoia;
 	private JPanel hizkuntzaEtaIrten;
@@ -22,7 +22,7 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	private JPanel argazkiakIgoPanel;
 	private JPanel goikoPanela;
 	
-	private Vector<String> bildumaElementuak = new Vector<String>();
+	private Vector<String> bildumaElementuak;
 	private JComboBox<String> bildumak;
 	private JButton argazkiakBotoia;
 	private JPanel ezkerrekoPanela;
@@ -41,36 +41,55 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	
 	public PantailaNagusia() {
 		super(new BorderLayout());
+		
 		pantailaNagusia = new JFrame("FlickrBackup");
+		goikoPanela = new JPanel();
+		hizkuntzaEtaIrten = new JPanel();
+		argazkiakJaitsiPanel = new JPanel();
+		argazkiakIgoPanel = new JPanel();
+		irtenBotoia = new JButton("Irten");
+		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
+		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
+		irtenBotoia.addActionListener(this);
+		ezkerrekoPanela = new JPanel();		
+		eskumakoPanela = new JPanel();
+		bilatuText = new JTextField(LUZERA);
+		bilatuBotoia = new JButton("Bilatu");
+		behekoPanela = new JPanel();
+		bildumakLabel = new JLabel("Bildumak :   " );
+		bildumakGuztira = new JLabel("bildumenKontaketa()");
+		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
+		logoPanela = new JPanel();
+
+		bildumenPanela = new JPanel();
+		hizkuntzElementuak = new Vector<String>();
+		hizkuntzElementuak.add("Euskara");
+		hizkuntzElementuak.add("English");
+		hizkuntzElementuak.add("Español");
+		hizkuntzak = new JComboBox<String>(hizkuntzElementuak);
+		
+		bildumaElementuak = new Vector<String>();
+		bildumaElementuak.add("Lehenengo bilduma");
+		bildumaElementuak.add("Bigarren bilduma");
+		bildumak = new JComboBox<String>(bildumaElementuak);
+		argazkiakBotoia = new JButton("Argazkiak");
+		
 		iparraldePanela();
 		mendebaldePanela();
 		ekialdePanela();
 		hegoaldePanela();
 	}
 	
-	public void iparraldePanela() {
-		goikoPanela = new JPanel();
-		
-		hizkuntzaEtaIrten = new JPanel();
-		argazkiakJaitsiPanel = new JPanel();
-		argazkiakIgoPanel = new JPanel();
-		
-		hizkuntzElementuak.add("Euskara");
-		hizkuntzElementuak.add("English");
-		hizkuntzElementuak.add("Español");
-		hizkuntzak = new JComboBox<String>(hizkuntzElementuak);
-		irtenBotoia = new JButton("Irten");
+	public void iparraldePanela() {	
 		hizkuntzaEtaIrten.setLayout(new BoxLayout(hizkuntzaEtaIrten, BoxLayout.X_AXIS));
 		hizkuntzaEtaIrten.add(hizkuntzak);
 		hizkuntzaEtaIrten.add(irtenBotoia);
 		hizkuntzaEtaIrten.setBorder(BorderFactory.createEmptyBorder(10,1000,10,10));
 		
-		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
 		argazkiakJaitsiPanel.setLayout(new BoxLayout(argazkiakJaitsiPanel, BoxLayout.X_AXIS));
 		argazkiakJaitsiPanel.add(argazkiakJaitsiBotoia);
 		argazkiakJaitsiPanel.setBorder(BorderFactory.createEmptyBorder(10,10,5,1100));
 		
-		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
 		argazkiakIgoPanel.setLayout(new BoxLayout(argazkiakIgoPanel, BoxLayout.X_AXIS));
 		argazkiakIgoPanel.add(argazkiakIgoBotoia);
 		argazkiakIgoPanel.setBorder(BorderFactory.createEmptyBorder(5,10,10,1100));
@@ -80,18 +99,11 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 		goikoPanela.add(argazkiakJaitsiPanel);
 		goikoPanela.add(argazkiakIgoPanel);
 		goikoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-		
-		irtenBotoia.addActionListener(this);
-		
+				
 		pantailaNagusia.getContentPane().add(goikoPanela, BorderLayout.NORTH);
 	}
 	
 	public void mendebaldePanela() {
-		ezkerrekoPanela = new JPanel();		
-		bildumaElementuak.add("Lehenengo bilduma");
-		bildumaElementuak.add("Bigarren bilduma");
-		bildumak = new JComboBox<String>(bildumaElementuak);
-		argazkiakBotoia = new JButton("Argazkiak");
 		ezkerrekoPanela.setLayout(new BoxLayout(ezkerrekoPanela, BoxLayout.X_AXIS));
 		ezkerrekoPanela.add(bildumak);
 		ezkerrekoPanela.add(argazkiakBotoia);
@@ -100,9 +112,6 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	}
 	
 	public void ekialdePanela() {
-		eskumakoPanela = new JPanel();
-		bilatuText = new JTextField(LUZERA);
-		bilatuBotoia = new JButton("Bilatu");
 		eskumakoPanela.setLayout(new BoxLayout(eskumakoPanela, BoxLayout.X_AXIS));
 		eskumakoPanela.add(bilatuText);
 		eskumakoPanela.add(bilatuBotoia);
@@ -111,17 +120,10 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	}
 	
 	public void hegoaldePanela() {
-		behekoPanela = new JPanel();
-		bildumakLabel = new JLabel("Bildumak :   " );
-		bildumakGuztira = new JLabel("bildumenKontaketa()");
-		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
-		
-		bildumenPanela = new JPanel();
 		bildumenPanela.setLayout(new FlowLayout());
 		bildumenPanela.add(bildumakLabel);
 		bildumenPanela.add(bildumakGuztira);
 		
-		logoPanela = new JPanel();
 		logoPanela.setLayout(new FlowLayout());
 		logoPanela.add(picture);
 		
@@ -148,7 +150,6 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	public void panelaEraikitzen() {		
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
-		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
 	}
 

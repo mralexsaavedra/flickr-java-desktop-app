@@ -11,7 +11,7 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private JFrame pantailaNagusia;
-	private Vector<String> elementuak = new Vector<String>();
+	private Vector<String> elementuak;
 	private JComboBox<String> hizkuntzak;
 	private JPanel hizkuntza;
 	private JLabel picture;
@@ -24,18 +24,29 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	
 	public SesioaItxiPantaila() {
 		super(new BorderLayout());
+		
 		pantailaNagusia = new JFrame("FlickrBackup");
+		hizkuntza = new JPanel();
+		elementuak = new Vector<String>();
+		hizkuntzak = new JComboBox<String>(elementuak);
+		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
+		south = new JPanel();
+		goikoa = new JPanel();
+		behekoa = new JPanel();
+		irtenZara = new JLabel("Zure kontutik irten zara.");
+		berriroSartu = new JLabel("Berriro sartu nahi?");
+		sartuBotoia = new JButton("Sartu");
+		sartuBotoia.addActionListener(this);
+
 		goikoPanela();
 		erdikoPanela();
 		behekoPanela();
 	}
 	
 	public void goikoPanela() {
-		hizkuntza = new JPanel();
 		elementuak.add("Euskara");
 		elementuak.add("English");
 		elementuak.add("Español");
-		hizkuntzak = new JComboBox<String>(elementuak);
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
 		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -43,19 +54,10 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	}
 	
 	public void erdikoPanela() {
-		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
 		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 	}
 	
 	public void behekoPanela() {
-		south = new JPanel();
-		goikoa = new JPanel();
-		behekoa = new JPanel();
-
-		irtenZara = new JLabel("Zure kontutik irten zara.");
-		berriroSartu = new JLabel("Berriro sartu nahi?");
-		sartuBotoia = new JButton("Sartu");
-
 		goikoa.setLayout(new FlowLayout());
 		goikoa.add(irtenZara);
 		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
@@ -69,9 +71,7 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 		south.add(behekoa);
 		south.add(sartuBotoia);
 		south.setBorder(BorderFactory.createEmptyBorder(10,10,50,10));
-		
-		sartuBotoia.addActionListener(this);
-		
+			
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 	
