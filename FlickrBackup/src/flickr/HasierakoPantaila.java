@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.*;
 
@@ -32,10 +32,12 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	private JPasswordField pasahitzaText;
 	private JButton sartuBotoia;
 	private final int TAMAINA = 15;
-
+	private ArrayList<String> datuak;
+	
 	public HasierakoPantaila() {
 		super(new BorderLayout());
 		pantailaNagusia = new JFrame("FlickrBackup");
+		datuak = new ArrayList<String>();
 		goikoPanela();
 		erdikoPanela();
 		behekoPanela();
@@ -92,29 +94,27 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 		berifikazioa();
 	}
 	
-	public ArrayList<String> fitxategienDatuakLortu() {
+	public void fitxategienDatuakLortu() {
 		File fitxategia = new File(System.getProperty("user.home") + "/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
-		ArrayList<String> datuak = new ArrayList<String>();
 		try {
-			//Scanner scan = new Scanner(fitxategia);
 			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
 			String lerroa;
 			while ((lerroa = bf.readLine()) != null) {				
 				datuak.add(lerroa.trim());
 			}	
 			bf.close();
+			System.out.println(datuak.get(1));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return datuak;
 	}
 	
 	public void berifikazioa() {
+		this.fitxategienDatuakLortu();
 		System.out.println("Berifiazioan gaude");
-		if (emailText.getText().equals(fitxategienDatuakLortu().get(0))){
+		if (emailText.getText().equals(datuak.get(0))){
 			System.out.println("Email ondo");
-			if (pasahitzaText.getPassword().equals(fitxategienDatuakLortu().get(1))){
-				System.exit(0);
+			if (Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())){
 				//new PantailaNagusia();
 				System.out.println("Email eta pasahitza ondo");
 			}
