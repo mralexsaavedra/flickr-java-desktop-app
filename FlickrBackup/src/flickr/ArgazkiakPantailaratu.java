@@ -25,15 +25,10 @@ import com.flickr4java.flickr.util.IOUtilities;
 public class ArgazkiakPantailaratu {
 
 	static String apiKey;
-
 	static String sharedSecret;
-
 	Flickr f;
-
 	REST rest;
-
 	RequestContext requestContext;
-
 	Properties properties = null;
 
 	public ArgazkiakPantailaratu() throws IOException {
@@ -107,7 +102,6 @@ public class ArgazkiakPantailaratu {
 		} catch (FlickrException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	// convert filename to clean filename
@@ -149,5 +143,4 @@ public class ArgazkiakPantailaratu {
 		}
 		return true;
 	}
-
 }
