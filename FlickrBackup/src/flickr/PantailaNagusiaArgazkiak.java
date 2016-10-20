@@ -3,8 +3,10 @@ package flickr;
 import java.awt.*;
 import java.util.Vector;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PantailaNagusiaArgazkiak extends JPanel {
+public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -73,6 +75,9 @@ public class PantailaNagusiaArgazkiak extends JPanel {
 		goikoPanela.add(hizkuntzaEtaIrten);
 		goikoPanela.add(hasieraraPanel);
 		goikoPanela.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+		
+		irtenBotoia.addActionListener(this);
+		
 		pantailaNagusia.getContentPane().add(goikoPanela, BorderLayout.NORTH);
 	}
 	
@@ -133,6 +138,16 @@ public class PantailaNagusiaArgazkiak extends JPanel {
 		behekoPanela.add(new JPanel());
 		
 		pantailaNagusia.getContentPane().add(behekoPanela, BorderLayout.SOUTH);
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		logout();
+	}
+	
+	public void logout() {
+		pantailaNagusia.dispose();
+		SesioaItxiPantaila itxi = new SesioaItxiPantaila();
+		itxi.panelaEraikitzen();
 	}
 	
 	public void panelaEraikitzen() {		
