@@ -3,7 +3,9 @@ package flickr;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
@@ -91,15 +93,16 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	}
 	
 	public ArrayList<String> fitxategienDatuakLortu() {
-		File fitxategia = new File("/Users/alexander/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
+		File fitxategia = new File(System.getProperty("user.home") + "/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
 		ArrayList<String> datuak = new ArrayList<String>();
 		try {
-			Scanner scan = new Scanner(fitxategia);
-			while (scan.hasNext()) {
-				String linea = scan.nextLine();
-				datuak.add(linea.trim());
+			//Scanner scan = new Scanner(fitxategia);
+			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
+			String lerroa;
+			while ((lerroa = bf.readLine()) != null) {				
+				datuak.add(lerroa.trim());
 			}	
-			scan.close();
+			bf.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
