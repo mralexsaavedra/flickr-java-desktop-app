@@ -98,7 +98,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 			Scanner scan = new Scanner(fitxategia);
 			while (scan.hasNext()) {
 				String linea = scan.nextLine();
-				datuak.add(linea);
+				datuak.add(linea.trim());
 				//kont++;
 			}
 			
@@ -116,14 +116,22 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	}
 	
 	public void berifikazioa() {
+		System.out.println("Berifiazioan gaude");
 		if (emailText.getText().equals(fitxategienDatuakLortu().get(0))){
 			System.out.println("Email ondo");
 			if (pasahitzaText.getText().equals(fitxategienDatuakLortu().get(1))){
-				new PantailaNagusia();
+				System.exit(0);
+				//new PantailaNagusia();
+				System.out.println("Email eta pasahitza ondo");
 			}
 			else{
 				JOptionPane.showMessageDialog(pantailaNagusia, "Pasahitza txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
+				pasahitzaText.setText("");
 			}
+		}
+		else{
+			JOptionPane.showMessageDialog(pantailaNagusia, "Email txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
+			emailText.setText("");
 		}
 	}
 
@@ -136,8 +144,6 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	public static void main(String[] args) {
 		HasierakoPantaila h = new HasierakoPantaila();
 		h.panelaEraikitzen();
-		System.out.println(h.fitxategienDatuakLortu().get(0));
-		System.out.println(h.fitxategienDatuakLortu().get(1));
 	}
 
 }
