@@ -1,8 +1,6 @@
 package flickr;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Vector;
 import javax.swing.*;
 
@@ -140,6 +138,7 @@ public class PantailaNagusiaArgazkiak extends JPanel {
 	public void panelaEraikitzen() {		
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
+		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
 	}
 

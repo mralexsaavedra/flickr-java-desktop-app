@@ -93,22 +93,13 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 	public ArrayList<String> fitxategienDatuakLortu() {
 		File fitxategia = new File("/Users/alexander/workspaceJava/FlickrBackup/FlickrBackup/src/fitxategia.txt");
 		ArrayList<String> datuak = new ArrayList<String>();
-		//int kont = 0;
 		try {
 			Scanner scan = new Scanner(fitxategia);
 			while (scan.hasNext()) {
 				String linea = scan.nextLine();
 				datuak.add(linea.trim());
-				//kont++;
-			}
-			
-			 /*String [] datuenArray = new String[kont];
-
-             for (int i=0; i<datuenArray.length; i++){
-            	 datuenArray[i] = datuak.get(i);
-                 System.out.println("Mostrando línea " + (i+1) + " del fichero: " + datuenArray[i]);
-             }*/
-			
+			}	
+			scan.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,25 +110,24 @@ public class HasierakoPantaila extends JPanel implements ActionListener {
 		System.out.println("Berifiazioan gaude");
 		if (emailText.getText().equals(fitxategienDatuakLortu().get(0))){
 			System.out.println("Email ondo");
-			if (pasahitzaText.getText().equals(fitxategienDatuakLortu().get(1))){
+			if (pasahitzaText.getPassword().equals(fitxategienDatuakLortu().get(1))){
 				System.exit(0);
 				//new PantailaNagusia();
 				System.out.println("Email eta pasahitza ondo");
 			}
 			else{
 				JOptionPane.showMessageDialog(pantailaNagusia, "Pasahitza txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
-				pasahitzaText.setText("");
 			}
 		}
 		else{
 			JOptionPane.showMessageDialog(pantailaNagusia, "Email txarto dago", "ERROR", JOptionPane.ERROR_MESSAGE);
-			emailText.setText("");
 		}
 	}
 
 	public void panelaEraikitzen() {
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
+		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
 	}
 

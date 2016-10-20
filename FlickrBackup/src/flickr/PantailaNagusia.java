@@ -133,6 +133,7 @@ public class PantailaNagusia extends JPanel {
 	public void panelaEraikitzen() {		
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
+		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
 	}
 
