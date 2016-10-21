@@ -50,6 +50,7 @@ public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 		irtenBotoia = new JButton("Irten");
 		hasieraraBotoia = new JButton("Hasierara bueltatu");
 		irtenBotoia.addActionListener(this);
+		hasieraraBotoia.addActionListener(this);
 		ezkerrekoPanela = new JPanel();		
 		argazkiakBotoia = new JButton("Argazkiak");
 		erdikoPanela = new JPanel();
@@ -143,13 +144,24 @@ public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		logout();
+		if(e.getSource()==irtenBotoia) {
+			logout();
+		}
+		else if(e.getSource()==hasieraraBotoia) {
+			hasieraraBueltatu();
+		}
 	}
 	
 	public void logout() {
 		pantailaNagusia.dispose();
 		SesioaItxiPantaila itxi = new SesioaItxiPantaila();
 		itxi.panelaEraikitzen();
+	}
+	
+	public void hasieraraBueltatu() {
+		pantailaNagusia.dispose();
+		PantailaNagusia bueltatu = new PantailaNagusia();
+		bueltatu.panelaEraikitzen();
 	}
 	
 	public void panelaEraikitzen() {		

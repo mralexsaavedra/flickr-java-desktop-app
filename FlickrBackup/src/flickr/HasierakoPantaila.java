@@ -102,7 +102,7 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 	}
 
 	public void fitxategienDatuakLortu() {
-		File fitxategia = new File("/Users/alexander/git/FlickrBackup/FlickrBackup/src/fitxategia.txt");
+		File fitxategia = new File("src/fitxategia.txt");
 		try {
 			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
 			String lerroa;
