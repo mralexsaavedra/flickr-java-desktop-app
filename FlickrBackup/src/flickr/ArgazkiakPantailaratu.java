@@ -82,7 +82,7 @@ public class ArgazkiakPantailaratu {
 
 				PhotoList<Photo> col;
 				int PHOTOSPERPAGE = 2;
-				int HOWMANYPAGES = 1; // (int) Math.ceil(photoCount / 10);
+				int HOWMANYPAGES = (int) Math.ceil(photoCount / 10);
 				for (int page = 1; page <= HOWMANYPAGES; page++) {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
