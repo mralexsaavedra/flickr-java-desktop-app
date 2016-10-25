@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	
@@ -28,6 +29,9 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 		pantailaNagusia = new JFrame("FlickrBackup");
 		hizkuntza = new JPanel();
 		elementuak = new Vector<String>();
+		elementuak.add("Euskara");
+		elementuak.add("English");
+		elementuak.add("Español");
 		hizkuntzak = new JComboBox<String>(elementuak);
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
 		south = new JPanel();
@@ -44,9 +48,6 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	}
 	
 	public void goikoPanela() {
-		elementuak.add("Euskara");
-		elementuak.add("English");
-		elementuak.add("Español");
 		hizkuntza.setLayout(new FlowLayout());
 		hizkuntza.add(hizkuntzak);
 		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
@@ -60,18 +61,18 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	public void behekoPanela() {
 		goikoa.setLayout(new FlowLayout());
 		goikoa.add(irtenZara);
-		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,5,10));
+		goikoa.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 		behekoa.setLayout(new FlowLayout());
 		behekoa.add(berriroSartu);
-		behekoa.setBorder(BorderFactory.createEmptyBorder(5,10,10,10));
+		behekoa.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
 		south.setLayout(new BoxLayout(south, BoxLayout.Y_AXIS));
+		south.setBorder(BorderFactory.createEmptyBorder(10,100,50,100));
 		south.add(goikoa);
 		south.add(behekoa);
 		south.add(sartuBotoia);
-		south.setBorder(BorderFactory.createEmptyBorder(10,10,50,10));
-			
+		
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
 	
@@ -81,8 +82,13 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	
 	public void berriroSartu() {
 		pantailaNagusia.dispose();
-		PantailaNagusia sartzeko = new PantailaNagusia();
-		sartzeko.panelaEraikitzen();
+		PantailaNagusia sartzeko;
+		try {
+			sartzeko = new PantailaNagusia();
+			sartzeko.panelaEraikitzen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void panelaEraikitzen() {		

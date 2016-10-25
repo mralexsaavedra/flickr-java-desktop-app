@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Vector;
@@ -121,8 +122,13 @@ public class HasierakoPantaila extends JPanel implements ActionListener, KeyList
 		if (emailText.getText().equals(datuak.get(0))
 				&& Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())) {
 			pantailaNagusia.dispose();
-			PantailaNagusia p = new PantailaNagusia();
-			p.panelaEraikitzen();
+			PantailaNagusia p;
+			try {
+				p = new PantailaNagusia();
+				p.panelaEraikitzen();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		} else {
 			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);

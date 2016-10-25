@@ -1,10 +1,22 @@
 package flickr;
 
 import java.awt.*;
+import java.util.Properties;
 import java.util.Vector;
 import javax.swing.*;
+
+import com.flickr4java.flickr.Flickr;
+import com.flickr4java.flickr.FlickrException;
+import com.flickr4java.flickr.REST;
+import com.flickr4java.flickr.photosets.Photoset;
+import com.flickr4java.flickr.photosets.Photosets;
+import com.flickr4java.flickr.photosets.PhotosetsInterface;
+import com.flickr4java.flickr.util.IOUtilities;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class PantailaNagusia extends JPanel implements ActionListener {
 	
@@ -33,44 +45,71 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	
 	private JLabel bildumakLabel;
 	private JLabel bildumakGuztira;
-	private JPanel bildumenPanela;
+	private JPanel bildumenKontaketaPanela;
 	private JPanel logoPanela;
 	private JLabel picture;
 	private JPanel behekoPanela;
 	private final int LUZERA = 20;
 	
-	public PantailaNagusia() {
+	private JScrollPane bildumenScrollPanela;
+	
+	private Flickr f;
+	Properties properties = null;
+	
+	public PantailaNagusia() throws IOException {
 		super(new BorderLayout());
+				
+		InputStream in = null;
+		try {
+			in = getClass().getResourceAsStream("/setup.properties");
+			properties = new Properties();
+			properties.load(in);
+		} finally {
+			IOUtilities.close(in);
+		}
+		f = new Flickr(properties.getProperty("apiKey"), properties.getProperty("secret"), new REST());
 		
 		pantailaNagusia = new JFrame("FlickrBackup");
 		goikoPanela = new JPanel();
 		hizkuntzaEtaIrten = new JPanel();
 		argazkiakJaitsiPanel = new JPanel();
 		argazkiakIgoPanel = new JPanel();
-		irtenBotoia = new JButton("Irten");
-		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");
-		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
-		irtenBotoia.addActionListener(this);
 		ezkerrekoPanela = new JPanel();		
 		eskumakoPanela = new JPanel();
 		bilatuText = new JTextField(LUZERA);
 		bilatuBotoia = new JButton("Bilatu");
 		behekoPanela = new JPanel();
+		bildumenKontaketaPanela = new JPanel();
 		bildumakLabel = new JLabel("Bildumak :   " );
-		bildumakGuztira = new JLabel("bildumenKontaketa()");
+		bildumakGuztira = new JLabel(bildumenKontaketa());
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
 		logoPanela = new JPanel();
-
-		bildumenPanela = new JPanel();
+		
+		irtenBotoia = new JButton("Irten");
+		irtenBotoia.addActionListener(this);
+		argazkiakIgoBotoia = new JButton("Flickr-era argazkiak igo");
+		argazkiakJaitsiBotoia = new JButton("Flickr-etik argazkiak jaitsi");		
+		argazkiakJaitsiBotoia.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+					try {
+						ArgazkiakPantailaratu t = new ArgazkiakPantailaratu();
+						System.out.println("Argazkiak pantailartzen...");
+						t.showPhotos();						
+						System.out.println("Argazkiak jatsi dira");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+			}
+		});
+		
 		hizkuntzElementuak = new Vector<String>();
 		hizkuntzElementuak.add("Euskara");
 		hizkuntzElementuak.add("English");
 		hizkuntzElementuak.add("Español");
 		hizkuntzak = new JComboBox<String>(hizkuntzElementuak);
 		
-		bildumaElementuak = new Vector<String>();
-		bildumaElementuak.add("Lehenengo bilduma");
-		bildumaElementuak.add("Bigarren bilduma");
+		bildumaElementuak = getBildumak();
 		bildumak = new JComboBox<String>(bildumaElementuak);
 		argazkiakBotoia = new JButton("Argazkiak");
 		
@@ -78,6 +117,10 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 		mendebaldePanela();
 		ekialdePanela();
 		hegoaldePanela();
+		
+		bildumenScrollPanela = new JScrollPane();
+		bildumenScrollPanela.setPreferredSize(new Dimension(50, 400));
+		pantailaNagusia.getContentPane().add(bildumenScrollPanela, BorderLayout.CENTER);
 	}
 	
 	public void iparraldePanela() {	
@@ -120,15 +163,15 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	}
 	
 	public void hegoaldePanela() {
-		bildumenPanela.setLayout(new FlowLayout());
-		bildumenPanela.add(bildumakLabel);
-		bildumenPanela.add(bildumakGuztira);
+		bildumenKontaketaPanela.setLayout(new FlowLayout());
+		bildumenKontaketaPanela.add(bildumakLabel);
+		bildumenKontaketaPanela.add(bildumakGuztira);
 		
 		logoPanela.setLayout(new FlowLayout());
 		logoPanela.add(picture);
 		
 		behekoPanela.setLayout(new GridLayout(1,5));
-		behekoPanela.add(bildumenPanela);
+		behekoPanela.add(bildumenKontaketaPanela);
 		behekoPanela.add(new JPanel());
 		behekoPanela.add(logoPanela);
 		behekoPanela.add(new JPanel());
@@ -147,6 +190,45 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 		itxita.panelaEraikitzen();
 	}
 	
+	public String bildumenKontaketa(){
+		String userId = properties.getProperty("nsid");		
+		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
+		Photosets photosets;
+		
+		int photosetsCount = 0;
+
+		try {
+			photosets = photosetsInterface.getList(userId);
+			photosetsCount = photosets.getTotal();
+			
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+		return String.valueOf(photosetsCount);
+	}
+	
+	public Vector<String> getBildumak(){		
+		Vector<String> bildumenIzenak = new Vector<String>();
+		
+		String userId = properties.getProperty("nsid");
+		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
+		Photosets photosets;
+		
+		try {
+			photosets = photosetsInterface.getList(userId);
+			java.util.Collection<Photoset> bildumak = photosets.getPhotosets();
+			
+			for (Photoset photoset : bildumak) {
+				String title = photoset.getTitle();
+				bildumenIzenak.add(title);
+			}
+			
+		} catch (FlickrException e) {
+				e.printStackTrace();
+		}
+		return bildumenIzenak;
+	}
+	
 	public void panelaEraikitzen() {		
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
@@ -154,7 +236,12 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 	}
 
 	public static void main(String[] args) {		 
-		PantailaNagusia n = new PantailaNagusia();
-		n.panelaEraikitzen();
+		PantailaNagusia n;
+		try {
+			n = new PantailaNagusia();
+			n.panelaEraikitzen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

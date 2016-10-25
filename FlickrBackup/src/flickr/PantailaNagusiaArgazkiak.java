@@ -5,6 +5,7 @@ import java.util.Vector;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 	
@@ -43,6 +44,12 @@ public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 	public PantailaNagusiaArgazkiak() {
 		super(new BorderLayout());
 		
+		hizkuntzElementuak = new Vector<String>();
+		hizkuntzElementuak.add("Euskara");
+		hizkuntzElementuak.add("English");
+		hizkuntzElementuak.add("Español");
+		hizkuntzak = new JComboBox<String>(hizkuntzElementuak);
+		
 		pantailaNagusia = new JFrame("FlickrBackup");
 		goikoPanela = new JPanel();
 		hizkuntzaEtaIrten = new JPanel();
@@ -64,12 +71,6 @@ public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/logo-flickr.png")));
 		bildumenPanela = new JPanel();
 		logoPanela = new JPanel();
-
-		hizkuntzElementuak = new Vector<String>();
-		hizkuntzElementuak.add("Euskara");
-		hizkuntzElementuak.add("English");
-		hizkuntzElementuak.add("Español");
-		hizkuntzak = new JComboBox<String>(hizkuntzElementuak);
 		
 		bildumaElementuak = new Vector<String>();
 		bildumaElementuak.add("Lehenengo bilduma");
@@ -160,8 +161,13 @@ public class PantailaNagusiaArgazkiak extends JPanel implements ActionListener {
 	
 	public void hasieraraBueltatu() {
 		pantailaNagusia.dispose();
-		PantailaNagusia bueltatu = new PantailaNagusia();
-		bueltatu.panelaEraikitzen();
+		PantailaNagusia bueltatu;
+		try {
+			bueltatu = new PantailaNagusia();
+			bueltatu.panelaEraikitzen();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void panelaEraikitzen() {		
