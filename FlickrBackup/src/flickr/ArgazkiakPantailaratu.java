@@ -82,8 +82,8 @@ public class ArgazkiakPantailaratu {
 
 				PhotoList<Photo> col;
 				int PHOTOSPERPAGE = 2;
-				int HOWMANYPAGES = (int) Math.ceil(photoCount / 10);
-				for (int page = 1; page <= HOWMANYPAGES; page++) {
+				int HOWMANYPAGES = 1; // (int) Math.ceil(photoCount / 10);
+				for (int page = 0; page <= HOWMANYPAGES; page++) {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
@@ -124,22 +124,28 @@ public class ArgazkiakPantailaratu {
 		String cleanTitle = convertToFileSystemChar(p.getTitle());
 
 		File orgFile = new File(path + File.separator + cleanTitle + "_" + p.getId() + "_o." + p.getOriginalFormat());
+        File largeFile = new File(path + File.separator + cleanTitle + "_" + p.getId() + "_b." + p.getOriginalFormat());
 
-		if (orgFile.exists()) {
-			System.out.println(p.getTitle() + "\t" + p.getLargeUrl() + " skipped!");
-			return false;
-		}
+        if (orgFile.exists() || largeFile.exists()) {
+            System.out.println(p.getTitle() + "\t" + p.getLargeUrl() + " skipped!");
+            return false;
+        }
 
 		try {
-			Photo nfo = f.getPhotosInterface().getInfo(p.getId(), null);
-			p.setOriginalSecret(nfo.getOriginalSecret());
-			ImageIO.write(p.getOriginalImage(), p.getOriginalFormat(), orgFile);
-			System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
-		} catch (FlickrException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            Photo nfo = f.getPhotosInterface().getInfo(p.getId(), null);
+            if (nfo.getOriginalSecret().isEmpty()) {
+                ImageIO.write(p.getLargeImage(), p.getOriginalFormat(), largeFile);
+                System.out.println(p.getTitle() + "\t" + p.getLargeUrl() + " was written to " + largeFile.getName());
+            } else {
+                p.setOriginalSecret(nfo.getOriginalSecret());
+                ImageIO.write(p.getOriginalImage(), p.getOriginalFormat(), orgFile);
+                System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
+            }
+        } catch (FlickrException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		return true;
 	}
 }
