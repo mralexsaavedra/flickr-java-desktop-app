@@ -120,6 +120,7 @@ public class PantailaNagusia extends JPanel implements ActionListener {
 		
 		bildumenScrollPanela = new JScrollPane();
 		bildumenScrollPanela.setPreferredSize(new Dimension(50, 400));
+		bildumenScrollPanela.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		pantailaNagusia.getContentPane().add(bildumenScrollPanela, BorderLayout.CENTER);
 	}
 	
