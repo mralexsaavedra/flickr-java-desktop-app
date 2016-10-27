@@ -1,16 +1,20 @@
 package flickrPantailak;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import flickrJava.ArgazkiakPantailaratu;
+import flickrJava.BildumakPantailaratu;
 
 public class MenuBarra extends JMenuBar implements ActionListener {
 
@@ -18,7 +22,7 @@ public class MenuBarra extends JMenuBar implements ActionListener {
 	* 
 	*/
 	private static final long serialVersionUID = 1L;
-
+	
 	private PantailaNagusia nagusia;
 
 	public MenuBarra() {
@@ -106,13 +110,16 @@ public class MenuBarra extends JMenuBar implements ActionListener {
 			SesioaItxiPantaila itxi = new SesioaItxiPantaila();
 			itxi.panelaEraikitzen();
 		} else if ("bildumak pantailaratu".equals(e.getActionCommand())) {
-			/*
-			 * BildumakPantailaratu bp; 
-			 * try { bp = new BildumakPantailaratu();
-			 * bp.showPhotosets(); } catch (IOException e1) {
-			 * e1.printStackTrace();
-			 */
-			createFrame();
+			BildumakPantailaratu bp; 
+			 	try { 
+			 		bp = new BildumakPantailaratu();
+			 		JPanel bildumenPanela = new JPanel();
+			 		JLabel bildumak = new JLabel(bp.showPhotosets());
+					 bildumenPanela.add(bildumak);
+					 nagusia.getContentPane().add(bildumenPanela, BorderLayout.CENTER);
+			  } catch (IOException e1) {
+				  e1.printStackTrace();
+			  }
 		} else if("argazkiak pantailaratu".equals(e.getActionCommand())) {
 			ArgazkiakPantailaratu ap;
 			try {
@@ -126,14 +133,5 @@ public class MenuBarra extends JMenuBar implements ActionListener {
 		}
 	}
 
-
-	protected void createFrame() {
-		MyInternalFrame frame = new MyInternalFrame();
-		nagusia.add(frame);
-		try {
-			frame.setSelected(true);
-		} catch (java.beans.PropertyVetoException e) {
-		}
-	}
 
 }

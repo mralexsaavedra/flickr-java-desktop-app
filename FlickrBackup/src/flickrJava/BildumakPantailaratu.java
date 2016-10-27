@@ -60,23 +60,26 @@ public class BildumakPantailaratu {
         System.exit(0);
     }
 
-	public void showPhotosets() {
+	public String showPhotosets() {
 		   PhotosetsInterface photosetsInterface  = f.getPhotosetsInterface();
 			
 			String userId = properties.getProperty("nsid");
+			
+			String titulua = null;
 			
 			try {
 				Photosets photosets = photosetsInterface.getList(userId);
 				Collection<Photoset> bildumak = photosets.getPhotosets();
 				
 				for (Photoset  bilduma : bildumak) {
+					titulua = bilduma.getTitle();
 					System.out.print(bilduma.getTitle() +  ":");
 					System.out.println(bilduma.getDescription());
 				}
 			} catch (FlickrException e) {
 				e.printStackTrace();
 			}	
-			
+			return titulua;
 	}
 	
 }
