@@ -18,7 +18,7 @@ import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.util.IOUtilities;
 
-public class BildumakPantailaratu {
+public class Bildumak {
 
 	static String apiKey;
 
@@ -32,7 +32,7 @@ public class BildumakPantailaratu {
 
 	Properties properties = null;
 
-	public BildumakPantailaratu() throws IOException {
+	public Bildumak() throws IOException {
 		InputStream in = null;
 		try {
 			in = getClass().getResourceAsStream("/setup.properties");
@@ -54,7 +54,7 @@ public class BildumakPantailaratu {
 	
     public static void main(String[] args) {
         try {
-        	BildumakPantailaratu t = new BildumakPantailaratu();
+        	Bildumak t = new Bildumak();
             t.showPhotosets();
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,17 +74,30 @@ public class BildumakPantailaratu {
 				Collection<Photoset> bildumak = photosets.getPhotosets();
 				
 				for (Photoset  bilduma : bildumak) {
-					String[] res = new String[2];
+					String[] res = new String[3];
 					res[0] = bilduma.getTitle();
 					res[1] = bilduma.getDescription();
+					res[2] = String.valueOf(bilduma.getPhotoCount());
 					emaitza.add(res);
-					System.out.print(bilduma.getTitle() +  ":");
-					System.out.println(bilduma.getDescription());
+					//System.out.print(bilduma.getTitle() +  ":");
+					//System.out.println(bilduma.getDescription());
 				}
 			} catch (FlickrException e) {
 				e.printStackTrace();
 			}	
 			return emaitza;
+	}
+	
+	public int blidumenKontaketa() {
+		String userId = properties.getProperty("nsid");
+		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
+		Photosets photosets = null;
+		try {
+			photosets = photosetsInterface.getList(userId);
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+		return photosets.getTotal();
 	}
 	
 }

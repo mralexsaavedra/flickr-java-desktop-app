@@ -125,7 +125,6 @@ public class PantailaNagusia extends JFrame implements ActionListener{
 		} 
 		else if ("bildumak pantailaratu".equals(e.getActionCommand())) {
 			BildumakUI bUI = new BildumakUI();
-			bUI.setVisible(true);
 			bUI.lortuBildumak();
 			bUI.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 			getContentPane().add(bUI, BorderLayout.CENTER);
