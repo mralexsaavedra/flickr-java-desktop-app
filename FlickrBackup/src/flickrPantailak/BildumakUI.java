@@ -13,17 +13,16 @@ import javax.swing.JPanel;
 import flickrJava.Bildumak;
 
 public class BildumakUI extends JPanel{
-
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	/**
-	 * 
-	 */
-	
+
 	public BildumakUI() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+		lortuBildumak();
 	}
 
 	public void lortuBildumak() {
@@ -49,9 +48,7 @@ public class BildumakUI extends JPanel{
         frame.setVisible(true);
 		
 		BildumakUI bUI = new BildumakUI();
-		bUI.lortuBildumak();	
 		
-		bUI.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		frame.getContentPane().add(bUI, BorderLayout.CENTER);
 	}
 	

@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -124,10 +123,7 @@ public class PantailaNagusia extends JFrame implements ActionListener{
 			new SesioaItxiPantaila().panelaEraikitzen();
 		} 
 		else if ("bildumak pantailaratu".equals(e.getActionCommand())) {
-			BildumakUI bUI = new BildumakUI();
-			bUI.lortuBildumak();
-			bUI.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-			getContentPane().add(bUI, BorderLayout.CENTER);
+			getContentPane().add(new BildumakUI(), BorderLayout.CENTER);
 		} 
 		else if("argazkiak pantailaratu".equals(e.getActionCommand())) {
 			ArgazkiakPantailaratu ap;
