@@ -2,7 +2,9 @@ package flickrJava;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 import com.flickr4java.flickr.Flickr;
@@ -60,26 +62,29 @@ public class BildumakPantailaratu {
         System.exit(0);
     }
 
-	public String showPhotosets() {
+	public List<String[]> showPhotosets() {
 		   PhotosetsInterface photosetsInterface  = f.getPhotosetsInterface();
 			
 			String userId = properties.getProperty("nsid");
 			
-			String titulua = null;
+			List<String[]> emaitza = new ArrayList<String[]>();
 			
 			try {
 				Photosets photosets = photosetsInterface.getList(userId);
 				Collection<Photoset> bildumak = photosets.getPhotosets();
 				
 				for (Photoset  bilduma : bildumak) {
-					titulua = bilduma.getTitle();
+					String[] res = new String[2];
+					res[0] = bilduma.getTitle();
+					res[1] = bilduma.getDescription();
+					emaitza.add(res);
 					System.out.print(bilduma.getTitle() +  ":");
 					System.out.println(bilduma.getDescription());
 				}
 			} catch (FlickrException e) {
 				e.printStackTrace();
 			}	
-			return titulua;
+			return emaitza;
 	}
 	
 }
