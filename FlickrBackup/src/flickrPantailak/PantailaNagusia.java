@@ -14,7 +14,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import flickrJava.ArgazkiakPantailaratu;
+import flickrJava.Argazkiak;
 
 public class PantailaNagusia extends JFrame implements ActionListener{
 	/**
@@ -126,9 +126,9 @@ public class PantailaNagusia extends JFrame implements ActionListener{
 			getContentPane().add(new BildumakUI(), BorderLayout.CENTER);
 		} 
 		else if("argazkiak pantailaratu".equals(e.getActionCommand())) {
-			ArgazkiakPantailaratu ap;
+			Argazkiak ap;
 			try {
-				ap = new ArgazkiakPantailaratu();
+				ap = new Argazkiak();
 				ap.showPhotos();
 			} catch (IOException e1) {
 				e1.printStackTrace();

@@ -21,7 +21,7 @@ import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.util.IOUtilities;
 
-public class ArgazkiakPantailaratu {
+public class Argazkiak {
 
 	static String apiKey;
 	static String sharedSecret;
@@ -30,7 +30,7 @@ public class ArgazkiakPantailaratu {
 	RequestContext requestContext;
 	Properties properties = null;
 
-	public ArgazkiakPantailaratu() throws IOException {
+	public Argazkiak() throws IOException {
 		InputStream in = null;
 		try {
 			in = getClass().getResourceAsStream("/setup.properties");
@@ -52,7 +52,7 @@ public class ArgazkiakPantailaratu {
 
 	public static void main(String[] args) {
 		try {
-			ArgazkiakPantailaratu t = new ArgazkiakPantailaratu();
+			Argazkiak t = new Argazkiak();
 			t.showPhotos();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,10 +75,52 @@ public class ArgazkiakPantailaratu {
 			for (Photoset photoset : bildumak) {
 				String id = photoset.getId();
 				String title = photoset.getTitle();
-				String secret = photoset.getSecret();
 				int photoCount = photoset.getPhotoCount();
 
-				System.out.println("Title:" + title + " Secret:" + secret + " Count:" + photoCount);
+				System.out.println("Biduma: " + title +  " - ArgazkiCount: " + photoCount);
+
+				PhotoList<Photo> col;
+				int PHOTOSPERPAGE = photoCount;
+				int HOWMANYPAGES;
+				if (photoCount>10)
+					HOWMANYPAGES = (int) Math.ceil(photoCount / 10);
+				else
+					HOWMANYPAGES = 1;
+				
+				for (int page = 0; page <= HOWMANYPAGES; page++) {
+					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
+
+					for (Photo argazkia : col) {
+						//saveImage(argazkia);
+						System.out.println(argazkia.getTitle() + ": ");
+						System.out.println(argazkia.getDescription() + ": ");
+						System.out.println(argazkia.getDateAdded() + ": ");
+						System.out.println(argazkia.getDatePosted() + ": ");
+						System.out.println(argazkia.getDateTaken() + ": ");
+						System.out.println(argazkia.getGeoData() + ": ");
+						System.out.println(argazkia.getTags());
+					}
+				}
+			}
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void argazkiakGorde() {
+
+		String userId = properties.getProperty("nsid");
+
+		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
+		Photosets photosets;
+		try {
+			photosets = photosetsInterface.getList(userId);
+
+			Collection<Photoset> bildumak = photosets.getPhotosets();
+
+			for (Photoset photoset : bildumak) {
+				String id = photoset.getId();
+				int photoCount = photoset.getPhotoCount();
 
 				PhotoList<Photo> col;
 				int PHOTOSPERPAGE = photoCount;
@@ -93,13 +135,6 @@ public class ArgazkiakPantailaratu {
 
 					for (Photo argazkia : col) {
 						saveImage(argazkia);
-						System.out.println(argazkia.getTitle() + ": ");
-						System.out.println(argazkia.getDescription() + ": ");
-						System.out.println(argazkia.getDateAdded() + ": ");
-						System.out.println(argazkia.getDatePosted() + ": ");
-						System.out.println(argazkia.getDateTaken() + ": ");
-						System.out.println(argazkia.getGeoData() + ": ");
-						System.out.println(argazkia.getTags());
 					}
 				}
 			}
