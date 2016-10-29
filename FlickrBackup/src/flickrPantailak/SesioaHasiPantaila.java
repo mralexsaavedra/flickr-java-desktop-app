@@ -127,7 +127,8 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 		if (emailText.getText().equals(datuak.get(0))
 				&& Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())) {
 			pantailaNagusia.dispose();
-			new PantailaNagusia();
+			PantailaNagusia nagusia = new PantailaNagusia();
+			nagusia.eraikiFrame();
 		} else {
 			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
