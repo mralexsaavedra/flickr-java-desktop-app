@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,8 +20,17 @@ public class BildumakUI extends JPanel{
 
 	public BildumakUI() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		lortuBildumak();
+	}
+	
+	public static void main(String[] args) {
+		JFrame frame = new JFrame();
+        frame.setSize(400, 300);
+		BildumakUI bUI = new BildumakUI();
+		bUI.lortuBildumak();
+        frame.getContentPane().add(bUI, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 	}
 
 	public void lortuBildumak() {
@@ -39,18 +47,5 @@ public class BildumakUI extends JPanel{
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
-		frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-		
-		BildumakUI bUI = new BildumakUI();
-		
-		frame.getContentPane().add(bUI, BorderLayout.CENTER);
-	}
-	
 	
 }

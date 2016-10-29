@@ -79,8 +79,6 @@ public class Bildumak {
 					res[1] = bilduma.getDescription();
 					res[2] = String.valueOf(bilduma.getPhotoCount());
 					emaitza.add(res);
-					//System.out.print(bilduma.getTitle() +  ":");
-					//System.out.println(bilduma.getDescription());
 				}
 			} catch (FlickrException e) {
 				e.printStackTrace();

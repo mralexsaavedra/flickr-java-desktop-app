@@ -3,7 +3,9 @@ package flickrJava;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,13 +62,15 @@ public class Argazkiak {
 		System.exit(0);
 	}
 
-	public void showPhotos() {
+	public  List<String[]> showPhotos() {
 
 		String userId = properties.getProperty("nsid");
-		// String secret = properties.getProperty("secret");
 
 		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
 		Photosets photosets;
+		
+		List<String[]> emaitza = new ArrayList<String[]>();
+
 		try {
 			photosets = photosetsInterface.getList(userId);
 
@@ -74,10 +78,7 @@ public class Argazkiak {
 
 			for (Photoset photoset : bildumak) {
 				String id = photoset.getId();
-				String title = photoset.getTitle();
 				int photoCount = photoset.getPhotoCount();
-
-				System.out.println("Biduma: " + title +  " - ArgazkiCount: " + photoCount);
 
 				PhotoList<Photo> col;
 				int PHOTOSPERPAGE = photoCount;
@@ -91,20 +92,22 @@ public class Argazkiak {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
-						//saveImage(argazkia);
-						System.out.println(argazkia.getTitle() + ": ");
-						System.out.println(argazkia.getDescription() + ": ");
-						System.out.println(argazkia.getDateAdded() + ": ");
-						System.out.println(argazkia.getDatePosted() + ": ");
-						System.out.println(argazkia.getDateTaken() + ": ");
-						System.out.println(argazkia.getGeoData() + ": ");
-						System.out.println(argazkia.getTags());
+						String[] res = new String[1];
+						res[0] = argazkia.getTitle();
+						//res[1] = argazkia.getDescription();
+						//res[2] = argazkia.getDateAdded().toString();
+						//res[3] = argazkia.getDatePosted().toString();
+						//res[4] = argazkia.getDateTaken().toString();
+						//res[5] = argazkia.getGeoData().toString();
+						//res[6] = argazkia.getTags().toString();
+						emaitza.add(res);
 					}
 				}
 			}
 		} catch (FlickrException e) {
 			e.printStackTrace();
 		}
+		return emaitza;
 	}
 	
 	public void argazkiakGorde() {
