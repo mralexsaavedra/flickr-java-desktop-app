@@ -1,4 +1,4 @@
-package probak;
+package probakTaulak;
 
 import javax.swing.JInternalFrame;
 
