@@ -29,7 +29,7 @@ public class PantailaNagusia extends JFrame{
 	public PantailaNagusia() {
 		this.setTitle("FlickrBackup");
 		this.setJMenuBar(createMenuBar());
-		this.getContentPane().add(new TreeDemo(), BorderLayout.WEST);
+		this.getContentPane().add(new TreeDemo(), BorderLayout.CENTER);
 	}
 
 	public static void main(String[] args) {
@@ -54,13 +54,18 @@ public class PantailaNagusia extends JFrame{
 		JMenu menu = new JMenu("Flickr");
 		menu.setMnemonic(KeyEvent.VK_D);
 		menuBar.add(menu);
-
+		
 		// 1. zutabearen 1. aukera
+		JMenuItem pantailaNagusiaMenuItem = new JMenuItem("Pantaila Nagusia");
+		pantailaNagusiaMenuItem.addActionListener(actionListener -> this.eraikiFrame());
+		menu.add(pantailaNagusiaMenuItem);
+
+		// 1. zutabearen 2. aukera
 		JMenuItem logoutMenuItem = new JMenuItem("Logout");
 		logoutMenuItem.addActionListener(actionListener -> this.logout());
 		menu.add(logoutMenuItem);
 
-		// 1. zutabearen 2 aukera
+		// 1. zutabearen 3. aukera
 		JMenuItem menuItem = new JMenuItem("Quit");
 		menuItem.setMnemonic(KeyEvent.VK_Q);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.ALT_MASK));
@@ -101,7 +106,6 @@ public class PantailaNagusia extends JFrame{
 
 		// 4. zutabearen 1. aukera
 		JMenuItem euskeraMenuItem = new JMenuItem("Euskera");
-		euskeraMenuItem.addActionListener(actionListener -> this.eraiki());
 		hizkuntzaMenua.add(euskeraMenuItem);
 
 		// 4. zutabearen 2. aukera
@@ -121,20 +125,6 @@ public class PantailaNagusia extends JFrame{
 	}
 	
 	private void bildumakEraiki(){
-		BildumakUI bUI = new BildumakUI();
-		bUI.lortuBildumak();
-		getContentPane().add(bUI, BorderLayout.CENTER);
-		eraikiFrame();
-	}
-	
-	private void argazkiakEraiki(){
-		ArgazkiakUI aUI = new ArgazkiakUI();
-		aUI.lortuArgazkiak();
-		getContentPane().add(aUI, BorderLayout.CENTER);
-		eraikiFrame();
-	}
-	
-	private void eraiki(){
 		desktop = new JDesktopPane();
 		this.setContentPane(desktop);
         desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
@@ -145,6 +135,13 @@ public class PantailaNagusia extends JFrame{
 			internalFrame.setSelected(true);
         } catch (java.beans.PropertyVetoException e) {}
 		internalFrame.setVisible(true);
+	}
+	
+	private void argazkiakEraiki(){
+		ArgazkiakUI aUI = new ArgazkiakUI();
+		aUI.lortuArgazkiak();
+		getContentPane().add(aUI, BorderLayout.CENTER);
+		eraikiFrame();
 	}
 	
 	

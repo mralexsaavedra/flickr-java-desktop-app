@@ -63,21 +63,20 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		// Create the HTML viewing pane.
 		htmlPane = new JEditorPane();
 		htmlPane.setEditable(false);
-		initHelp();
+		//initHelp();
 		JScrollPane htmlView = new JScrollPane(htmlPane);
 
 		// Add the scroll panes to a split pane.
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setTopComponent(treeView);
 		splitPane.setBottomComponent(htmlView);
 
 		Dimension minimumSize = new Dimension(100, 50);
 		htmlView.setMinimumSize(minimumSize);
 		treeView.setMinimumSize(minimumSize);
-		splitPane.setDividerLocation(100);
+		splitPane.setDividerLocation(200);
 		splitPane.setPreferredSize(new Dimension(500, 300));
 
-		// Add the split pane to this panel.
 		add(splitPane);
 	}
 
@@ -136,7 +135,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		try {
 			if (url != null) {
 				htmlPane.setPage(url);
-			} else { // null url
+			} else { 
 				htmlPane.setText("File Not Found");
 				if (DEBUG) {
 					System.out.println("Attempted to display a null URL.");
@@ -168,10 +167,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		 
 	}
 
-	/**
-	 * Create the GUI and show it. For thread safety, this method should be
-	 * invoked from the event dispatch thread.
-	 */
+
 	private static void createAndShowGUI() {
 		if (useSystemLookAndFeel) {
 			try {
