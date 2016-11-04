@@ -22,7 +22,7 @@ import com.flickr4java.flickr.photosets.Photoset;
 
 import flickrJava.Bildumak;
 
-public class TreeDemo extends JPanel implements TreeSelectionListener {
+public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	/**
 	 * 
 	 */
@@ -40,7 +40,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 	// Optionally set the look and feel.
 	private static boolean useSystemLookAndFeel = false;
 
-	public TreeDemo() {
+	public Zuhaitza() {
 		super(new GridLayout(1, 0));
 
 		// Create the nodes.
@@ -190,7 +190,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Add content to the window.
-		frame.add(new TreeDemo());
+		frame.add(new Zuhaitza());
 
 		// Display the window.
 		frame.pack();

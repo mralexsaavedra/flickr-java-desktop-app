@@ -15,7 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import probakTaulak.MyInternalFrame;
-import probakZuhaitza.TreeDemo;
+import probakZuhaitza.Zuhaitza;
 
 
 public class PantailaNagusia extends JFrame{
@@ -29,7 +29,7 @@ public class PantailaNagusia extends JFrame{
 	public PantailaNagusia() {
 		this.setTitle("FlickrBackup");
 		this.setJMenuBar(createMenuBar());
-		this.getContentPane().add(new TreeDemo(), BorderLayout.CENTER);
+		this.getContentPane().add(new Zuhaitza(), BorderLayout.CENTER);
 	}
 
 	public static void main(String[] args) {

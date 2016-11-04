@@ -39,7 +39,11 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+
+import flickrJava.Bildumak;
+
 import java.awt.Dimension;
+import java.util.List;
 
 public class TableFilterDemo extends JPanel {
     /**
@@ -149,23 +153,23 @@ public class TableFilterDemo extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		
-		private String[] columnNames = {"First Name",
-                                        "Last Name",
-                                        "Sport",
-                                        "# of Years",
-                                        "Vegetarian"};
-        private Object[][] data = {
-	    {"Kathy", "Smith",
-	     "Snowboarding", new Integer(5), new Boolean(false)},
-	    {"John", "Doe",
-	     "Rowing", new Integer(3), new Boolean(true)},
-	    {"Sue", "Black",
-	     "Knitting", new Integer(2), new Boolean(false)},
-	    {"Jane", "White",
-	     "Speed reading", new Integer(20), new Boolean(true)},
-	    {"Joe", "Brown",
-	     "Pool", new Integer(10), new Boolean(false)}
-        };
+		/*private String[] columnNames = {"First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+		private Object[][] data = {
+				{"Kathy", "Smith", "Snowboarding", new Integer(5), new Boolean(false)},
+				{"John", "Doe", "Rowing", new Integer(3), new Boolean(true)},
+				{"Sue", "Black", "Knitting", new Integer(2), new Boolean(false)},
+				{"Jane", "White", "Speed reading", new Integer(20), new Boolean(true)},
+				{"Joe", "Brown", "Pool", new Integer(10), new Boolean(false)}
+		};*/
+		
+		private String[] columnNames = {"Titulua", "Deskripzioa", "ArgazkiCount"};
+		Bildumak t;
+		List<String[]> bildumak = t.showPhotosets();
+		private Object[][] data = {bildumak};
 
         public int getColumnCount() {
             return columnNames.length;
