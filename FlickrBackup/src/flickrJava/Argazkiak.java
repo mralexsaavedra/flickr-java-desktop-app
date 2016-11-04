@@ -61,7 +61,7 @@ public class Argazkiak {
 		}
 		System.exit(0);
 	}
-
+	
 	public  List<String[]> showPhotos() {
 
 		String userId = properties.getProperty("nsid");

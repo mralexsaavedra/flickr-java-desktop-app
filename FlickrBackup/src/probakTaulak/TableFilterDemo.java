@@ -144,7 +144,12 @@ public class TableFilterDemo extends JPanel {
 
 
     class MyTableModel extends AbstractTableModel {
-        private String[] columnNames = {"First Name",
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		private String[] columnNames = {"First Name",
                                         "Last Name",
                                         "Sport",
                                         "# of Years",

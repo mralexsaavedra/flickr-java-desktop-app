@@ -18,6 +18,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.flickr4java.flickr.photosets.Photoset;
+
 import flickrJava.Bildumak;
 
 public class TreeDemo extends JPanel implements TreeSelectionListener {
@@ -74,7 +76,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		Dimension minimumSize = new Dimension(100, 50);
 		htmlView.setMinimumSize(minimumSize);
 		treeView.setMinimumSize(minimumSize);
-		splitPane.setDividerLocation(200);
+		splitPane.setDividerLocation(300);
 		splitPane.setPreferredSize(new Dimension(500, 300));
 
 		add(splitPane);
@@ -150,9 +152,15 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		Bildumak t;
 		try {
 			t = new Bildumak();
-			List<String[]> emaitzak = t.showPhotosets();
-			for (String[] bilduma : emaitzak) {
-				top.add(new DefaultMutableTreeNode(bilduma[0]));
+			List<String[]> bildumak = t.showPhotosets();
+			for (String[] bilduma : bildumak) {
+				DefaultMutableTreeNode bildumaTreeNode = new DefaultMutableTreeNode(bilduma[0]);
+				top.add(bildumaTreeNode);
+				Photoset photoset = t.bildumaLortu(bilduma[0]);
+				List<String[]> argazkiak = t.bildumaBatenArgazkiakLortu(photoset);
+				for (String[] argazkia : argazkiak){
+					bildumaTreeNode.add(new DefaultMutableTreeNode(argazkia[0]));
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

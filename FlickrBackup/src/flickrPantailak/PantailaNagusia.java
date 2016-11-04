@@ -140,6 +140,7 @@ public class PantailaNagusia extends JFrame{
 	private void argazkiakEraiki(){
 		ArgazkiakUI aUI = new ArgazkiakUI();
 		aUI.lortuArgazkiak();
+		getContentPane().removeAll();
 		getContentPane().add(aUI, BorderLayout.CENTER);
 		eraikiFrame();
 	}
