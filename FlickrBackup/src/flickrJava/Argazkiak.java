@@ -55,7 +55,7 @@ public class Argazkiak {
 	public static void main(String[] args) {
 		try {
 			Argazkiak t = new Argazkiak();
-			t.showPhotos();
+			t.argazkiakGorde();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

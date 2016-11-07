@@ -6,8 +6,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -27,9 +30,8 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JEditorPane htmlPane;
+	private JPanel argazkiPanela;
 	private JTree tree;
-	private URL helpURL;
 	private static boolean DEBUG = false;
 
 	// Optionally play with line styles. Possible values are
@@ -62,19 +64,16 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		// Create the scroll pane and add the tree to it.
 		JScrollPane treeView = new JScrollPane(tree);
 
-		// Create the HTML viewing pane.
-		htmlPane = new JEditorPane();
-		htmlPane.setEditable(false);
-		//initHelp();
-		JScrollPane htmlView = new JScrollPane(htmlPane);
+		argazkiPanela = new JPanel();
+		JScrollPane argazkiView = new JScrollPane(argazkiPanela);
 
 		// Add the scroll panes to a split pane.
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setTopComponent(treeView);
-		splitPane.setBottomComponent(htmlView);
+		splitPane.setBottomComponent(argazkiView);
 
 		Dimension minimumSize = new Dimension(100, 50);
-		htmlView.setMinimumSize(minimumSize);
+		argazkiView.setMinimumSize(minimumSize);
 		treeView.setMinimumSize(minimumSize);
 		splitPane.setDividerLocation(300);
 		splitPane.setPreferredSize(new Dimension(500, 300));
@@ -94,31 +93,12 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		System.out.println(nodeInfo);
 		
 		if (node.isLeaf()) {
-			BookInfo book = (BookInfo) nodeInfo;
-			displayURL(book.bookURL);
-			if (DEBUG) {
-				System.out.print(book.bookURL + ":  \n    ");
-			}
-		} else {
-			displayURL(helpURL);
-		}
+			ArgazkiaInfo argazkiInfo = (ArgazkiaInfo) nodeInfo;
+			ImageIcon argazkia = new ImageIcon(argazkiInfo);
+			argazkia.paintIcon(argazkiPanela, getGraphics(), WIDTH, HEIGHT);
+		} 
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
-		}
-	}
-
-	private void displayURL(URL url) {
-		try {
-			if (url != null) {
-				htmlPane.setPage(url);
-			} else { 
-				htmlPane.setText("File Not Found");
-				if (DEBUG) {
-					System.out.println("Attempted to display a null URL.");
-				}
-			}
-		} catch (IOException e) {
-			System.err.println("Attempted to read a bad URL: " + url);
 		}
 	}
 
