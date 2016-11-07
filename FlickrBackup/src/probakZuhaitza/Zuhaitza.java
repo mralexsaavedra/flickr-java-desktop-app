@@ -3,14 +3,10 @@ package probakZuhaitza;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -94,8 +90,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		
 		if (node.isLeaf()) {
 			ArgazkiaInfo argazkiInfo = (ArgazkiaInfo) nodeInfo;
-			ImageIcon argazkia = new ImageIcon(argazkiInfo);
-			argazkia.paintIcon(argazkiPanela, getGraphics(), WIDTH, HEIGHT);
+			ImageIcon argazkia = new ImageIcon("pics" + argazkiInfo.azgarkiIzena + "_o.jpg");
 		} 
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
