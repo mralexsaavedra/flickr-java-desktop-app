@@ -90,6 +90,9 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			return;
 
 		Object nodeInfo = node.getUserObject();
+		
+		System.out.println(nodeInfo);
+		
 		if (node.isLeaf()) {
 			BookInfo book = (BookInfo) nodeInfo;
 			displayURL(book.bookURL);
@@ -102,35 +105,6 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
 		}
-	}
-
-	private class BookInfo {
-		public String bookName;
-		public URL bookURL;
-
-		public BookInfo(String book, String filename) {
-			bookName = book;
-			bookURL = getClass().getResource(filename);
-			if (bookURL == null) {
-				System.err.println("Couldn't find file: " + filename);
-			}
-		}
-
-		public String toString() {
-			return bookName;
-		}
-	}
-
-	private void initHelp() {
-		String s = "TreeDemoHelp.html";
-		helpURL = getClass().getResource(s);
-		if (helpURL == null) {
-			System.err.println("Couldn't open help file: " + s);
-		} else if (DEBUG) {
-			System.out.println("Help URL is " + helpURL);
-		}
-
-		displayURL(helpURL);
 	}
 
 	private void displayURL(URL url) {
@@ -165,14 +139,6 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-
-		/*DefaultMutableTreeNode book = null;
-		book = new DefaultMutableTreeNode(new BookInfo
-	            ("The Java Tutorial: A Short Course on the Basics",
-	            "tutorial.html"));
-	     category.add(book);*/
-		 
 	}
 
 

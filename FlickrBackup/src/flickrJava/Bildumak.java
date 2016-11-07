@@ -116,7 +116,7 @@ public class Bildumak {
 		else
 			HOWMANYPAGES = 1;
 		
-		for (int page = 0; page <= HOWMANYPAGES; page++) {
+		for (int page = 1; page <= HOWMANYPAGES; page++) {
 			try {
 				col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 				for (Photo argazkia : col) {

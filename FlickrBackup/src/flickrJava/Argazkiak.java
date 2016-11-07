@@ -88,7 +88,7 @@ public class Argazkiak {
 				else
 					HOWMANYPAGES = 1;
 				
-				for (int page = 0; page <= HOWMANYPAGES; page++) {
+				for (int page = 1; page <= HOWMANYPAGES; page++) {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
@@ -111,7 +111,6 @@ public class Argazkiak {
 	}
 	
 	public void argazkiakGorde() {
-
 		String userId = properties.getProperty("nsid");
 
 		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
@@ -133,7 +132,7 @@ public class Argazkiak {
 				else
 					HOWMANYPAGES = 1;
 				
-				for (int page = 0; page <= HOWMANYPAGES; page++) {
+				for (int page = 1; page <= HOWMANYPAGES; page++) {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
