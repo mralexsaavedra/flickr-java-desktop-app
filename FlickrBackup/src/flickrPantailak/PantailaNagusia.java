@@ -15,7 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import probakTaulak.MyInternalFrame;
-import probakZuhaitza.Zuhaitza;
+import zuhaitza.Zuhaitza;
 
 
 public class PantailaNagusia extends JFrame{

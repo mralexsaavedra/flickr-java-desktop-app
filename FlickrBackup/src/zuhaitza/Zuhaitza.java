@@ -1,11 +1,14 @@
-package probakZuhaitza;
+package zuhaitza;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -26,6 +29,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private BufferedImage img = null;
 	private JPanel argazkiPanela;
 	private JTree tree;
 	private static boolean DEBUG = false;
@@ -90,12 +94,24 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		
 		if (node.isLeaf()) {
 			ArgazkiaInfo argazkiInfo = (ArgazkiaInfo) nodeInfo;
-			ImageIcon argazkia = new ImageIcon("pics" + argazkiInfo.azgarkiIzena + "_o.jpg");
+			irakurriArgazkia(argazkiInfo);
 		} 
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
 		}
 	}
+	
+	public void irakurriArgazkia(ArgazkiaInfo argazkiInfo){
+		try {
+            img = ImageIO.read(new File(argazkiInfo.azgarkiIzena));
+        } catch (IOException ex) {
+            System.out.println("No se pudo leer la imagen");
+        }
+	}
+	
+	 public void paint(Graphics g){
+	        g.drawImage(img, 10, 20,getWidth()-10, getHeight()-10, null);
+	 }
 
 	private void createNodes(DefaultMutableTreeNode top) {
 		Bildumak t;
@@ -127,7 +143,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		}
 
 		// Create and set up the window.
-		JFrame frame = new JFrame("TreeDemo");
+		JFrame frame = new JFrame("FlickrBackup");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Add content to the window.

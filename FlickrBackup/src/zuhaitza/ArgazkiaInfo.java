@@ -1,4 +1,4 @@
-package probakZuhaitza;
+package zuhaitza;
 
 public class ArgazkiaInfo {
 	public String azgarkiIzena;
