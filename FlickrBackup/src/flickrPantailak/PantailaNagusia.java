@@ -66,7 +66,7 @@ public class PantailaNagusia extends JFrame{
 		menu.add(logoutMenuItem);
 
 		// 1. zutabearen 3. aukera
-		JMenuItem menuItem = new JMenuItem("Quit");
+		JMenuItem menuItem = new JMenuItem("Irten");
 		menuItem.setMnemonic(KeyEvent.VK_Q);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.ALT_MASK));
 		menuItem.addActionListener(actionListener -> System.exit(0));

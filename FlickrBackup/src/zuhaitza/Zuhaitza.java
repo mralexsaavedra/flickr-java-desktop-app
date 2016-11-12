@@ -1,15 +1,14 @@
 package zuhaitza;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -20,8 +19,10 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photosets.Photoset;
 
+import flickrJava.Argazkiak;
 import flickrJava.Bildumak;
 
 public class Zuhaitza extends JPanel implements TreeSelectionListener {
@@ -29,7 +30,6 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private BufferedImage img = null;
 	private JPanel argazkiPanela;
 	private JTree tree;
 	private static boolean DEBUG = false;
@@ -93,25 +93,20 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		System.out.println(nodeInfo);
 		
 		if (node.isLeaf()) {
-			ArgazkiaInfo argazkiInfo = (ArgazkiaInfo) nodeInfo;
-			irakurriArgazkia(argazkiInfo);
+			Photo argazkia = (Photo) nodeInfo;
+			irakurriArgazkia(argazkia);
 		} 
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
 		}
 	}
 	
-	public void irakurriArgazkia(ArgazkiaInfo argazkiInfo){
-		try {
-            img = ImageIO.read(new File(argazkiInfo.azgarkiIzena));
-        } catch (IOException ex) {
-            System.out.println("No se pudo leer la imagen");
-        }
+	public void irakurriArgazkia(Photo p){
+		String path = "pics" + File.separator;
+		String cleanTitle = Argazkiak.convertToFileSystemChar(p.getTitle());
+		String orgFile = new String(path + File.separator + cleanTitle + "_" + p.getId() + "_o." + p.getOriginalFormat());
+		argazkiPanela.add(new JLabel(new ImageIcon(orgFile)));
 	}
-	
-	 public void paint(Graphics g){
-	        g.drawImage(img, 10, 20,getWidth()-10, getHeight()-10, null);
-	 }
 
 	private void createNodes(DefaultMutableTreeNode top) {
 		Bildumak t;
