@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import flickrJava.Argazkiak;
 import probakTaulak.MyInternalFrame;
 import zuhaitza.Zuhaitza;
 
@@ -78,12 +80,12 @@ public class PantailaNagusia extends JFrame{
 
 		// 2. zutabeare 1 aukera
 		JMenuItem argazkiakJaitsiMenuItem = new JMenuItem("Argazkiak jaitsi");
-		argazkiakJaitsiMenuItem.addActionListener(actionListener -> System.out.println("ArgazkiakPantailaratu klasea"));
+		argazkiakJaitsiMenuItem.addActionListener(actionListener -> this.argazkiakJaitsi());
 		flickrMenua.add(argazkiakJaitsiMenuItem);
 
 		// 2. zutabearen 2. aukera
 		JMenuItem argazkiakIgoMenuItem = new JMenuItem("Argazkiak igo");
-		argazkiakIgoMenuItem.addActionListener(actionListener -> System.out.println("ArgazkiakIgo klasea"));
+		argazkiakIgoMenuItem.addActionListener(actionListener -> this.argazkiakIgo());
 		flickrMenua.add(argazkiakIgoMenuItem);
 
 		// 3. zutabea
@@ -143,6 +145,21 @@ public class PantailaNagusia extends JFrame{
 		getContentPane().removeAll();
 		getContentPane().add(aUI, BorderLayout.CENTER);
 		eraikiFrame();
+	}
+	
+	private void argazkiakJaitsi(){
+		Argazkiak argazkiakJaitsi;
+		try {
+			argazkiakJaitsi = new Argazkiak();
+			argazkiakJaitsi.argazkiakGorde();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void argazkiakIgo(){
+		ArgazkiakIgo argazkiakIgo = new ArgazkiakIgo();
+		argazkiakIgo.eraikiFrame();
 	}
 	
 	

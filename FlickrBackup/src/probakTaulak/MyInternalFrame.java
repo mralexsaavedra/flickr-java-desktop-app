@@ -18,9 +18,9 @@ public class MyInternalFrame extends JInternalFrame {
               true);//iconifiable
 
         setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
-        TableFilterDemo newContentPane = new TableFilterDemo();
+        /*TableFilterDemo newContentPane = new TableFilterDemo();
         newContentPane.setOpaque(true);
-        setContentPane(newContentPane);
+        setContentPane(newContentPane);*/
         pack();
     }
 }
