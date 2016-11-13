@@ -13,9 +13,9 @@ import flickrJava.Argazkiak;
 public class ArgazkienTaula extends JPanel{
 	
 	private static final long serialVersionUID = 1L;
-	private Object[][] data = new Object[30][1];
+	private Object[][] data = new Object[30][2];
 	//private String[] columnNames = { "Titulua", "Deskripzioa", "Data1","Data2","Data3","Data4","Etiketa"};
-	private String[] columnNames = {"Titulua"};
+	private String[] columnNames = {"Titulua","Bilduma"};
 	private JTable taula;
 	private JScrollPane scrollPanela;
 	
@@ -34,6 +34,7 @@ public class ArgazkienTaula extends JPanel{
 			for (String[] argazkia : emaitzak) {
 				for (int errenkada = 0; errenkada < data.length; errenkada++) {
 					data[errenkada][0] = argazkia[0];
+					data[errenkada][1] = argazkia[1];
 					/*data[errenkada][1] = argazkia[1];
 					data[errenkada][2] = argazkia[2];
 					data[errenkada][3] = argazkia[3];

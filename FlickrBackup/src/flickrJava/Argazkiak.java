@@ -92,8 +92,9 @@ public class Argazkiak {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
-						String[] res = new String[1];
+						String[] res = new String[2];
 						res[0] = argazkia.getTitle();
+						res[1] = photoset.getTitle();
 						/*res[1] = argazkia.getDescription();
 						res[2] = argazkia.getDateAdded().toString();
 						res[3] = argazkia.getDatePosted().toString();

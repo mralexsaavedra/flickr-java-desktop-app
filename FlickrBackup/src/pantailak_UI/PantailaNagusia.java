@@ -7,11 +7,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import flickrJava.Argazkiak;
@@ -61,8 +63,8 @@ public class PantailaNagusia extends JFrame{
 		menuBar.add(menu);
 		
 		// 1. zutabearen 1. aukera
-		JMenuItem pantailaNagusiaMenuItem = new JMenuItem("Pantaila Nagusia");
-		pantailaNagusiaMenuItem.addActionListener(actionListener -> this.eraikiFrame());
+		JMenuItem pantailaNagusiaMenuItem = new JMenuItem("Zuhaitza");
+		pantailaNagusiaMenuItem.addActionListener(actionListener -> this.zuhaitzaEraiki());
 		menu.add(pantailaNagusiaMenuItem);
 
 		// 1. zutabearen 2. aukera
@@ -159,7 +161,8 @@ public class PantailaNagusia extends JFrame{
 		Argazkiak argazkiakJaitsi;
 		try {
 			argazkiakJaitsi = new Argazkiak();
-			argazkiakJaitsi.argazkiakGorde();
+			argazkiakJaitsi.showPhotos();
+			JOptionPane.showMessageDialog(null, "Argazkiak ondo jaitsi egin dira", "ABISUA", JOptionPane.DEFAULT_OPTION,new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
