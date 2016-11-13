@@ -1,4 +1,4 @@
-package flickrPantailak;
+package pantailak_UI;
 
 import java.awt.*;
 import java.util.Vector;

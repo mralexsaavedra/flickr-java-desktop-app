@@ -1,4 +1,4 @@
-package probakTaulak;
+package pantailak_UI;
 
 import javax.swing.JInternalFrame;
 
@@ -18,9 +18,5 @@ public class MyInternalFrame extends JInternalFrame {
               true);//iconifiable
 
         setLocation(xOffset*openFrameCount, yOffset*openFrameCount);
-        /*TableFilterDemo newContentPane = new TableFilterDemo();
-        newContentPane.setOpaque(true);
-        setContentPane(newContentPane);*/
-        pack();
     }
 }

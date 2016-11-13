@@ -1,4 +1,4 @@
-package probakTaulak;
+package taulak_UI;
 
 import javax.swing.*;
 import javax.swing.SpringLayout;

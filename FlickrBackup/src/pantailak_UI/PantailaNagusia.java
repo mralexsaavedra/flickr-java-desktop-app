@@ -1,6 +1,5 @@
-package flickrPantailak;
+package pantailak_UI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -16,8 +15,9 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import flickrJava.Argazkiak;
-import probakTaulak.MyInternalFrame;
-import zuhaitza.Zuhaitza;
+import taulak_UI.ArgazkienTaula;
+import taulak_UI.BildumenTaula;
+import zuhaitza_UI.Zuhaitza;
 
 
 public class PantailaNagusia extends JFrame{
@@ -31,7 +31,11 @@ public class PantailaNagusia extends JFrame{
 	public PantailaNagusia() {
 		this.setTitle("FlickrBackup");
 		this.setJMenuBar(createMenuBar());
-		this.getContentPane().add(new Zuhaitza(), BorderLayout.CENTER);
+		desktop = new JDesktopPane();
+		this.setContentPane(desktop);
+        desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+		desktop.setBackground(Color.LIGHT_GRAY);
+		this.zuhaitzaEraiki();
 	}
 
 	public static void main(String[] args) {
@@ -40,7 +44,6 @@ public class PantailaNagusia extends JFrame{
 	}
 
 	public void eraikiFrame() {
-		// this.setSize(500, 400);
 		int inset = 50;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setBounds(inset, inset, screenSize.width - inset * 2, screenSize.height - inset * 2);
@@ -94,12 +97,12 @@ public class PantailaNagusia extends JFrame{
 
 		// 3. zutabearen 1. aukera
 		JMenuItem bildumakMenuItem = new JMenuItem("Bildumak Pantailaratu");
-		bildumakMenuItem.addActionListener(actionListener -> this.bildumakEraiki());
+		bildumakMenuItem.addActionListener(actionListener -> this.bildumakPantailaratu());
 		ikusiMenua.add(bildumakMenuItem);
 
 		// 3. zutabearen 2. aukera
 		JMenuItem argazkiakMenuItem = new JMenuItem("Argazkiak Pantailaratu");
-		argazkiakMenuItem.addActionListener(actionListener -> this.argazkiakEraiki());
+		argazkiakMenuItem.addActionListener(actionListener -> this.argazkiakPantailaratu());
 		ikusiMenua.add(argazkiakMenuItem);
 
 		// 4. zutabea
@@ -126,25 +129,30 @@ public class PantailaNagusia extends JFrame{
 		new SesioaItxiPantaila().panelaEraikitzen();
 	}
 	
-	private void bildumakEraiki(){
-		desktop = new JDesktopPane();
-		this.setContentPane(desktop);
-        desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+	private void argazkiakPantailaratu(){
 		MyInternalFrame internalFrame = new MyInternalFrame();
-		desktop.setBackground(Color.LIGHT_GRAY);
 		desktop.add(internalFrame);
+		ArgazkienTaula taula = new ArgazkienTaula();
+		taula.setOpaque(true);
+        internalFrame.setContentPane(taula);
+        internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
         } catch (java.beans.PropertyVetoException e) {}
 		internalFrame.setVisible(true);
 	}
 	
-	private void argazkiakEraiki(){
-		ArgazkiakUI aUI = new ArgazkiakUI();
-		aUI.lortuArgazkiak();
-		getContentPane().removeAll();
-		getContentPane().add(aUI, BorderLayout.CENTER);
-		eraikiFrame();
+	private void bildumakPantailaratu(){
+		MyInternalFrame internalFrame = new MyInternalFrame();
+		desktop.add(internalFrame);
+		BildumenTaula taula = new BildumenTaula();
+		taula.setOpaque(true);
+        internalFrame.setContentPane(taula);
+        internalFrame.pack();
+		try {
+			internalFrame.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {}
+		internalFrame.setVisible(true);
 	}
 	
 	private void argazkiakJaitsi(){
@@ -158,9 +166,25 @@ public class PantailaNagusia extends JFrame{
 	}
 	
 	private void argazkiakIgo(){
-		ArgazkiakIgo argazkiakIgo = new ArgazkiakIgo();
-		argazkiakIgo.eraikiFrame();
+		MyInternalFrame internalFrame = new MyInternalFrame();
+		desktop.add(internalFrame);
+        internalFrame.setSize(300,300);
+		internalFrame.add(new ArgazkiakIgo());
+		try {
+			internalFrame.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {}
+		internalFrame.setVisible(true);
 	}
 	
+	private void zuhaitzaEraiki(){
+		MyInternalFrame internalFrame = new MyInternalFrame();
+		desktop.add(internalFrame);
+        internalFrame.setSize(1000,500);
+		internalFrame.add(new Zuhaitza());
+		try {
+			internalFrame.setSelected(true);
+        } catch (java.beans.PropertyVetoException e) {}
+		internalFrame.setVisible(true);
+	}
 	
 }

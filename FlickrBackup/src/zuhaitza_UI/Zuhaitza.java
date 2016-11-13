@@ -1,4 +1,4 @@
-package zuhaitza;
+package zuhaitza_UI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -34,26 +34,20 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	private JTree tree;
 	private static boolean DEBUG = false;
 
-	// Optionally play with line styles. Possible values are
-	// "Angled" (the default), "Horizontal", and "None".
 	private static boolean playWithLineStyle = false;
 	private static String lineStyle = "Horizontal";
 
-	// Optionally set the look and feel.
 	private static boolean useSystemLookAndFeel = false;
 
 	public Zuhaitza() {
 		super(new GridLayout(1, 0));
 
-		// Create the nodes.
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Flickr");
 		createNodes(top);
 
-		// Create a tree that allows one selection at a time.
 		tree = new JTree(top);
 		tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-		// Listen for when the selection changes.
 		tree.addTreeSelectionListener(this);
 
 		if (playWithLineStyle) {
@@ -61,13 +55,11 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			tree.putClientProperty("JTree.lineStyle", lineStyle);
 		}
 
-		// Create the scroll pane and add the tree to it.
 		JScrollPane treeView = new JScrollPane(tree);
 
 		argazkiPanela = new JPanel();
 		JScrollPane argazkiView = new JScrollPane(argazkiPanela);
 
-		// Add the scroll panes to a split pane.
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setTopComponent(treeView);
 		splitPane.setBottomComponent(argazkiView);
@@ -137,21 +129,16 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			}
 		}
 
-		// Create and set up the window.
 		JFrame frame = new JFrame("FlickrBackup");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// Add content to the window.
 		frame.add(new Zuhaitza());
 
-		// Display the window.
 		frame.pack();
 		frame.setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		// Schedule a job for the event dispatch thread:
-		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();

@@ -64,7 +64,7 @@ public class Bildumak {
         System.exit(0);
     }
 
-	public List<String[]> showPhotosets() {
+	public  List<String[]> showPhotosets() {
 		   PhotosetsInterface photosetsInterface  = f.getPhotosetsInterface();
 			
 			String userId = properties.getProperty("nsid");
