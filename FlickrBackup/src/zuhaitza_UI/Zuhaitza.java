@@ -80,7 +80,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		if (node == null)
 			return;
 
-		Object nodeInfo = node.getUserObject();
+		Object nodeInfo =  node.getUserObject();
 		
 		System.out.println(nodeInfo);
 		
