@@ -15,7 +15,7 @@ public class BildumenTaula extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Object[][] data = new Object[10][3];
+	private Object[][] data;
 	private String[] columnNames = { "Titulua", "Deskripzioa", "Argazki kopurua" };
 	private JTable taula;
 	private JScrollPane scrollPanela;
@@ -32,12 +32,11 @@ public class BildumenTaula extends JPanel{
 		try {
 			bildumak = new Bildumak();
 			List<String[]> emaitzak = bildumak.showPhotosets();
-			for (String[] bilduma : emaitzak) {
-				for (int errenkada = 0; errenkada < data.length; errenkada++) {
-					data[errenkada][0] = bilduma[0];
-					data[errenkada][1] = bilduma[1];
-					data[errenkada][2] = bilduma[2];
-				}
+			data = new Object[emaitzak.size()][3];
+			for (int errenkada = 0; errenkada < data.length; errenkada++) {
+					data[errenkada][0] = emaitzak.get(errenkada)[0];
+					data[errenkada][1] = emaitzak.get(errenkada)[1];
+					data[errenkada][2] = emaitzak.get(errenkada)[2];
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
