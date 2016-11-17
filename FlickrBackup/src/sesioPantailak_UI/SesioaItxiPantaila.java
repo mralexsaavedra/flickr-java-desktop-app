@@ -1,8 +1,11 @@
-package pantailak_UI;
+package sesioPantailak_UI;
 
 import java.awt.*;
 import java.util.Vector;
 import javax.swing.*;
+
+import pantailak_UI.PantailaNagusia;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

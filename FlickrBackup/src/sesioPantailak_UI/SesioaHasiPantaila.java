@@ -1,19 +1,17 @@
-package pantailak_UI;
+package sesioPantailak_UI;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
 
-public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyListener {
+import flickrJava.MD5;
+import kudeatzaileak.Kudeatzailea;
+import pantailak_UI.PantailaNagusia;
+
+public class SesioaHasiPantaila extends JPanel implements KeyListener {
 
 	/**
 	 * 
@@ -33,7 +31,6 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 	private JLabel pasahitzaLabel;
 	private JPasswordField pasahitzaText;
 	private JButton sartuBotoia;
-	private ArrayList<String> datuak;
 	private final int TAMAINA = 15;
 
 	public SesioaHasiPantaila() {
@@ -42,9 +39,7 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 		pantailaNagusia = new JFrame("FlickrBackup");
 		
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
-		
-		datuak = new ArrayList<String>();
-		
+				
 		hizkuntza = new JPanel();
 		elementuak = new Vector<String>();
 		elementuak.add("Euskara");
@@ -64,12 +59,18 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 		
 		sartuBotoia = new JButton("Sartu");
 				
-		sartuBotoia.addActionListener(this);
+		sartuBotoia.addActionListener(actionListener -> {
+			try {
+				this.berifikazioa();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 		emailText.addKeyListener(this);
 		pasahitzaText.addKeyListener(this);
 		
 		goikoPanela();
-		erdikoPanela();
+		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 		behekoPanela();
 	}
 
@@ -78,10 +79,6 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 		hizkuntza.add(hizkuntzak);
 		hizkuntza.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		pantailaNagusia.getContentPane().add(hizkuntza, BorderLayout.NORTH);
-	}
-
-	public void erdikoPanela() {
-		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 	}
 
 	public void behekoPanela() {
@@ -102,43 +99,37 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 		south.add(sartuBotoia);
 		pantailaNagusia.getContentPane().add(south, BorderLayout.SOUTH);
 	}
-
-	public void actionPerformed(ActionEvent e) {
-		berifikazioa();
-	}
-
-	public void fitxategienDatuakLortu() {
-		File fitxategia = new File("src/fitxategia.txt");
-		try {
-			BufferedReader bf = new BufferedReader(new FileReader(fitxategia));
-			String lerroa;
-			while ((lerroa = bf.readLine()) != null) {
-				datuak.add(lerroa.trim());
-			}
-			bf.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void berifikazioa() {
-		this.fitxategienDatuakLortu();
-		
-		if (emailText.getText().equals(datuak.get(0))
-				&& Arrays.equals(pasahitzaText.getPassword(), datuak.get(1).toCharArray())) {
-			pantailaNagusia.dispose();
-			PantailaNagusia nagusia = new PantailaNagusia();
-			nagusia.eraikiFrame();
-		} else {
-			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-
+	
 	public void panelaEraikitzen() {
 		pantailaNagusia.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pantailaNagusia.pack();
 		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
+	}
+
+	public void berifikazioa() throws Exception {
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getErabiltzaileak();
+		char[] pass = this.pasahitzaText.getPassword();
+		String passString = new String(pass);
+		
+		if (emailText.getText().isEmpty() || pass.length==0){
+			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		else{
+			MD5 md5 = new MD5();
+			for (String[] erabiltzaile : emaitzak){
+				if (emailText.getText().equals(erabiltzaile[0])) {
+					if (md5.MD5Hashing(passString).equals(erabiltzaile[1])){
+						pantailaNagusia.dispose();
+						PantailaNagusia nagusia = new PantailaNagusia();
+						nagusia.eraikiFrame();
+					}
+					else {
+						JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
+					}
+				}	
+			}
+		}
 	}
 
 	public static void main(String[] args) {
@@ -151,7 +142,11 @@ public class SesioaHasiPantaila extends JPanel implements ActionListener, KeyLis
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER)
-			berifikazioa();
+			try {
+				berifikazioa();
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 	}
 
 	public void keyReleased(KeyEvent e) {

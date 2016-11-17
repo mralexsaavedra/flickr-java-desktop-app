@@ -1,13 +1,12 @@
 package taulak_UI;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import flickrJava.Bildumak;
+import kudeatzaileak.Kudeatzailea;
 
 public class BildumenTaula extends JPanel{
 	
@@ -28,18 +27,12 @@ public class BildumenTaula extends JPanel{
 	}
 	
 	public void elementuakGehitu() {
-		Bildumak bildumak;
-		try {
-			bildumak = new Bildumak();
-			List<String[]> emaitzak = bildumak.showPhotosets();
-			data = new Object[emaitzak.size()][3];
-			for (int errenkada = 0; errenkada < data.length; errenkada++) {
-					data[errenkada][0] = emaitzak.get(errenkada)[0];
-					data[errenkada][1] = emaitzak.get(errenkada)[1];
-					data[errenkada][2] = emaitzak.get(errenkada)[2];
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak();
+		data = new Object[emaitzak.size()][3];
+		for (int errenkada = 0; errenkada < data.length; errenkada++) {
+				data[errenkada][0] = emaitzak.get(errenkada)[0];
+				data[errenkada][1] = emaitzak.get(errenkada)[1];
+				data[errenkada][2] = emaitzak.get(errenkada)[2];
 		}
 	}
 

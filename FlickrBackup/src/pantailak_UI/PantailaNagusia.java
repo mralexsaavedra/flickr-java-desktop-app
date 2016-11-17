@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -17,17 +16,18 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import flickrJava.Argazkiak;
+import flickrJava.Bildumak;
+import sesioPantailak_UI.SesioaItxiPantaila;
 import taulak_UI.ArgazkienTaula;
 import taulak_UI.BildumenTaula;
 import zuhaitza_UI.Zuhaitza;
 
-
-public class PantailaNagusia extends JFrame{
+public class PantailaNagusia extends JFrame {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private JDesktopPane desktop;
 
 	public PantailaNagusia() {
@@ -35,9 +35,8 @@ public class PantailaNagusia extends JFrame{
 		this.setJMenuBar(createMenuBar());
 		desktop = new JDesktopPane();
 		this.setContentPane(desktop);
-        desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
+		desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktop.setBackground(Color.LIGHT_GRAY);
-		this.zuhaitzaEraiki();
 	}
 
 	public static void main(String[] args) {
@@ -61,18 +60,34 @@ public class PantailaNagusia extends JFrame{
 		JMenu menu = new JMenu("Flickr");
 		menu.setMnemonic(KeyEvent.VK_D);
 		menuBar.add(menu);
-		
+
 		// 1. zutabearen 1. aukera
 		JMenuItem pantailaNagusiaMenuItem = new JMenuItem("Zuhaitza");
 		pantailaNagusiaMenuItem.addActionListener(actionListener -> this.zuhaitzaEraiki());
 		menu.add(pantailaNagusiaMenuItem);
 
 		// 1. zutabearen 2. aukera
+		JMenuItem sinkronizatuMenuItem = new JMenuItem("Sinkronizatu");
+		sinkronizatuMenuItem.addActionListener(actionListener -> {
+			try {
+				this.sinkronizatu();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+		menu.add(sinkronizatuMenuItem);
+		
+		// 1. zutabearen 3. aukera
+		JMenuItem argazkiakIgoMenuItem = new JMenuItem("Argazkiak igo");
+		argazkiakIgoMenuItem.addActionListener(actionListener -> this.argazkiakIgo());
+		menu.add(argazkiakIgoMenuItem);
+
+		// 1. zutabearen 4. aukera
 		JMenuItem logoutMenuItem = new JMenuItem("Logout");
 		logoutMenuItem.addActionListener(actionListener -> this.logout());
 		menu.add(logoutMenuItem);
 
-		// 1. zutabearen 3. aukera
+		// 1. zutabearen 5. aukera
 		JMenuItem menuItem = new JMenuItem("Irten");
 		menuItem.setMnemonic(KeyEvent.VK_Q);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Q, ActionEvent.ALT_MASK));
@@ -80,42 +95,28 @@ public class PantailaNagusia extends JFrame{
 		menu.add(menuItem);
 
 		// 2. zutabea
-		JMenu flickrMenua = new JMenu("Akzioak");
-		menuBar.add(flickrMenua);
-
-		// 2. zutabeare 1 aukera
-		JMenuItem argazkiakJaitsiMenuItem = new JMenuItem("Argazkiak jaitsi");
-		argazkiakJaitsiMenuItem.addActionListener(actionListener -> this.argazkiakJaitsi());
-		flickrMenua.add(argazkiakJaitsiMenuItem);
-
-		// 2. zutabearen 2. aukera
-		JMenuItem argazkiakIgoMenuItem = new JMenuItem("Argazkiak igo");
-		argazkiakIgoMenuItem.addActionListener(actionListener -> this.argazkiakIgo());
-		flickrMenua.add(argazkiakIgoMenuItem);
-
-		// 3. zutabea
 		JMenu ikusiMenua = new JMenu("Ikusi");
 		menuBar.add(ikusiMenua);
 
-		// 3. zutabearen 1. aukera
+		// 2. zutabearen 1. aukera
 		JMenuItem bildumakMenuItem = new JMenuItem("Bildumak Pantailaratu");
 		bildumakMenuItem.addActionListener(actionListener -> this.bildumakPantailaratu());
 		ikusiMenua.add(bildumakMenuItem);
 
-		// 3. zutabearen 2. aukera
+		// 2. zutabearen 2. aukera
 		JMenuItem argazkiakMenuItem = new JMenuItem("Argazkiak Pantailaratu");
 		argazkiakMenuItem.addActionListener(actionListener -> this.argazkiakPantailaratu());
 		ikusiMenua.add(argazkiakMenuItem);
 
-		// 4. zutabea
+		// 3. zutabea
 		JMenu hizkuntzaMenua = new JMenu("Hizkuntza");
 		menuBar.add(hizkuntzaMenua);
 
-		// 4. zutabearen 1. aukera
+		// 3. zutabearen 1. aukera
 		JMenuItem euskeraMenuItem = new JMenuItem("Euskera");
 		hizkuntzaMenua.add(euskeraMenuItem);
 
-		// 4. zutabearen 2. aukera
+		// 3. zutabearen 2. aukera
 		JMenuItem ingelesaMenuItem = new JMenuItem("English");
 		hizkuntzaMenua.add(ingelesaMenuItem);
 
@@ -125,69 +126,74 @@ public class PantailaNagusia extends JFrame{
 
 		return menuBar;
 	}
-	
-	private void logout(){
+
+	private void logout() {
 		this.dispose();
 		new SesioaItxiPantaila().panelaEraikitzen();
 	}
-	
-	private void argazkiakPantailaratu(){
+
+	private void argazkiakPantailaratu() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		ArgazkienTaula taula = new ArgazkienTaula();
 		taula.setOpaque(true);
-        internalFrame.setContentPane(taula);
-        internalFrame.pack();
+		internalFrame.setContentPane(taula);
+		internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
+		} catch (java.beans.PropertyVetoException e) {
+		}
 		internalFrame.setVisible(true);
 	}
-	
-	private void bildumakPantailaratu(){
+
+	private void bildumakPantailaratu() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		BildumenTaula taula = new BildumenTaula();
 		taula.setOpaque(true);
-        internalFrame.setContentPane(taula);
-        internalFrame.pack();
+		internalFrame.setContentPane(taula);
+		internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
+		} catch (java.beans.PropertyVetoException e) {
+		}
 		internalFrame.setVisible(true);
 	}
-	
-	private void argazkiakJaitsi(){
-		Argazkiak argazkiakJaitsi;
-		try {
-			argazkiakJaitsi = new Argazkiak();
-			argazkiakJaitsi.showPhotos();
-			JOptionPane.showMessageDialog(null, "Argazkiak ondo jaitsi egin dira", "ABISUA", JOptionPane.DEFAULT_OPTION,new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private void argazkiakIgo(){
+
+	private void argazkiakIgo() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
-        internalFrame.setSize(300,300);
+		internalFrame.setSize(300, 300);
 		internalFrame.add(new ArgazkiakIgo());
 		try {
 			internalFrame.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
+		} catch (java.beans.PropertyVetoException e) {
+		}
 		internalFrame.setVisible(true);
 	}
-	
-	private void zuhaitzaEraiki(){
+
+	private void zuhaitzaEraiki() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
-        internalFrame.setSize(1000,500);
+		internalFrame.setSize(1000, 500);
 		internalFrame.add(new Zuhaitza());
 		try {
 			internalFrame.setSelected(true);
-        } catch (java.beans.PropertyVetoException e) {}
+		} catch (java.beans.PropertyVetoException e) {
+		}
 		internalFrame.setVisible(true);
 	}
-	
+
+	private void sinkronizatu() throws Exception {
+		Bildumak bildumak;
+		Argazkiak argazkiak;
+		bildumak = new Bildumak();
+		bildumak.bildumakGordeDB();
+		argazkiak = new Argazkiak();
+		argazkiak.argazkiakGorde();
+		argazkiak.erlazioakGordeDB();
+		JOptionPane.showMessageDialog(null, "Dena eguneratu egin da", "ABISUA", JOptionPane.DEFAULT_OPTION,
+				new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
+	}
+
 }

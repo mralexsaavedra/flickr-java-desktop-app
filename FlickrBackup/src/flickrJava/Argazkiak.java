@@ -23,6 +23,8 @@ import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
 import com.flickr4java.flickr.util.IOUtilities;
 
+import kudeatzaileak.Kudeatzailea;
+
 public class Argazkiak {
 
 	static String apiKey;
@@ -55,7 +57,7 @@ public class Argazkiak {
 	public static void main(String[] args) {
 		try {
 			Argazkiak t = new Argazkiak();
-			t.argazkiakGorde();
+			t.erlazioakGordeDB();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,7 +113,7 @@ public class Argazkiak {
 		return emaitza;
 	}
 	
-	public void argazkiakGorde() {
+	public void argazkiakGorde() throws Exception {
 		String userId = properties.getProperty("nsid");
 
 		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
@@ -161,14 +163,14 @@ public class Argazkiak {
 	}
 
 	@SuppressWarnings("deprecation")
-	public boolean saveImage(Photo p) {
-
+	public boolean saveImage(Photo p) throws Exception {
+		
 		String path = "pics" + File.separator;
 		String cleanTitle = convertToFileSystemChar(p.getTitle());
 
 		File orgFile = new File(path + File.separator + cleanTitle + "_" + p.getId() + "_o." + p.getOriginalFormat());
         File largeFile = new File(path + File.separator + cleanTitle + "_" + p.getId() + "_b." + p.getOriginalFormat());
-
+        
         if (orgFile.exists() || largeFile.exists()) {
             System.out.println(p.getTitle() + "\t" + p.getLargeUrl() + " skipped!");
             return false;
@@ -184,11 +186,51 @@ public class Argazkiak {
                 ImageIO.write(p.getOriginalImage(), p.getOriginalFormat(), orgFile);
                 System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
             }
+    			MD5 md5 = new MD5();
+    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle());
         } catch (FlickrException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 		return true;
+	}
+	
+	public  void erlazioakGordeDB() {
+
+		String userId = properties.getProperty("nsid");
+
+		PhotosetsInterface photosetsInterface = f.getPhotosetsInterface();
+		Photosets photosets;
+		
+		try {
+			photosets = photosetsInterface.getList(userId);
+
+			Collection<Photoset> bildumak = photosets.getPhotosets();
+
+			for (Photoset photoset : bildumak) {
+				String id = photoset.getId();
+				int photoCount = photoset.getPhotoCount();
+
+				PhotoList<Photo> col;
+				int PHOTOSPERPAGE = photoCount;
+				int HOWMANYPAGES;
+				if (photoCount>10)
+					HOWMANYPAGES = (int) Math.ceil(photoCount / 10);
+				else
+					HOWMANYPAGES = 1;
+				
+				for (int page = 1; page <= HOWMANYPAGES; page++) {
+					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
+
+					for (Photo argazkia : col) {
+						String md5 = Kudeatzailea.getInstantzia().getArgazki(argazkia.getTitle());
+						Kudeatzailea.getInstantzia().erlazioakEgin("alexander", photoset.getTitle(), md5);
+					}
+				}
+			}
+		} catch (FlickrException e) {
+			e.printStackTrace();
+		}
 	}
 }

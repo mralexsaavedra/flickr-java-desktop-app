@@ -25,10 +25,10 @@ public class ArgazkiakIgo extends JPanel implements ActionListener {
 
 		fc = new JFileChooser();
 
-		openButton = new JButton("Ireki");
+		openButton = new JButton("Aukeratu");
 		openButton.addActionListener(this);
 
-		saveButton = new JButton("Gorde");
+		saveButton = new JButton("Igo");
 		saveButton.addActionListener(this);
 
 		JPanel buttonPanel = new JPanel();
@@ -50,7 +50,7 @@ public class ArgazkiakIgo extends JPanel implements ActionListener {
 				// This is where a real application would open the file.
 				log.append("Aukeratutakoa: " + file.getName() + "." + newline);
 			} else {
-				log.append("Irekita kantzelatuta" + newline);
+				log.append("Aukeratua kantzelatuta" + newline);
 			}
 			log.setCaretPosition(log.getDocument().getLength());
 
@@ -60,9 +60,9 @@ public class ArgazkiakIgo extends JPanel implements ActionListener {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fc.getSelectedFile();
 				// This is where a real application would save the file.
-				log.append("Gordetzen: " + file.getName() + "." + newline);
+				log.append("Igotzen: " + file.getName() + "." + newline);
 			} else {
-				log.append("Gorde akzioa kantzelatuta" + newline);
+				log.append("Igo akzioa kantzelatuta" + newline);
 			}
 			log.setCaretPosition(log.getDocument().getLength());
 		}
