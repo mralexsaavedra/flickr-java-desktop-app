@@ -68,9 +68,10 @@ public class Kudeatzailea {
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
-				String[] res = new String[2];
+				String[] res = new String[3];
 				res[0] = rs.getString("md5");
 				res[1] = rs.getString("izena");
+				res[2] = rs.getString("file");
 				emaitza.add(res);
 			}
 		} catch (SQLException e) {
@@ -86,6 +87,20 @@ public class Kudeatzailea {
 		try {
 			while (rs.next()) {
 				emaitza = rs.getString("md5");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emaitza;
+	}
+	
+	public String getArgazkiFile(String argazkia){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		ResultSet rs = dbkud.execSQL("SELECT file FROM argazki WHERE izena='" + argazkia + "';");
+		String emaitza = null;
+		try {
+			while (rs.next()) {
+				emaitza = rs.getString("file");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -109,9 +124,9 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public void argazkiakGorde(String md5, String izena){
+	public void argazkiakGorde(String md5, String izena, String file){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO argazki SET md5='" + md5 + "',izena='" + izena + "';";
+		String kontsulta = "INSERT INTO argazki SET md5='" + md5 + "',izena='" + izena + "',file='" + file + "';";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}

@@ -57,6 +57,7 @@ public class Argazkiak {
 	public static void main(String[] args) {
 		try {
 			Argazkiak t = new Argazkiak();
+			t.argazkiakGorde();
 			t.erlazioakGordeDB();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -187,7 +188,7 @@ public class Argazkiak {
                 System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
             }
     			MD5 md5 = new MD5();
-    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle());
+    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle(),orgFile.toString());
         } catch (FlickrException e) {
             e.printStackTrace();
         } catch (IOException e) {

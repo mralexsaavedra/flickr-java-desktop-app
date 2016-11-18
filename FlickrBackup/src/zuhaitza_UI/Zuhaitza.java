@@ -2,12 +2,9 @@ package zuhaitza_UI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.io.File;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -18,10 +15,9 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.flickr4java.flickr.photos.Photo;
 
-import flickrJava.Argazkiak;
 import kudeatzaileak.Kudeatzailea;
+import pantailak_UI.Argazki;
 
 public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	/**
@@ -83,19 +79,15 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		System.out.println(nodeInfo);
 		
 		if (node.isLeaf()) {
-			Photo argazkia = (Photo) nodeInfo;
-			irakurriArgazkia(argazkia);
+			argazkiPanela.removeAll();
+			String file = Kudeatzailea.getInstantzia().getArgazkiFile(nodeInfo.toString());
+			Argazki argazki = new Argazki(argazkiPanela, file);
+			argazkiPanela.add(argazki);
+			argazkiPanela.repaint();
 		} 
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
 		}
-	}
-	
-	public void irakurriArgazkia(Photo p){
-		String path = "pics" + File.separator;
-		String cleanTitle = Argazkiak.convertToFileSystemChar(p.getTitle());
-		String orgFile = new String(path + File.separator + cleanTitle + "_" + p.getId() + "_o." + p.getOriginalFormat());
-		argazkiPanela.add(new JLabel(new ImageIcon(orgFile)));
 	}
 
 	private void createNodes(DefaultMutableTreeNode top) {
