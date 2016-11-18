@@ -12,7 +12,7 @@ public class ArgazkienTaula extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Object[][] data;
-	private String[] columnNames = { "Argazkia", "Bilduma" };
+	private String[] columnNames = { "Argazkia", "Bilduma"};
 	private JTable taula;
 	private JScrollPane scrollPanela;
 

@@ -22,7 +22,6 @@ public class Argazki extends JPanel {
     public void paint(Graphics g) {
         ImageIcon Img = new ImageIcon(path);
         g.drawImage(Img.getImage(), 0, 0, x, y, null);
-        System.out.println("draw");
     }    
 
 }

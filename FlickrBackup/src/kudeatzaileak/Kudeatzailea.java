@@ -108,6 +108,22 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
+	public List<String> getBildumaFile(String bilduma){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		ResultSet rs = dbkud.execSQL("SELECT a.file FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");
+		List<String> emaitza = new ArrayList<String>();
+		try {
+			while (rs.next()) {
+				String res = new String();
+				res = rs.getString("file");
+				emaitza.add(res);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emaitza;
+	}
+	
 	public List<String[]> getBildumaBatenArgazkia(String bilduma){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		ResultSet rs = dbkud.execSQL("SELECT a.izena FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");

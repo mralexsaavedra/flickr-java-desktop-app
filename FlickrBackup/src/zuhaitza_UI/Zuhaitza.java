@@ -2,9 +2,15 @@ package zuhaitza_UI;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -15,6 +21,7 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
 
+import org.imgscalr.Scalr;
 
 import kudeatzaileak.Kudeatzailea;
 import pantailak_UI.Argazki;
@@ -84,7 +91,23 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			Argazki argazki = new Argazki(argazkiPanela, file);
 			argazkiPanela.add(argazki);
 			argazkiPanela.repaint();
-		} 
+		}
+		else{
+			argazkiPanela.removeAll();
+			List<String>  emaitza = Kudeatzailea.getInstantzia().getBildumaFile(nodeInfo.toString());
+			for (int i = 0; i<emaitza.size(); i++){
+				File f = new File(emaitza.get(i));
+				try {
+					BufferedImage img = ImageIO.read(f);
+					BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.SPEED,  Scalr.Mode.FIT_TO_WIDTH, 150, 100, Scalr.OP_ANTIALIAS);
+					argazkiPanela.setLayout(new GridLayout(5,5));
+					ImageIcon image = new ImageIcon(thumbnail);
+					argazkiPanela.add(new JLabel(image));
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
 		if (DEBUG) {
 			System.out.println(nodeInfo.toString());
 		}
