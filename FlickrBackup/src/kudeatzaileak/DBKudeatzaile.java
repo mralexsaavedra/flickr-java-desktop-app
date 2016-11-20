@@ -10,8 +10,11 @@ public class DBKudeatzaile {
 		try {
 			String userName = "xxxxxxxxxxxxxxx";
 			String password = "xxxxxxxxxxxxxxx";
-			String url = "jdbc:mysql://localhost:3306/flickr?autoReconnect=true&useSSL=false";
-			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+			String url = "jdbc:mysql://localhost:3306/flickr";
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			// Apache-ko errorea zuzentzeko aldatu behar dena:
+			//String url = "jdbc:mysql://localhost:3306/flickr?autoReconnect=true&useSSL=false";
+			//Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			conn = (Connection) DriverManager.getConnection(url, userName, password);
 			System.out.println("Database connection established");
 		} catch (Exception e) {
