@@ -101,8 +101,8 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 					BufferedImage img = ImageIO.read(f);
 					BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.SPEED,  Scalr.Mode.FIT_TO_WIDTH, 150, 100, Scalr.OP_ANTIALIAS);
 					argazkiPanela.setLayout(new GridLayout(5,5));
-					ImageIcon image = new ImageIcon(thumbnail);
-					argazkiPanela.add(new JLabel(image));
+					argazkiPanela.add(new JLabel(new ImageIcon(thumbnail)));
+					argazkiPanela.repaint();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
