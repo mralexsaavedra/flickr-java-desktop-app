@@ -9,9 +9,12 @@ public class DBKudeatzaile {
 	private void conOpen() {
 		try {
 			String userName = "root";
-			String password = "asg19951143ARITZ";
+			String password = "";
 			String url = "jdbc:mysql://localhost:3306/flickr";
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			// Apache-ko errorea zuzentzeko aldatu behar dena:
+			//String url = "jdbc:mysql://localhost:3306/flickr?autoReconnect=true&useSSL=false";
+			//Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 			conn = (Connection) DriverManager.getConnection(url, userName, password);
 			System.out.println("Database connection established");
 		} catch (Exception e) {
