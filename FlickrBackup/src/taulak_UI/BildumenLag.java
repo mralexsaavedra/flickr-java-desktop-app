@@ -12,7 +12,6 @@ class BildumenLag {
 		this.argazkiKop = argazkiKop;
 	}
 
-	@Override
 	public String toString() {
 		return "Lag [titulua=" + titulua + ", deskripzioa=" + deskripzioa + ", argazkiKop=" + argazkiKop + "]";
 	}
