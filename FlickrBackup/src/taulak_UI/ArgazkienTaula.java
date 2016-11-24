@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -43,7 +42,7 @@ public class ArgazkienTaula extends JPanel {
 					try {
 						BufferedImage img = ImageIO.read(f);
 						BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.SPEED,  Scalr.Mode.FIT_TO_WIDTH, 150, 100, Scalr.OP_ANTIALIAS);
-						data[errenkada][2] = new JLabel(new ImageIcon(thumbnail));
+						data[errenkada][2] = new ImageIcon(thumbnail);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
