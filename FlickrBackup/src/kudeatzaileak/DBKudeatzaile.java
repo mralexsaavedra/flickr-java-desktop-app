@@ -9,7 +9,7 @@ public class DBKudeatzaile {
 	private void conOpen() {
 		try {
 			String userName = "root";
-			String password = "";
+			String password = "ÑUTE";
 			String url = "jdbc:mysql://localhost:3306/flickr";
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			// Apache-ko errorea zuzentzeko aldatu behar dena:
