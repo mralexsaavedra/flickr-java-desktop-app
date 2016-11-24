@@ -10,30 +10,27 @@ import kudeatzaileak.Kudeatzailea;
 
 public class BildumenTaula extends JPanel{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	private Object[][] data;
-	private String[] columnNames = { "Titulua", "Deskripzioa", "Argazki kopurua" };
+	
+	private BildumenTableModel model;
 	private JTable taula;
 	private JScrollPane scrollPanela;
 	
 	public BildumenTaula(){
 		this.elementuakGehitu();
-		taula = new JTable(data,columnNames);
+		model = new BildumenTableModel();
+		taula = new JTable(model);
 		scrollPanela = new JScrollPane(taula);
 		this.add(scrollPanela);
 	}
 	
 	public void elementuakGehitu() {
 		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak();
-		data = new Object[emaitzak.size()][3];
-		for (int errenkada = 0; errenkada < data.length; errenkada++) {
-				data[errenkada][0] = emaitzak.get(errenkada)[0];
-				data[errenkada][1] = emaitzak.get(errenkada)[1];
-				data[errenkada][2] = emaitzak.get(errenkada)[2];
+		model.data = new Object[emaitzak.size()][3];
+		for (int errenkada = 0; errenkada < model.data.length; errenkada++) {
+			model.data[errenkada][0] = emaitzak.get(errenkada)[0];
+			model.data[errenkada][1] = emaitzak.get(errenkada)[1];
+			model.data[errenkada][2] = emaitzak.get(errenkada)[2];
 		}
 	}
-
 }
