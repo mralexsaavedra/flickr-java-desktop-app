@@ -23,6 +23,8 @@ public class ArgazkienTaula extends JPanel {
 	private JTable taula;
 	private JScrollPane scrollPanela;
 
+	
+	
 	public ArgazkienTaula() {
 		this.elementuakGehitu();
 		taula = new JTable(data, columnNames);

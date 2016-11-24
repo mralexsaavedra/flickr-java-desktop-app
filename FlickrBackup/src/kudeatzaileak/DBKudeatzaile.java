@@ -8,8 +8,8 @@ public class DBKudeatzaile {
 
 	private void conOpen() {
 		try {
-			String userName = "XXXX";
-			String password = "XXXXX";
+			String userName = "root";
+			String password = "asg19951143ARITZ";
 			String url = "jdbc:mysql://localhost:3306/flickr";
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			conn = (Connection) DriverManager.getConnection(url, userName, password);
