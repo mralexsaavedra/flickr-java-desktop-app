@@ -18,6 +18,7 @@ public class ArgazkienTaula extends JPanel {
 		model = new ArgazkienTableModel(erabiltzaile);
 		taula = new JTable(model);
 		scrollPanela = new JScrollPane(taula);
+		taula.setRowHeight(80);
 		this.add(scrollPanela);
 	}
 
