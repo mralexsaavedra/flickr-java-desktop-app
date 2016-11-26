@@ -24,18 +24,15 @@ import kudeatzaileak.Kudeatzailea;
 public class Bildumak {
 
 	static String apiKey;
-
 	static String sharedSecret;
-
 	Flickr f;
-
 	REST rest;
-
 	RequestContext requestContext;
-
 	Properties properties = null;
+	private String erabiltzaile;
 
-	public Bildumak() throws IOException {
+	public Bildumak(String email) throws IOException {
+		this.erabiltzaile = email;
 		InputStream in = null;
 		try {
 			in = getClass().getResourceAsStream("/setup.properties");
@@ -54,16 +51,6 @@ public class Bildumak {
 		Flickr.debugRequest = false;
 		Flickr.debugStream = false;
 	}
-	
-    public static void main(String[] args) {
-        try {
-        	Bildumak t = new Bildumak();
-            t.bildumakGordeDB();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
-    }
 
 	public  List<String[]> showPhotosets() {
 		   PhotosetsInterface photosetsInterface  = f.getPhotosetsInterface();
@@ -114,7 +101,7 @@ public class Bildumak {
 	public void bildumakGordeDB(){
 		List<String[]> bildumak = this.showPhotosets();
 		for (String[] bilduma : bildumak){
-			Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], Integer.parseInt(bilduma[2]), "alexander");
+			Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], Integer.parseInt(bilduma[2]), erabiltzaile);
 		}
 	}
 	

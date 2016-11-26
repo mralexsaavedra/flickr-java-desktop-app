@@ -27,21 +27,17 @@ public class PantailaNagusia extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private String erabiltzaile;
 	private JDesktopPane desktop;
 
-	public PantailaNagusia() {
+	public PantailaNagusia(String email) {
+		this.erabiltzaile = email;
 		this.setTitle("FlickrBackup");
 		this.setJMenuBar(createMenuBar());
 		desktop = new JDesktopPane();
 		this.setContentPane(desktop);
 		desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktop.setBackground(Color.LIGHT_GRAY);
-	}
-
-	public static void main(String[] args) {
-		PantailaNagusia nagusia = new PantailaNagusia();
-		nagusia.eraikiFrame();
 	}
 
 	public void eraikiFrame() {
@@ -129,13 +125,13 @@ public class PantailaNagusia extends JFrame {
 
 	private void logout() {
 		this.dispose();
-		new SesioaItxiPantaila().panelaEraikitzen();
+		new SesioaItxiPantaila(erabiltzaile).panelaEraikitzen();
 	}
 
 	private void argazkiakPantailaratu() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
-		ArgazkienTaula taula = new ArgazkienTaula();
+		ArgazkienTaula taula = new ArgazkienTaula(erabiltzaile);
 		taula.setOpaque(true);
 		internalFrame.setContentPane(taula);
 		internalFrame.pack();
@@ -149,7 +145,7 @@ public class PantailaNagusia extends JFrame {
 	private void bildumakPantailaratu() {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
-		BildumenTaula taula = new BildumenTaula();
+		BildumenTaula taula = new BildumenTaula(erabiltzaile);
 		taula.setOpaque(true);
 		internalFrame.setContentPane(taula);
 		internalFrame.pack();
@@ -176,7 +172,7 @@ public class PantailaNagusia extends JFrame {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		internalFrame.setSize(1000, 500);
-		internalFrame.add(new Zuhaitza());
+		internalFrame.add(new Zuhaitza(erabiltzaile));
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -187,9 +183,9 @@ public class PantailaNagusia extends JFrame {
 	private void sinkronizatu() throws Exception {
 		Bildumak bildumak;
 		Argazkiak argazkiak;
-		bildumak = new Bildumak();
+		bildumak = new Bildumak(erabiltzaile);
 		bildumak.bildumakGordeDB();
-		argazkiak = new Argazkiak();
+		argazkiak = new Argazkiak(erabiltzaile);
 		argazkiak.argazkiakGorde();
 		argazkiak.erlazioakGordeDB();
 		JOptionPane.showMessageDialog(null, "Dena eguneratu egin da", "ABISUA", JOptionPane.DEFAULT_OPTION,

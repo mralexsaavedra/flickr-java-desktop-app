@@ -1,31 +1,36 @@
 package taulak_UI;
 
+import java.util.List;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
+
+import kudeatzaileak.Kudeatzailea;
 
 public class BildumenTableModel extends AbstractTableModel {
 	
 	private static final long serialVersionUID = 1L;
+	private String erabiltzaile;
+	private Vector<BildumenLag> data;
+	private Vector<String> columnNames = new Vector<String>();
 	
-	Object[][] data;
-	Vector<String> columnNames = new Vector<String>();
-	
-	public BildumenTableModel() {
-		this.kargatu();
-	}
-	
-	public void kargatu() {
-		this.hasieratuZutabeIzenak();
+	public BildumenTableModel(String email) {
+		this.erabiltzaile = email;
+		this.elementuakGehitu();
 	}
 
 	@Override
 	public int getRowCount() {
-		return data.length;
+		return data.size();
 	}
 
 	@Override
 	public int getColumnCount() {
 		return columnNames.size();
+	}
+	
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		return data.get(rowIndex).getBalioa(columnIndex);
 	}
 	
 	public void hasieratuZutabeIzenak() {
@@ -60,10 +65,18 @@ public class BildumenTableModel extends AbstractTableModel {
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}
+	
+	 public void setValueAt(Object value, int row, int col) {
+		 data.get(row).insertElementAt(value, col);
+     }
 
-	@Override
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return null;
+	public void elementuakGehitu() {
+		this.hasieratuZutabeIzenak();
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
+		data = new Vector<BildumenLag>(emaitzak.size());
+		for (int errenkada = 0; errenkada < emaitzak.size(); errenkada++) {
+			data.add(new BildumenLag(emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1], Integer.parseInt(emaitzak.get(errenkada)[2])));
+		}
 	}
+	
 }

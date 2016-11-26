@@ -1,12 +1,9 @@
 package taulak_UI;
 
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
-import kudeatzaileak.Kudeatzailea;
 
 public class BildumenTaula extends JPanel{
 	
@@ -15,22 +12,14 @@ public class BildumenTaula extends JPanel{
 	private BildumenTableModel model;
 	private JTable taula;
 	private JScrollPane scrollPanela;
+	private String erabiltzaile;
 	
-	public BildumenTaula(){
-		this.elementuakGehitu();
-		model = new BildumenTableModel();
+	public BildumenTaula(String email){
+		this.erabiltzaile = email;
+		model = new BildumenTableModel(erabiltzaile);
 		taula = new JTable(model);
 		scrollPanela = new JScrollPane(taula);
 		this.add(scrollPanela);
 	}
-	
-	public void elementuakGehitu() {
-		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak();
-		model.data = new Object[emaitzak.size()][3];
-		for (int errenkada = 0; errenkada < model.data.length; errenkada++) {
-			model.data[errenkada][0] = emaitzak.get(errenkada)[0];
-			model.data[errenkada][1] = emaitzak.get(errenkada)[1];
-			model.data[errenkada][2] = emaitzak.get(errenkada)[2];
-		}
-	}
+
 }

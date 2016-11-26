@@ -9,13 +9,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
-import javax.swing.UIManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -31,6 +29,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private  String erabiltzaile;
 	private JPanel argazkiPanela;
 	private JTree tree;
 	private static boolean DEBUG = false;
@@ -38,11 +37,12 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	private static boolean playWithLineStyle = false;
 	private static String lineStyle = "Horizontal";
 
-	private static boolean useSystemLookAndFeel = false;
+	//private static boolean useSystemLookAndFeel = false;
 
-	public Zuhaitza() {
+	public Zuhaitza(String email) {
 		super(new GridLayout(1, 0));
-
+		this.erabiltzaile = email;
+		
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Flickr");
 		createNodes(top);
 
@@ -94,7 +94,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 		}
 		else{
 			argazkiPanela.removeAll();
-			List<String>  emaitza = Kudeatzailea.getInstantzia().getBildumaFile(nodeInfo.toString());
+			List<String>  emaitza = Kudeatzailea.getInstantzia().getBildumaFile(nodeInfo.toString(),erabiltzaile);
 			for (int i = 0; i<emaitza.size(); i++){
 				File f = new File(emaitza.get(i));
 				try {
@@ -115,7 +115,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 	}
 
 	private void createNodes(DefaultMutableTreeNode top) {
-		List<String[]> bildumak = Kudeatzailea.getInstantzia().getBildumak();
+		List<String[]> bildumak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
 		for (String[] bilduma : bildumak) {
 			DefaultMutableTreeNode bildumaTreeNode = new DefaultMutableTreeNode(bilduma[0]);
 			top.add(bildumaTreeNode);
@@ -125,31 +125,5 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			}
 		}
 	}
-
-
-	private static void createAndShowGUI() {
-		if (useSystemLookAndFeel) {
-			try {
-				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			} catch (Exception e) {
-				System.err.println("Couldn't use system look and feel.");
-			}
-		}
-
-		JFrame frame = new JFrame("FlickrBackup");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frame.add(new Zuhaitza());
-
-		frame.pack();
-		frame.setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
-	}
+	
 }

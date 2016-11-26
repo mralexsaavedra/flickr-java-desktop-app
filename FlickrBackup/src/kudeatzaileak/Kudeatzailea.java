@@ -35,10 +35,10 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public List<String[]> getBildumak(){
+	public List<String[]> getBildumak(String email){
 
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT * from bilduma");
+		ResultSet rs = dbkud.execSQL("SELECT * from bilduma WHERE erabiltzaileEmail='" + email + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
@@ -57,7 +57,7 @@ public class Kudeatzailea {
 	public  void bildumakGorde(String izena, String deskripzioa, int argazkiKop, String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		String kontsulta = "INSERT INTO bilduma SET izena='" + izena + "',deskripzioa='" + deskripzioa + "'"
-									+ ",argazkiKopurua='" + argazkiKop  + "',erabiltzaileEmail= '" + email + "';";
+									+ ",argazkiKopurua='" + argazkiKop  + "',erabiltzaileEmail='" + email + "';";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}
@@ -108,9 +108,10 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public List<String> getBildumaFile(String bilduma){
+	public List<String> getBildumaFile(String bilduma, String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.file FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");
+		ResultSet rs = dbkud.execSQL("SELECT a.file FROM argazki a, erlazioa e "
+				+ "WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "' AND e.erabiltzailea='" + email + "';");
 		List<String> emaitza = new ArrayList<String>();
 		try {
 			while (rs.next()) {
@@ -154,9 +155,9 @@ public class Kudeatzailea {
 		dbkud.execSQL(kontsulta);
 	}
 	
-	public List<String[]> getErlazioak(){
+	public List<String[]> getErlazioak(String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma FROM erlazioa e,argazki a WHERE e.argazkia=a.md5");
+		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {

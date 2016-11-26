@@ -121,7 +121,7 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 				if (emailText.getText().equals(erabiltzaile[0])) {
 					if (md5.MD5Hashing(passString).equals(erabiltzaile[1])){
 						pantailaNagusia.dispose();
-						PantailaNagusia nagusia = new PantailaNagusia();
+						PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
 						nagusia.eraikiFrame();
 					}
 					else {

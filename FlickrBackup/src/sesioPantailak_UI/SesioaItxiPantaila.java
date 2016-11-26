@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
 public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
-	
+	private String erabiltzaile;
 	private JFrame pantailaNagusia;
 	private Vector<String> elementuak;
 	private JComboBox<String> hizkuntzak;
@@ -25,8 +25,9 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	private JLabel berriroSartu;
 	private JButton sartuBotoia;
 	
-	public SesioaItxiPantaila() {
+	public SesioaItxiPantaila(String email) {
 		super(new BorderLayout());
+		this.erabiltzaile = email;
 		
 		pantailaNagusia = new JFrame("FlickrBackup");
 		
@@ -91,7 +92,7 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 	
 	public void berriroSartu() {
 		pantailaNagusia.dispose();
-		PantailaNagusia frameNagusia = new PantailaNagusia();
+		PantailaNagusia frameNagusia = new PantailaNagusia(erabiltzaile);
 		frameNagusia.eraikiFrame();
 	}
 	
@@ -102,8 +103,4 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 		pantailaNagusia.setVisible(true);
 	}
 	
-	public static void main(String[] args) {		 
-		SesioaItxiPantaila s = new SesioaItxiPantaila();
-		s.panelaEraikitzen();
-	}
 }

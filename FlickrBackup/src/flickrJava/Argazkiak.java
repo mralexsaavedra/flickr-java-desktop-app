@@ -33,8 +33,10 @@ public class Argazkiak {
 	REST rest;
 	RequestContext requestContext;
 	Properties properties = null;
-
-	public Argazkiak() throws IOException {
+	private String erabiltzaile;
+	
+	public Argazkiak(String email) throws IOException {
+		this.erabiltzaile = email;
 		InputStream in = null;
 		try {
 			in = getClass().getResourceAsStream("/setup.properties");
@@ -54,17 +56,6 @@ public class Argazkiak {
 		Flickr.debugStream = false;
 	}
 
-	public static void main(String[] args) {
-		try {
-			Argazkiak t = new Argazkiak();
-			t.argazkiakGorde();
-			t.erlazioakGordeDB();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.exit(0);
-	}
-	
 	public  List<String[]> showPhotos() {
 
 		String userId = properties.getProperty("nsid");
@@ -226,7 +217,7 @@ public class Argazkiak {
 
 					for (Photo argazkia : col) {
 						String md5 = Kudeatzailea.getInstantzia().getArgazki(argazkia.getTitle());
-						Kudeatzailea.getInstantzia().erlazioakEgin("alexander", photoset.getTitle(), md5);
+						Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, photoset.getTitle(), md5);
 					}
 				}
 			}
