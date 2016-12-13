@@ -199,7 +199,13 @@ public class Argazkiak {
                 System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
             }
     			MD5 md5 = new MD5();
-    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle(),orgFile.toString());
+    			String deskripzioa = p.getDescription();
+			String dateAdded = konprobatuData(p.getDateAdded());
+			String datePosted = konprobatuData(p.getDatePosted());
+			String dateTaken = konprobatuData(p.getDateTaken());
+			String geoData = konprobatuData(p.getGeoData());
+			String tag = p.getTags().toString();
+    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle(),orgFile.toString(), deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag);
         } catch (FlickrException e) {
             e.printStackTrace();
         } catch (IOException e) {

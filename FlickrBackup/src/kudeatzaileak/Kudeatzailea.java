@@ -64,7 +64,7 @@ public class Kudeatzailea {
 	
 	public List<String[]> getArgazkiak(){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT * from argazki");
+		ResultSet rs = dbkud.execSQL("SELECT md5,izena,file from argazki");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
@@ -141,9 +141,9 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public void argazkiakGorde(String md5, String izena, String file){
+	public void argazkiakGorde(String md5, String izena, String file, String deskripzioa, String dateAdded, String datePosted, String dateTaken, String geoData, String tag){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO argazki SET md5='" + md5 + "',izena='" + izena + "',file='" + file + "';";
+		String kontsulta = "INSERT INTO argazki SET md5='" + md5 + "',izena='" + izena + "',file='" + file + "',deskripzioa='" + deskripzioa + "',dateAdded='" + dateAdded + "',datePosted='" + datePosted + "',dateTaken='" + dateTaken + "',geoData='" + geoData + "',tag='" + tag + "';";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}
@@ -157,13 +157,19 @@ public class Kudeatzailea {
 	
 	public List<String[]> getErlazioak(String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");
+		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma,a.deskripzioa,a.dateAdded,a.datePosted,a.dateTaken,a.geoData,a.tag FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
-				String[] res = new String[2];
+				String[] res = new String[8];
 				res[0] = rs.getString("izena");
 				res[1] = rs.getString("bilduma");
+				res[2] = rs.getString("deskripzioa");
+				res[3] = rs.getString("dateAdded");
+				res[4] = rs.getString("datePosted");
+				res[5] = rs.getString("dateTaken");
+				res[6] = rs.getString("geoData");
+				res[7] = rs.getString("tag");
 				emaitza.add(res);
 			}
 		} catch (SQLException e) {

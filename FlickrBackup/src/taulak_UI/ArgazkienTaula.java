@@ -23,6 +23,7 @@ public class ArgazkienTaula extends JPanel {
 		scrollPanela.setPreferredSize(new Dimension(900,400));
 		taula.setRowHeight(80);
 		taula.getColumnModel().getColumn(0).setPreferredWidth(100);
+		taula.getColumnModel().getColumn(1).setPreferredWidth(150);
 		this.add(scrollPanela);
 	}
 

@@ -112,7 +112,7 @@ public class ArgazkienTableModel extends AbstractTableModel {
 			try {
 				BufferedImage img = ImageIO.read(f);
 				BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.SPEED,  Scalr.Mode.FIT_TO_WIDTH, 150, 100, Scalr.OP_ANTIALIAS);
-				data.add(new ArgazkienLag(new ImageIcon(thumbnail), emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1],"eee","eee","eee","eee","eee", "eee"));
+				data.add(new ArgazkienLag(new ImageIcon(thumbnail), emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1],emaitzak.get(errenkada)[2],emaitzak.get(errenkada)[3],emaitzak.get(errenkada)[4],emaitzak.get(errenkada)[5],emaitzak.get(errenkada)[6],emaitzak.get(errenkada)[7]));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}			
