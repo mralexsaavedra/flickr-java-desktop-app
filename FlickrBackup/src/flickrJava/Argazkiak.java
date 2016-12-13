@@ -55,6 +55,15 @@ public class Argazkiak {
 		Flickr.debugRequest = false;
 		Flickr.debugStream = false;
 	}
+	
+	public static void main(String[] args){
+		try {
+			Argazkiak a = new Argazkiak("alexander");
+			a.showPhotos();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public  List<String[]> showPhotos() {
 
@@ -86,15 +95,19 @@ public class Argazkiak {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
-						String[] res = new String[2];
+						String[] res = new String[8];
 						res[0] = argazkia.getTitle();
+						System.out.println(res[0]);
 						res[1] = photoset.getTitle();
-						//res[2] = argazkia.getDescription();
-						//res[3] = argazkia.getDateAdded().toString();
-						//res[4] = argazkia.getDatePosted().toString();
-						//res[5] = argazkia.getDateTaken().toString();
-						//res[6] = argazkia.getGeoData().toString();
-						//res[7] = argazkia.getTags().toString();
+						res[2] = argazkia.getDescription();
+						System.out.println(res[2]);
+						res[3] = konprobatuData(argazkia.getDateAdded());
+						System.out.println(res[3]);
+						res[4] = konprobatuData(argazkia.getDatePosted());
+						res[5] = konprobatuData(argazkia.getDateTaken());
+						res[6] = konprobatuData(argazkia.getGeoData());
+						res[7] = argazkia.getTags().toString();
+						System.out.println(res[7]);
 						emaitza.add(res);
 					}
 				}
@@ -103,6 +116,13 @@ public class Argazkiak {
 			e.printStackTrace();
 		}
 		return emaitza;
+	}
+	
+	public String konprobatuData(Object o){
+		if (o==null)
+			return ("Ez dago");
+		else
+			return o.toString();
 	}
 	
 	public void argazkiakGorde() throws Exception {
