@@ -89,12 +89,12 @@ public class Argazkiak {
 						String[] res = new String[2];
 						res[0] = argazkia.getTitle();
 						res[1] = photoset.getTitle();
-						/*res[1] = argazkia.getDescription();
-						res[2] = argazkia.getDateAdded().toString();
-						res[3] = argazkia.getDatePosted().toString();
-						res[4] = argazkia.getDateTaken().toString();
-						res[5] = argazkia.getGeoData().toString();
-						res[6] = argazkia.getTags().toString();*/
+						//res[2] = argazkia.getDescription();
+						//res[3] = argazkia.getDateAdded().toString();
+						//res[4] = argazkia.getDatePosted().toString();
+						//res[5] = argazkia.getDateTaken().toString();
+						//res[6] = argazkia.getGeoData().toString();
+						//res[7] = argazkia.getTags().toString();
 						emaitza.add(res);
 					}
 				}

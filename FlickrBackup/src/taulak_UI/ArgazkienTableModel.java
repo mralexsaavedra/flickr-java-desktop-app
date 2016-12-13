@@ -43,9 +43,15 @@ public class ArgazkienTableModel extends AbstractTableModel {
 	}
 	
 	public void hasieratuZutabeIzenak() {
+		columnNames.add("Irudia");
 		columnNames.add("Argazkia");
 		columnNames.add("Bilduma");
-		columnNames.add("Irudia");
+		columnNames.add("Deskripzioa");
+		columnNames.add("DateAdded");
+		columnNames.add("DatePosted");
+		columnNames.add("DateTaken");
+		columnNames.add("GeoData");
+		columnNames.add("Tag");
 	}
 	
 	public String getColumnName(int zut) {
@@ -56,14 +62,31 @@ public class ArgazkienTableModel extends AbstractTableModel {
 		Class<?> klaseMota = null;
 		switch (col) {
 		case 0:
-			klaseMota = String.class;
+			klaseMota = ImageIcon.class;
 			break;
 		case 1:
 			klaseMota = String.class;
 			break;
 		case 2:
-			klaseMota = ImageIcon.class;
+			klaseMota = String.class;
 			break;
+		case 3:
+			klaseMota = String.class;
+			break;
+		case 4:
+			klaseMota = String.class;
+			break;
+		case 5:
+			klaseMota = String.class;
+			break;
+		case 6:
+			klaseMota = String.class;
+			break;
+		case 7:
+			klaseMota = String.class;
+			break;
+		case 8:
+			klaseMota = String.class;
 		default:
 			break;
 		}
@@ -89,7 +112,7 @@ public class ArgazkienTableModel extends AbstractTableModel {
 			try {
 				BufferedImage img = ImageIO.read(f);
 				BufferedImage thumbnail = Scalr.resize(img, Scalr.Method.SPEED,  Scalr.Mode.FIT_TO_WIDTH, 150, 100, Scalr.OP_ANTIALIAS);
-				data.add(new ArgazkienLag(emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1], new ImageIcon(thumbnail)));
+				data.add(new ArgazkienLag(new ImageIcon(thumbnail), emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1],"eee","eee","eee","eee","eee", "eee"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}			

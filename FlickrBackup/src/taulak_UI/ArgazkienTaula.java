@@ -1,5 +1,7 @@
 package taulak_UI;
 
+import java.awt.Dimension;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,7 +20,9 @@ public class ArgazkienTaula extends JPanel {
 		model = new ArgazkienTableModel(erabiltzaile);
 		taula = new JTable(model);
 		scrollPanela = new JScrollPane(taula);
+		scrollPanela.setPreferredSize(new Dimension(900,400));
 		taula.setRowHeight(80);
+		taula.getColumnModel().getColumn(0).setPreferredWidth(100);
 		this.add(scrollPanela);
 	}
 
