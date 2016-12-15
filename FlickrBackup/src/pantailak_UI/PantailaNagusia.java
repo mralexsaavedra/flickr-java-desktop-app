@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
@@ -75,7 +76,13 @@ public class PantailaNagusia extends JFrame {
 		
 		// 1. zutabearen 3. aukera
 		JMenuItem argazkiakIgoMenuItem = new JMenuItem("Argazkiak igo");
-		argazkiakIgoMenuItem.addActionListener(actionListener -> this.argazkiakIgo());
+		argazkiakIgoMenuItem.addActionListener(actionListener -> {
+			try {
+				this.argazkiakIgo();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 		menu.add(argazkiakIgoMenuItem);
 
 		// 1. zutabearen 4. aukera
@@ -156,11 +163,11 @@ public class PantailaNagusia extends JFrame {
 		internalFrame.setVisible(true);
 	}
 
-	private void argazkiakIgo() {
+	private void argazkiakIgo() throws IOException {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		internalFrame.setSize(300, 300);
-		internalFrame.add(new ArgazkiakIgo());
+		internalFrame.add(new ArgazkiakIgo(erabiltzaile));
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {

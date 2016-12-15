@@ -54,14 +54,6 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public  void bildumakGorde(String izena, String deskripzioa, int argazkiKop, String email){
-		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO bilduma SET izena='" + izena + "',deskripzioa='" + deskripzioa + "'"
-									+ ",argazkiKopurua='" + argazkiKop  + "',erabiltzaileEmail='" + email + "';";
-		System.out.println(kontsulta);
-		dbkud.execSQL(kontsulta);
-	}
-	
 	public List<String[]> getArgazkiak(){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		ResultSet rs = dbkud.execSQL("SELECT md5,izena,file from argazki");
@@ -141,20 +133,6 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public void argazkiakGorde(String md5, String izena, String file, String deskripzioa, String dateAdded, String datePosted, String dateTaken, String geoData, String tag){
-		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO argazki SET md5='" + md5 + "',izena='" + izena + "',file='" + file + "',deskripzioa='" + deskripzioa + "',dateAdded='" + dateAdded + "',datePosted='" + datePosted + "',dateTaken='" + dateTaken + "',geoData='" + geoData + "',tag='" + tag + "';";
-		System.out.println(kontsulta);
-		dbkud.execSQL(kontsulta);
-	}
-	
-	public void erlazioakEgin(String erabiltzailea, String bilduma, String argazkia){
-		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO erlazioa SET erabiltzailea='" + erabiltzailea + "',bilduma='" + bilduma + "',argazkia='" + argazkia + "';";
-		System.out.println(kontsulta);
-		dbkud.execSQL(kontsulta);
-	}
-	
 	public List<String[]> getErlazioak(String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma,a.deskripzioa,a.dateAdded,a.datePosted,a.dateTaken,a.geoData,a.tag FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");
@@ -176,6 +154,28 @@ public class Kudeatzailea {
 			e.printStackTrace();
 		}
 		return emaitza;
+	}
+	
+	public  void bildumakGorde(String izena, String deskripzioa, int argazkiKop, String email){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "INSERT INTO bilduma (izena,deskripzioa,argazkiKopurua,erabiltzaileEmail) VALUES ('" + izena + "','" + deskripzioa + "'"
+									+ ",'" + argazkiKop  + "','" + email + "');";
+		System.out.println(kontsulta);
+		dbkud.execSQL(kontsulta);
+	}
+	
+	public void argazkiakGorde(String md5, String izena, String file, String deskripzioa, String dateAdded, String datePosted, String dateTaken, String geoData, String tag){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "INSERT INTO argazki (md5,izena,file,deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag) VALUES ('" + md5 + "','" + izena + "','" + file + "','" + deskripzioa + "','" + dateAdded + "','" + datePosted + "','" + dateTaken + "','" + geoData + "','" + tag + "');";
+		System.out.println(kontsulta);
+		dbkud.execSQL(kontsulta);
+	}
+	
+	public void erlazioakEgin(String erabiltzailea, String bilduma, String argazkia){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "INSERT INTO erlazioa (erabiltzailea,bilduma,argazkia) VALUES ('" + erabiltzailea + "','" + bilduma + "','" + argazkia + "');";
+		System.out.println(kontsulta);
+		dbkud.execSQL(kontsulta);
 	}
 	
 }

@@ -199,7 +199,7 @@ public class Argazkiak {
                 System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
             }
     			MD5 md5 = new MD5();
-    			String deskripzioa = p.getDescription();
+    			String deskripzioa = konprobatuData(p.getDescription());
 			String dateAdded = konprobatuData(p.getDateAdded());
 			String datePosted = konprobatuData(p.getDatePosted());
 			String dateTaken = konprobatuData(p.getDateTaken());
