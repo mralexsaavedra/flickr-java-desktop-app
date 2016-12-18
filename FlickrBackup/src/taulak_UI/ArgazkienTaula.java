@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import kudeatzaileak.Kudeatzailea;
+
 public class ArgazkienTaula extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +27,21 @@ public class ArgazkienTaula extends JPanel {
 		taula.getColumnModel().getColumn(0).setPreferredWidth(100);
 		taula.getColumnModel().getColumn(1).setPreferredWidth(150);
 		this.add(scrollPanela);
+	}
+	
+	public void eguneratu(){
+		Kudeatzailea.getInstantzia().deleteErlazioak();
+		Kudeatzailea.getInstantzia().deleteArgazkiak();
+		model.datuakEguneratu();
+	}
+	
+	public void ezabatu(){
+		if (taula.getSelectedRow()==-1){
+			if (model.getRowCount()!=0)
+				model.deleteRow(model.getRowCount()-1);
+		} else{
+			model.deleteRow(taula.getSelectedRow());
+		}
 	}
 
 	

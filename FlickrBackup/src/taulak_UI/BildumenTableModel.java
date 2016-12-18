@@ -1,9 +1,13 @@
 package taulak_UI;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.table.AbstractTableModel;
 
+import com.flickr4java.flickr.photosets.Photoset;
+
+import flickrJava.Bildumak;
 import kudeatzaileak.Kudeatzailea;
 
 public class BildumenTableModel extends AbstractTableModel {
@@ -72,6 +76,30 @@ public class BildumenTableModel extends AbstractTableModel {
 	 public void setValueAt(Object value, int row, int col) {
 		 data.get(row).insertElementAt(value, col);
      }
+	 
+	 public void deleteRow(int row){
+		 data.remove(row);
+		 this.fireTableRowsUpdated(0, this.getRowCount());
+		 this.fireTableDataChanged();
+	 }
+	 
+	 public void datuakEguneratu(){
+		 Bildumak bildumak;
+		try {
+			bildumak = new Bildumak(erabiltzaile);
+			for (BildumenLag errenkada : data){
+				 Photoset bilduma = bildumak.bildumaLortu(errenkada.titulua);
+				 Kudeatzailea.getInstantzia().bildumakGorde(errenkada.titulua, errenkada.deskripzioa, bilduma.getPhotoCount(), erabiltzaile);
+				List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenMD5Guztiak(errenkada.titulua);
+				for (String[] argazkia : emaitzak){
+					 Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, errenkada.titulua, argazkia[0]);
+				}
+			 }
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		 
+	 }
 
 	public void elementuakGehitu() {
 		this.hasieratuZutabeIzenak();

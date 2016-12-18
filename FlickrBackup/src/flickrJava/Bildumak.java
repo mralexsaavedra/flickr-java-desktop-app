@@ -152,6 +152,15 @@ public class Bildumak {
 	public void igoArgazkia(File imageFile) throws IOException, FlickrException{
 		Argazkiak argazkiak= new Argazkiak(erabiltzaile);
 		argazkiak.argazkiakIgo(imageFile);
+		//Mover al album
+		Kudeatzailea.getInstantzia().deleteErlazioak();
+		Kudeatzailea.getInstantzia().deleteArgazkiak();
+		argazkiak.erlazioakGordeDB();
+		try {
+			argazkiak.argazkiakGorde();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean argazkiaBadago(String bilduma, File irudia){

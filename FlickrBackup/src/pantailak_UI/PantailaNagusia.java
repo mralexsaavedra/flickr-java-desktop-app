@@ -147,9 +147,11 @@ public class PantailaNagusia extends JFrame {
 		JButton eguneratuBotoia = new JButton("Eguneratu");
 		JButton ezabatuBotoia = new JButton("Ezabatu");
 		internalFrame.add(taula, BorderLayout.CENTER);
-		botoienPanela.add(eguneratuBotoia);
+		eguneratuBotoia.addActionListener(actionListener -> argazkiakEguneratu());
 		botoienPanela.add(ezabatuBotoia);
-		internalFrame.add(botoienPanela, BorderLayout.SOUTH);		internalFrame.pack();
+		ezabatuBotoia.addActionListener(actionListener -> argazkiakEzabatu());
+		internalFrame.add(botoienPanela, BorderLayout.SOUTH);		
+		internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -167,7 +169,9 @@ public class PantailaNagusia extends JFrame {
 		JButton ezabatuBotoia = new JButton("Ezabatu");
 		internalFrame.add(taula, BorderLayout.CENTER);
 		botoienPanela.add(eguneratuBotoia);
+		eguneratuBotoia.addActionListener(actionListener -> bildumakEguneratu());
 		botoienPanela.add(ezabatuBotoia);
+		ezabatuBotoia.addActionListener(actionListener -> bildumakEzabatu());
 		internalFrame.add(botoienPanela, BorderLayout.SOUTH);
 		internalFrame.pack();
 		try {
@@ -211,6 +215,22 @@ public class PantailaNagusia extends JFrame {
 		argazkiak.erlazioakGordeDB();
 		JOptionPane.showMessageDialog(null, "Dena eguneratu egin da", "ABISUA", JOptionPane.DEFAULT_OPTION,
 				new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
+	}
+	
+	private void bildumakEguneratu(){
+		
+	}
+	
+	private void bildumakEzabatu(){
+		
+	}
+	
+	private void argazkiakEguneratu(){
+		
+	}
+	
+	private void argazkiakEzabatu(){
+		
 	}
 
 }

@@ -95,12 +95,28 @@ public class ArgazkienTableModel extends AbstractTableModel {
 	}
 	
 	public boolean isCellEditable(int row, int col) {
-		return false;
+		if (col == 1)
+			return false;
+		else
+			return true;
 	}
 	
 	public void setValueAt(Object value, int row, int col) {
 		 data.get(row).insertElementAt(value, col);
     }
+	
+	public void deleteRow(int row){
+		 data.remove(row);
+		 this.fireTableRowsUpdated(0, this.getRowCount());
+		 this.fireTableDataChanged();
+	 }
+	 
+	 public void datuakEguneratu(){
+		 for (ArgazkienLag errenkada : data){
+			 //Kudeatzailea.getInstantzia().argazkiakGorde(md5, izena, file, deskripzioa, dateAdded, datePosted, dateTaken, geoData, tag);
+			 //Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, bilduma, argazkia);
+		 }
+	 }
 	
 	public void elementuakGehitu() {
 		this.hasieratuZutabeIzenak();

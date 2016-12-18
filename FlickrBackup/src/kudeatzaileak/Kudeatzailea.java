@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Kudeatzailea {
 
 	private static final Kudeatzailea kudeatzaile = new Kudeatzailea();
@@ -195,4 +196,21 @@ public class Kudeatzailea {
 		dbkud.execSQL(kontsulta);
 	}
 	
+	public void deleteErlazioak(){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "DELETE FROM erlazioa;";
+		dbkud.execSQL(kontsulta);
+	}
+	
+	public void deleteBildumak(){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "DELETE FROM bilduma;";
+		dbkud.execSQL(kontsulta);
+	}
+	
+	public void deleteArgazkiak(){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "DELETE FROM argazki;";
+		dbkud.execSQL(kontsulta);
+	}
 }
