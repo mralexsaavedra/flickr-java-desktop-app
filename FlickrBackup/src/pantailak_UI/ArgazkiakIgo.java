@@ -90,31 +90,16 @@ public class ArgazkiakIgo extends JPanel{
 		InputStream in = null;
 		Uploader uploader = f.getUploader();
 		PhotosInterface pint = f.getPhotosInterface();
-
 		try {
 			in = new FileInputStream(imageFile);
 			UploadMetaData metaData = buildPrivatePhotoMetadata();
 			metaData.setPublicFlag(true);
-			// check correct handling of escaped value
-			metaData.setTitle("argazkia");
+			metaData.setTitle(imageFile.getName());
 			String photoId = uploader.upload(in, metaData);
-			try {
-				pint.delete(photoId);
-			} catch (FlickrException o) {
-				// Ignore if user doesn't have delete permissions
-				// This will leave a *private* photo in the test account's
-				// photostream!
-				if (!o.getErrorCode().equals("99")) {
-					throw o;
-				}
-			}
-
 		} finally {
 			IOUtilities.close(in);
 		}
-
-		log.append("Igotzen: " + imageFile.getName() + "." + newline);
-
+		log.append("Igota: " + imageFile.getName() + "." + newline);
 	}
 
 	public void aukeratu() {
