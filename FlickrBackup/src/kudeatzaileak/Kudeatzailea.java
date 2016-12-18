@@ -133,6 +133,23 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
+	public List<String[]> getBildumaBatenMD5Guztiak(String bilduma){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		ResultSet rs = dbkud.execSQL("SELECT a.md5 FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");
+		List<String[]> emaitza = new ArrayList<String[]>();
+		try {
+			while (rs.next()) {
+				String[] res = new String[1];
+				res[0] = rs.getString("md5");
+				emaitza.add(res);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emaitza;
+	}
+	
+	
 	public List<String[]> getErlazioak(String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma,a.deskripzioa,a.dateAdded,a.datePosted,a.dateTaken,a.geoData,a.tag FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");

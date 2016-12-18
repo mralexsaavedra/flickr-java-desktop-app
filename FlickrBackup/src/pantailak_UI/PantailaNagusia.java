@@ -1,5 +1,6 @@
 package pantailak_UI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -8,12 +9,14 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import flickrJava.Argazkiak;
@@ -140,8 +143,13 @@ public class PantailaNagusia extends JFrame {
 		desktop.add(internalFrame);
 		ArgazkienTaula taula = new ArgazkienTaula(erabiltzaile);
 		taula.setOpaque(true);
-		internalFrame.setContentPane(taula);
-		internalFrame.pack();
+		JPanel  botoienPanela = new JPanel();
+		JButton eguneratuBotoia = new JButton("Eguneratu");
+		JButton ezabatuBotoia = new JButton("Ezabatu");
+		internalFrame.add(taula, BorderLayout.CENTER);
+		botoienPanela.add(eguneratuBotoia);
+		botoienPanela.add(ezabatuBotoia);
+		internalFrame.add(botoienPanela, BorderLayout.SOUTH);		internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -154,7 +162,13 @@ public class PantailaNagusia extends JFrame {
 		desktop.add(internalFrame);
 		BildumenTaula taula = new BildumenTaula(erabiltzaile);
 		taula.setOpaque(true);
-		internalFrame.setContentPane(taula);
+		JPanel  botoienPanela = new JPanel();
+		JButton eguneratuBotoia = new JButton("Eguneratu");
+		JButton ezabatuBotoia = new JButton("Ezabatu");
+		internalFrame.add(taula, BorderLayout.CENTER);
+		botoienPanela.add(eguneratuBotoia);
+		botoienPanela.add(ezabatuBotoia);
+		internalFrame.add(botoienPanela, BorderLayout.SOUTH);
 		internalFrame.pack();
 		try {
 			internalFrame.setSelected(true);
@@ -167,7 +181,7 @@ public class PantailaNagusia extends JFrame {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		internalFrame.setSize(300, 300);
-		internalFrame.add(new ArgazkiakIgo(erabiltzaile));
+		internalFrame.add(new ArgazkiakIgo(erabiltzaile, desktop));
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {

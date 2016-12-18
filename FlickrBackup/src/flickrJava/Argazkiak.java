@@ -1,6 +1,7 @@
 package flickrJava;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -18,9 +19,12 @@ import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
+import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
+import com.flickr4java.flickr.uploader.UploadMetaData;
+import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.IOUtilities;
 
 import kudeatzaileak.Kudeatzailea;
@@ -250,5 +254,26 @@ public class Argazkiak {
 		} catch (FlickrException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void argazkiakIgo(File imageFile) throws IOException, FlickrException{
+		InputStream in = null;
+		Uploader uploader = f.getUploader();
+		PhotosInterface pint = f.getPhotosInterface();
+		try {
+			in = new FileInputStream(imageFile);
+			UploadMetaData metaData = buildPrivatePhotoMetadata();
+			metaData.setPublicFlag(true);
+			metaData.setTitle(imageFile.getName());
+			String photoId = uploader.upload(in, metaData);
+		} finally {
+			IOUtilities.close(in);
+		}
+	}
+	
+	public UploadMetaData buildPrivatePhotoMetadata() {
+		UploadMetaData uploadMetaData = new UploadMetaData();
+		uploadMetaData.setPublicFlag(false);
+		return uploadMetaData;
 	}
 }

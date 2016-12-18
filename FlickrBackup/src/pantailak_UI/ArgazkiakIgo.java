@@ -13,10 +13,9 @@ import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.RequestContext;
 import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
-import com.flickr4java.flickr.photos.PhotosInterface;
-import com.flickr4java.flickr.uploader.UploadMetaData;
-import com.flickr4java.flickr.uploader.Uploader;
 import com.flickr4java.flickr.util.IOUtilities;
+
+import flickrJava.Bildumak;
 
 public class ArgazkiakIgo extends JPanel{
 	/**
@@ -35,10 +34,11 @@ public class ArgazkiakIgo extends JPanel{
 	RequestContext requestContext;
 	Properties properties = null;
 	private String erabiltzaile;
+	private JDesktopPane desktop;
 
-	public ArgazkiakIgo(String email) throws IOException {
+	public ArgazkiakIgo(String email, JDesktopPane desktopPane) throws IOException {
 		super(new BorderLayout());
-
+		this.desktop = desktopPane;
 		this.erabiltzaile = email;
 		InputStream in = null;
 		try {
@@ -85,58 +85,21 @@ public class ArgazkiakIgo extends JPanel{
 		add(logScrollPane, BorderLayout.CENTER);
 	}
 
-	public void igoArgazkia() throws IOException, FlickrException {
+	private void igoArgazkia() throws IOException, FlickrException {
 		File imageFile = fc.getSelectedFile();
-		InputStream in = null;
-		Uploader uploader = f.getUploader();
-		PhotosInterface pint = f.getPhotosInterface();
-		try {
-			in = new FileInputStream(imageFile);
-			UploadMetaData metaData = buildPrivatePhotoMetadata();
-			metaData.setPublicFlag(true);
-			metaData.setTitle(imageFile.getName());
-			String photoId = uploader.upload(in, metaData);
-		} finally {
-			IOUtilities.close(in);
-		}
+		Bildumak bildumak = new Bildumak(erabiltzaile);
+		bildumak.argazkiaIgoBildumaBatean(desktop, imageFile);
 		log.append("Igota: " + imageFile.getName() + "." + newline);
 	}
 
-	public void aukeratu() {
+	private void aukeratu() {
 		int returnVal = fc.showOpenDialog(ArgazkiakIgo.this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
-			// This is where a real application would open the file.
 			log.append("Aukeratutakoa: " + file.getName() + "." + newline);
 		} else {
 			log.append("Aukeratua kantzelatuta" + newline);
 		}
-	}
-
-	private UploadMetaData buildPrivatePhotoMetadata() {
-		UploadMetaData uploadMetaData = new UploadMetaData();
-		uploadMetaData.setPublicFlag(false);
-		return uploadMetaData;
-	}
-
-	protected static ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = ArgazkiakIgo.class.getResource(path);
-		if (imgURL != null) {
-			return new ImageIcon(imgURL);
-		} else {
-			System.err.println("Ezin da ireki: " + path);
-			return null;
-		}
-	}
-
-	public static void main(String[] args) throws IOException {
-		JFrame frame = new JFrame("Flickr");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(new ArgazkiakIgo("alexander"));
-		frame.setLocationRelativeTo(null);
-		frame.pack();
-		frame.setVisible(true);
-		UIManager.put("swing.boldMetal", Boolean.FALSE);
 	}
 
 }

@@ -1,6 +1,7 @@
 package taulak_UI;
 
 
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
