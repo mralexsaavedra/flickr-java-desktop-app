@@ -19,9 +19,8 @@ public class Kudeatzailea {
 	}
 
 	public List<String[]> getErabiltzaileak() {
-
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT * from erabiltzaile");
+		ResultSet rs = dbkud.execSQL("SELECT * FROM erabiltzaile");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
@@ -37,17 +36,31 @@ public class Kudeatzailea {
 	}
 	
 	public List<String[]> getBildumak(String email){
-
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT * from bilduma WHERE erabiltzaileEmail='" + email + "';");
+		ResultSet rs = dbkud.execSQL("SELECT * FROM bilduma WHERE erabiltzaileEmail='" + email + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
-				String[] res = new String[3];
-				res[0] = rs.getString("izena");
-				res[1] = rs.getString("deskripzioa");
-				res[2] = rs.getString("argazkiKopurua");
+				String[] res = new String[4];
+				res[0] = rs.getString("id");
+				res[1] = rs.getString("izena");
+				res[2] = rs.getString("deskripzioa");
+				res[3] = rs.getString("argazkiKopurua");
 				emaitza.add(res);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emaitza;
+	}
+	
+	public String getBilduma(String bilduma){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		ResultSet rs = dbkud.execSQL("SELECT id FROM bilduma WHERE izena='" + bilduma + "';");
+		String emaitza = null;
+		try {
+			while (rs.next()) {
+				emaitza = rs.getString("id");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,14 +70,20 @@ public class Kudeatzailea {
 	
 	public List<String[]> getArgazkiak(){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT md5,izena,file from argazki");
+		ResultSet rs = dbkud.execSQL("SELECT * FROM argazki");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
 				String[] res = new String[3];
-				res[0] = rs.getString("md5");
+				res[0] = rs.getString("id");
 				res[1] = rs.getString("izena");
 				res[2] = rs.getString("file");
+				res[3] = rs.getString("deskripzioa");
+				res[4] = rs.getString("dateAdded");
+				res[5] = rs.getString("datePosted");
+				res[6] = rs.getString("dateTaken");
+				res[7] = rs.getString("geoData");
+				res[8] = rs.getString("tag");
 				emaitza.add(res);
 			}
 		} catch (SQLException e) {
@@ -75,11 +94,11 @@ public class Kudeatzailea {
 	
 	public String getArgazki(String argazkia){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT md5 FROM argazki WHERE izena='" + argazkia + "';");
+		ResultSet rs = dbkud.execSQL("SELECT id FROM argazki WHERE izena='" + argazkia + "';");
 		String emaitza = null;
 		try {
 			while (rs.next()) {
-				emaitza = rs.getString("md5");
+				emaitza = rs.getString("id");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -101,10 +120,10 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public List<String> getBildumaFile(String bilduma, String email){
+	public List<String> getBildumaFile(String bildumaID, String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		ResultSet rs = dbkud.execSQL("SELECT a.file FROM argazki a, erlazioa e "
-				+ "WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "' AND e.erabiltzailea='" + email + "';");
+				+ "WHERE a.id=e.argazkiID AND e.bildumaID='" + bildumaID + "' AND e.erabiltzailea='" + email + "';");
 		List<String> emaitza = new ArrayList<String>();
 		try {
 			while (rs.next()) {
@@ -118,9 +137,9 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public List<String[]> getBildumaBatenArgazkia(String bilduma){
+	public List<String[]> getBildumaBatenArgazkiak(String bildumaID){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.izena FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");
+		ResultSet rs = dbkud.execSQL("SELECT a.izena FROM argazki a, erlazioa e WHERE a.id=e.argazkiID AND e.bildumaID='" + bildumaID + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
@@ -134,14 +153,14 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public List<String[]> getBildumaBatenMD5Guztiak(String bilduma){
+	public List<String[]> getBildumaBatenIDGuztiak(String bildumaID){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.md5 FROM argazki a, erlazioa e WHERE a.md5=e.argazkia AND e.bilduma='" + bilduma + "';");
+		ResultSet rs = dbkud.execSQL("SELECT a.id FROM argazki a, erlazioa e WHERE a.id=e.argazkiID AND e.bildumaID='" + bildumaID + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
 				String[] res = new String[1];
-				res[0] = rs.getString("md5");
+				res[0] = rs.getString("id");
 				emaitza.add(res);
 			}
 		} catch (SQLException e) {
@@ -153,13 +172,13 @@ public class Kudeatzailea {
 	
 	public List<String[]> getErlazioak(String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bilduma,a.deskripzioa,a.dateAdded,a.datePosted,a.dateTaken,a.geoData,a.tag FROM erlazioa e,argazki a WHERE e.argazkia=a.md5 AND erabiltzailea='" + email + "';");
+		ResultSet rs = dbkud.execSQL("SELECT a.izena,e.bildumaID,a.deskripzioa,a.dateAdded,a.datePosted,a.dateTaken,a.geoData,a.tag FROM erlazioa e,argazki a WHERE e.argazkiID=a.id AND erabiltzailea='" + email + "';");
 		List<String[]> emaitza = new ArrayList<String[]>();
 		try {
 			while (rs.next()) {
 				String[] res = new String[8];
 				res[0] = rs.getString("izena");
-				res[1] = rs.getString("bilduma");
+				res[1] = rs.getString("bildumaID");
 				res[2] = rs.getString("deskripzioa");
 				res[3] = rs.getString("dateAdded");
 				res[4] = rs.getString("datePosted");
@@ -174,24 +193,24 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
-	public  void bildumakGorde(String izena, String deskripzioa, int argazkiKop, String email){
+	public  void bildumakGorde(String id, String izena, String deskripzioa, int argazkiKop, String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO bilduma (izena,deskripzioa,argazkiKopurua,erabiltzaileEmail) VALUES ('" + izena + "','" + deskripzioa + "'"
+		String kontsulta = "INSERT INTO bilduma (id,izena,deskripzioa,argazkiKopurua,erabiltzaileEmail) VALUES ('" + id + "','" + izena + "','" + deskripzioa + "'"
 									+ ",'" + argazkiKop  + "','" + email + "');";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}
 	
-	public void argazkiakGorde(String md5, String izena, String file, String deskripzioa, String dateAdded, String datePosted, String dateTaken, String geoData, String tag){
+	public void argazkiakGorde(String id, String izena, String file, String deskripzioa, String dateAdded, String datePosted, String dateTaken, String geoData, String tag){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO argazki (md5,izena,file,deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag) VALUES ('" + md5 + "','" + izena + "','" + file + "','" + deskripzioa + "','" + dateAdded + "','" + datePosted + "','" + dateTaken + "','" + geoData + "','" + tag + "');";
+		String kontsulta = "INSERT INTO argazki (id,izena,file,deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag) VALUES ('" + id + "','" + izena + "','" + file + "','" + deskripzioa + "','" + dateAdded + "','" + datePosted + "','" + dateTaken + "','" + geoData + "','" + tag + "');";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}
 	
-	public void erlazioakEgin(String erabiltzailea, String bilduma, String argazkia){
+	public void erlazioakEgin(String erabiltzailea, String bildumaID, String argazkiID){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
-		String kontsulta = "INSERT INTO erlazioa (erabiltzailea,bilduma,argazkia) VALUES ('" + erabiltzailea + "','" + bilduma + "','" + argazkia + "');";
+		String kontsulta = "INSERT INTO erlazioa (erabiltzailea,argazkiID,bildumaID) VALUES ('" + erabiltzailea + "','" + argazkiID + "','" + bildumaID + "');";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}

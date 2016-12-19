@@ -73,10 +73,11 @@ public class Bildumak {
 				Collection<Photoset> bildumak = photosets.getPhotosets();
 				
 				for (Photoset  bilduma : bildumak) {
-					String[] res = new String[3];
-					res[0] = bilduma.getTitle();
-					res[1] = bilduma.getDescription();
-					res[2] = String.valueOf(bilduma.getPhotoCount());
+					String[] res = new String[4];
+					res[0] = bilduma.getId();
+					res[1] = bilduma.getTitle();
+					res[2] = bilduma.getDescription();
+					res[3] = String.valueOf(bilduma.getPhotoCount());
 					emaitza.add(res);
 				}
 			} catch (FlickrException e) {
@@ -85,7 +86,7 @@ public class Bildumak {
 			return emaitza;
 	}
 	
-	public Photoset bildumaLortu(String bildumaTitle){
+	public Photoset bildumaLortu(String bildumaIzena){
 		Photoset bilduma = null;
 		
 		PhotosetsInterface photosetsInterface  = f.getPhotosetsInterface();
@@ -96,7 +97,7 @@ public class Bildumak {
 			Photosets photosets = photosetsInterface.getList(userId);
 			Collection<Photoset> bildumak = photosets.getPhotosets();
 			for (Photoset photoset : bildumak){
-				if (bildumaTitle.equals(photoset.getTitle())){
+				if (bildumaIzena.equals(photoset.getTitle())){
 					bilduma = photoset;
 				}		
 			}
@@ -110,7 +111,7 @@ public class Bildumak {
 	public void bildumakGordeDB(){
 		List<String[]> bildumak = this.showPhotosets();
 		for (String[] bilduma : bildumak){
-			Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], Integer.parseInt(bilduma[2]), erabiltzaile);
+			Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], bilduma[2],Integer.parseInt(bilduma[3]), erabiltzaile);
 		}
 	}
 	
@@ -131,10 +132,12 @@ public class Bildumak {
 		okBotoia.addActionListener(actionListener -> {
 			try {
 				internalFrame.dispose();
+				Argazkiak argazkiak = new Argazkiak(erabiltzaile);
+				String bildumaID = Kudeatzailea.getInstantzia().getBilduma(elementuenBox.getSelectedItem().toString());
 				if (argazkiaBadago(elementuenBox.getSelectedItem().toString(), imageFile)==true)
 					JOptionPane.showMessageDialog(null, "Argazki hori badago bilduma horretan", "WARNING", JOptionPane.WARNING_MESSAGE);
 				else
-					igoArgazkia(imageFile, elementuenBox.getSelectedItem().toString());
+					argazkiak.igoArgazkia(imageFile, bildumaID);
 			} catch (IOException | FlickrException e1) {
 				e1.printStackTrace();
 			}
@@ -148,18 +151,11 @@ public class Bildumak {
 		}
 		internalFrame.setVisible(true);
 	}
-	
-	public void igoArgazkia(File imageFile, String bilduma) throws IOException, FlickrException{
-		Argazkiak argazkiak= new Argazkiak(erabiltzaile);
-		String argazkia = argazkiak.argazkiakIgo(imageFile);
-        PhotosetsInterface iface = f.getPhotosetsInterface();
-        iface.addPhoto(bildumaLortu(bilduma).getId(), argazkia);		
-	}
-	
+		
 	public boolean argazkiaBadago(String bilduma, File irudia){
 		 boolean badago = false;
 		 MD5 md5 = new MD5();
-		 List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenMD5Guztiak(bilduma);
+		 List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenIDGuztiak(bilduma);
 		 for (String[] argazkia : emaitzak){
 			 try {
 				if (md5.MD5CheckSum(irudia).equals(argazkia[0]))

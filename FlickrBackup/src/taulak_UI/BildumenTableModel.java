@@ -89,16 +89,15 @@ public class BildumenTableModel extends AbstractTableModel {
 			bildumak = new Bildumak(erabiltzaile);
 			for (BildumenLag errenkada : data){
 				 Photoset bilduma = bildumak.bildumaLortu(errenkada.titulua);
-				 Kudeatzailea.getInstantzia().bildumakGorde(errenkada.titulua, errenkada.deskripzioa, bilduma.getPhotoCount(), erabiltzaile);
-				List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenMD5Guztiak(errenkada.titulua);
+				 Kudeatzailea.getInstantzia().bildumakGorde(bilduma.getId(), errenkada.titulua, errenkada.deskripzioa, bilduma.getPhotoCount(), erabiltzaile);
+				List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenIDGuztiak(bilduma.getId());
 				for (String[] argazkia : emaitzak){
-					 Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, errenkada.titulua, argazkia[0]);
+					 Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, bilduma.getId(), argazkia[0]);
 				}
 			 }
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		 
+		}	 
 	 }
 
 	public void elementuakGehitu() {
@@ -106,7 +105,7 @@ public class BildumenTableModel extends AbstractTableModel {
 		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
 		data = new Vector<BildumenLag>(emaitzak.size());
 		for (int errenkada = 0; errenkada < emaitzak.size(); errenkada++) {
-			data.add(new BildumenLag(emaitzak.get(errenkada)[0], emaitzak.get(errenkada)[1], Integer.parseInt(emaitzak.get(errenkada)[2])));
+			data.add(new BildumenLag(emaitzak.get(errenkada)[1], emaitzak.get(errenkada)[2], Integer.parseInt(emaitzak.get(errenkada)[3])));
 		}
 	}
 	

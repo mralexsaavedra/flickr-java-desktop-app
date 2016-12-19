@@ -19,7 +19,6 @@ import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
-import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
@@ -60,15 +59,6 @@ public class Argazkiak {
 		Flickr.debugStream = false;
 	}
 	
-	public static void main(String[] args){
-		try {
-			Argazkiak a = new Argazkiak("alexander");
-			a.showPhotos();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public  List<String[]> showPhotos() {
 
 		String userId = properties.getProperty("nsid");
@@ -101,17 +91,13 @@ public class Argazkiak {
 					for (Photo argazkia : col) {
 						String[] res = new String[8];
 						res[0] = argazkia.getTitle();
-						System.out.println(res[0]);
 						res[1] = photoset.getTitle();
 						res[2] = argazkia.getDescription();
-						System.out.println(res[2]);
 						res[3] = konprobatuData(argazkia.getDateAdded());
-						System.out.println(res[3]);
 						res[4] = konprobatuData(argazkia.getDatePosted());
 						res[5] = konprobatuData(argazkia.getDateTaken());
 						res[6] = konprobatuData(argazkia.getGeoData());
 						res[7] = argazkia.getTags().toString();
-						System.out.println(res[7]);
 						emaitza.add(res);
 					}
 				}
@@ -202,14 +188,18 @@ public class Argazkiak {
                 ImageIO.write(p.getOriginalImage(), p.getOriginalFormat(), orgFile);
                 System.out.println(p.getTitle() + "\t" + p.getOriginalUrl() + " was written to " + orgFile.getName());
             }
-    			MD5 md5 = new MD5();
+            
     			String deskripzioa = konprobatuData(p.getDescription());
 			String dateAdded = konprobatuData(p.getDateAdded());
 			String datePosted = konprobatuData(p.getDatePosted());
 			String dateTaken = konprobatuData(p.getDateTaken());
 			String geoData = konprobatuData(p.getGeoData());
+			//MD5 md5 = new MD5();
+			//Tag argakiMD5 = md5.MD5CheckSum(orgFile);
+			//p.getTags().add(argakiMD5);
 			String tag = p.getTags().toString();
-    			Kudeatzailea.getInstantzia().argazkiakGorde(md5.MD5CheckSum(orgFile), p.getTitle(),orgFile.toString(), deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag);
+			
+    			Kudeatzailea.getInstantzia().argazkiakGorde(p.getId(), p.getTitle(),orgFile.toString(), deskripzioa,dateAdded,datePosted,dateTaken,geoData,tag);
         } catch (FlickrException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -246,8 +236,7 @@ public class Argazkiak {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
-						String md5 = Kudeatzailea.getInstantzia().getArgazki(argazkia.getTitle());
-						Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, photoset.getTitle(), md5);
+						Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, photoset.getId(), argazkia.getId());
 					}
 				}
 			}
@@ -256,17 +245,18 @@ public class Argazkiak {
 		}
 	}
 	
-	public String argazkiakIgo(File imageFile) throws IOException, FlickrException{
+	public void igoArgazkia(File imageFile, String bildumaID) throws IOException, FlickrException{
 		InputStream in = null;
 		Uploader uploader = f.getUploader();
-		PhotosInterface pint = f.getPhotosInterface();
+		//PhotosInterface pint = f.getPhotosInterface();
 		try {
 			in = new FileInputStream(imageFile);
 			UploadMetaData metaData = buildPrivatePhotoMetadata();
 			metaData.setPublicFlag(true);
 			metaData.setTitle(imageFile.getName());
 			String photoId = uploader.upload(in, metaData);
-			return photoId;
+			PhotosetsInterface iface = f.getPhotosetsInterface();
+	        iface.addPhoto(bildumaID, photoId);	
 		} finally {
 			IOUtilities.close(in);
 		}
