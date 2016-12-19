@@ -256,7 +256,7 @@ public class Argazkiak {
 		}
 	}
 	
-	public void argazkiakIgo(File imageFile) throws IOException, FlickrException{
+	public String argazkiakIgo(File imageFile) throws IOException, FlickrException{
 		InputStream in = null;
 		Uploader uploader = f.getUploader();
 		PhotosInterface pint = f.getPhotosInterface();
@@ -266,6 +266,7 @@ public class Argazkiak {
 			metaData.setPublicFlag(true);
 			metaData.setTitle(imageFile.getName());
 			String photoId = uploader.upload(in, metaData);
+			return photoId;
 		} finally {
 			IOUtilities.close(in);
 		}
@@ -276,4 +277,5 @@ public class Argazkiak {
 		uploadMetaData.setPublicFlag(false);
 		return uploadMetaData;
 	}
+	
 }

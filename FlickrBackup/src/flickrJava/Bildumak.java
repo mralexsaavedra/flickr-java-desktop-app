@@ -134,7 +134,7 @@ public class Bildumak {
 				if (argazkiaBadago(elementuenBox.getSelectedItem().toString(), imageFile)==true)
 					JOptionPane.showMessageDialog(null, "Argazki hori badago bilduma horretan", "WARNING", JOptionPane.WARNING_MESSAGE);
 				else
-					igoArgazkia(imageFile);
+					igoArgazkia(imageFile, elementuenBox.getSelectedItem().toString());
 			} catch (IOException | FlickrException e1) {
 				e1.printStackTrace();
 			}
@@ -149,18 +149,11 @@ public class Bildumak {
 		internalFrame.setVisible(true);
 	}
 	
-	public void igoArgazkia(File imageFile) throws IOException, FlickrException{
+	public void igoArgazkia(File imageFile, String bilduma) throws IOException, FlickrException{
 		Argazkiak argazkiak= new Argazkiak(erabiltzaile);
-		argazkiak.argazkiakIgo(imageFile);
-		//Mover al album
-		Kudeatzailea.getInstantzia().deleteErlazioak();
-		Kudeatzailea.getInstantzia().deleteArgazkiak();
-		argazkiak.erlazioakGordeDB();
-		try {
-			argazkiak.argazkiakGorde();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		String argazkia = argazkiak.argazkiakIgo(imageFile);
+        PhotosetsInterface iface = f.getPhotosetsInterface();
+        iface.addPhoto(bildumaLortu(bilduma).getId(), argazkia);		
 	}
 	
 	public boolean argazkiaBadago(String bilduma, File irudia){
