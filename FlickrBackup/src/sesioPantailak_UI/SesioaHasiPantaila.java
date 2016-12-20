@@ -108,6 +108,16 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 		pantailaNagusia.setLocationRelativeTo(null);
 		pantailaNagusia.setVisible(true);
 	}
+	
+	public boolean badago(String email){
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getErabiltzaileak();
+		boolean badago = false;
+		for (String[] erabiltzaile : emaitzak){
+			if (erabiltzaile[0].equals(email))
+				badago = true;
+		}
+		return badago;
+	}
 
 	public void berifikazioa() throws Exception {
 		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getErabiltzaileak();
@@ -120,23 +130,25 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		else{
-			for (String[] erabiltzaile : emaitzak){
-				if (emailText.getText().equals(erabiltzaile[0])) {
-					if (md5.MD5Hashing(passString).equals(erabiltzaile[1])){
-						pantailaNagusia.dispose();
-						PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
-						nagusia.eraikiFrame();
-						nagusia.setupPropertiesLortu();
-					}	
-				}	
-				else {
-					//JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
-					Kudeatzailea.getInstantzia().erabiltzaileaGehitu(emailText.getText(), md5.MD5Hashing(passString));
-					pantailaNagusia.dispose();
-					PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
-					nagusia.eraikiFrame();
-					nagusia.setupPropertiesLortu();
+			if (badago(emailText.getText())){
+				for (String[] erabiltzaile : emaitzak){
+					if (emailText.getText().equals(erabiltzaile[0])) {
+						if (md5.MD5Hashing(passString).equals(erabiltzaile[1])){
+							pantailaNagusia.dispose();
+							PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
+							nagusia.eraikiFrame();
+							nagusia.setupPropertiesLortu();
+						}	
+					}
 				}
+			}
+			else {
+				//JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
+				Kudeatzailea.getInstantzia().erabiltzaileaGehitu(emailText.getText(), md5.MD5Hashing(passString));
+				pantailaNagusia.dispose();
+				PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
+				nagusia.eraikiFrame();
+				nagusia.setupPropertiesLortu();
 			}
 		}
 	}
