@@ -47,9 +47,10 @@ public class Bildumak {
 		this.erabiltzaile = email;
 		InputStream in = null;
 		try {
-			in = new ByteArrayInputStream(setupProperties.getBytes());
+			in = new ByteArrayInputStream(setupProperties.getBytes("UTF-8"));
 			properties = new Properties();
 			properties.load(in);
+			System.out.println(properties.getProperty("apiKey"));
 		} finally {
 			IOUtilities.close(in);
 		}
