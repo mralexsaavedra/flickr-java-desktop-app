@@ -115,9 +115,8 @@ public class Bildumak {
 	
 	public void bildumakGordeDB(){
 		List<String[]> bildumak = this.showPhotosets();
-		List<String[]> datuBasekoBildumak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
 		for (String[] bilduma : bildumak){
-			if (!datuBasekoBildumak.contains(bilduma))
+			if (!this.badago(bilduma[0]))
 				Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], bilduma[2],Integer.parseInt(bilduma[3]), erabiltzaile);
 		}
 	}
@@ -141,7 +140,8 @@ public class Bildumak {
 				internalFrame.dispose();
 				Argazkiak argazkiak = new Argazkiak(erabiltzaile, setupProperties);
 				String bildumaID = Kudeatzailea.getInstantzia().getBilduma(elementuenBox.getSelectedItem().toString());
-				if (argazkiaBadago(bildumaID, imageFile))
+				String argazkiID = Kudeatzailea.getInstantzia().getArgazki(imageFile.getName());
+				if (argazkiak.badagoBilduman(argazkiID, bildumaID))
 					JOptionPane.showMessageDialog(null, "Argazki hori badago bilduma horretan", "WARNING", JOptionPane.WARNING_MESSAGE);
 				else
 					argazkiak.igoArgazkia(imageFile, bildumaID);
@@ -159,17 +159,27 @@ public class Bildumak {
 		internalFrame.setVisible(true);
 	}
 		
-	public boolean argazkiaBadago(String bildumaID, File irudia){
+	/*public boolean argazkiaBadago(String bildumaID, File irudia){
 		 boolean badago = false;
 		 List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenIDGuztiak(bildumaID);
 		 String argazkiID = Kudeatzailea.getInstantzia().getArgazki(irudia.getName());
 		 	if (emaitzak.contains(argazkiID))
 		 		badago = true;
 		 return badago;
-	}
+	}*/
 	
 	public  PhotosetsInterface bildumaGuztiakLortu() {
           return f.getPhotosetsInterface();
+	}
+	
+	public boolean badago(String bilduma){
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
+		boolean badago = false;
+		for (String[] bildumak : emaitzak){
+			if (bildumak[0].equals(bilduma))
+				badago = true;
+		}
+		return badago;
 	}
 	
 }

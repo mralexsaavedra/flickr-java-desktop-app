@@ -239,7 +239,8 @@ public class Argazkiak {
 					col = photosetsInterface.getPhotos(id /* photosetId */, PHOTOSPERPAGE, page);
 
 					for (Photo argazkia : col) {
-						Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, photoset.getId(), argazkia.getId());
+						if (!this.badago(argazkia.getId()))
+							Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, photoset.getId(), argazkia.getId());
 					}
 				}
 			}
@@ -276,6 +277,26 @@ public class Argazkiak {
 		UploadMetaData uploadMetaData = new UploadMetaData();
 		uploadMetaData.setPublicFlag(false);
 		return uploadMetaData;
+	}
+	
+	public boolean badago(String argazkia){
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getDatuBasekoEralzioak(erabiltzaile);
+		boolean badago = false;
+		for (String[] erlazioak : emaitzak){
+			if (erlazioak[1].equals(argazkia))
+				badago = true;
+		}
+		return badago;
+	}
+	
+	public boolean badagoBilduman(String argazkia, String bilduma){
+		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getDatuBasekoEralzioak(erabiltzaile);
+		boolean badago = false;
+		for (String[] erlazioak : emaitzak){
+			if (erlazioak[1].equals(argazkia) && erlazioak[2].equals(bilduma))
+				badago = true;
+		}
+		return badago;
 	}
 	
 }
