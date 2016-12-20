@@ -106,7 +106,7 @@ public class ArgazkienTableModel extends AbstractTableModel {
     }
 	
 	public void deleteRow(int row){
-		 data.remove(row);
+		 data.remove(row); 
 		 this.fireTableRowsUpdated(0, this.getRowCount());
 		 this.fireTableDataChanged();
 	 }
