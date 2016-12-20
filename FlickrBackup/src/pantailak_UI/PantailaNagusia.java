@@ -121,22 +121,6 @@ public class PantailaNagusia extends JFrame {
 		argazkiakMenuItem.addActionListener(actionListener -> this.argazkiakPantailaratu());
 		ikusiMenua.add(argazkiakMenuItem);
 
-		// 3. zutabea
-		JMenu hizkuntzaMenua = new JMenu("Hizkuntza");
-		menuBar.add(hizkuntzaMenua);
-
-		// 3. zutabearen 1. aukera
-		JMenuItem euskeraMenuItem = new JMenuItem("Euskera");
-		hizkuntzaMenua.add(euskeraMenuItem);
-
-		// 3. zutabearen 2. aukera
-		JMenuItem ingelesaMenuItem = new JMenuItem("English");
-		hizkuntzaMenua.add(ingelesaMenuItem);
-
-		// 4. zutabearen 3. aukera
-		JMenuItem gaztelaniaMenuItem = new JMenuItem("Español");
-		hizkuntzaMenua.add(gaztelaniaMenuItem);
-
 		return menuBar;
 	}
 
