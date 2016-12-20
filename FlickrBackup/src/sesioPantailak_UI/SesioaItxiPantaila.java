@@ -94,6 +94,7 @@ public class SesioaItxiPantaila extends JPanel implements ActionListener {
 		pantailaNagusia.dispose();
 		PantailaNagusia frameNagusia = new PantailaNagusia(erabiltzaile);
 		frameNagusia.eraikiFrame();
+		frameNagusia.setupPropertiesLortu();
 	}
 	
 	public void panelaEraikitzen() {		

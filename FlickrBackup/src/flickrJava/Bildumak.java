@@ -1,9 +1,8 @@
 package flickrJava;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -45,11 +44,13 @@ public class Bildumak {
 	public Bildumak(String email, String path) throws IOException {
 		this.setupProperties = path;
 		this.erabiltzaile = email;
-		InputStream in = null;
+		FileInputStream in = null;
 		try {
-			in = new ByteArrayInputStream(setupProperties.getBytes("UTF-8"));
+			in = new FileInputStream(setupProperties);
 			properties = new Properties();
 			properties.load(in);
+			System.out.println(in.toString());
+			System.out.println(setupProperties);
 			System.out.println(properties.getProperty("apiKey"));
 		} finally {
 			IOUtilities.close(in);
@@ -114,8 +115,10 @@ public class Bildumak {
 	
 	public void bildumakGordeDB(){
 		List<String[]> bildumak = this.showPhotosets();
+		List<String[]> datuBasekoBildumak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
 		for (String[] bilduma : bildumak){
-			Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], bilduma[2],Integer.parseInt(bilduma[3]), erabiltzaile);
+			if (!datuBasekoBildumak.contains(bilduma))
+				Kudeatzailea.getInstantzia().bildumakGorde(bilduma[0], bilduma[1], bilduma[2],Integer.parseInt(bilduma[3]), erabiltzaile);
 		}
 	}
 	

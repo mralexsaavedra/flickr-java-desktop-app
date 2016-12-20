@@ -193,6 +193,24 @@ public class Kudeatzailea {
 		return emaitza;
 	}
 	
+	public List<String[]> getDatuBasekoEralzioak(String erabiltzaile){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		ResultSet rs = dbkud.execSQL("SELECT erabiltzailea,argazkiID,bildumaID FROM erlazioa WHERE erabiltzailea='" + erabiltzaile + "';");
+		List<String[]> emaitza = new ArrayList<String[]>();
+		try {
+			while (rs.next()) {
+				String[] res = new String[3];
+				res[0] = rs.getString("erabiltzailea");
+				res[1] = rs.getString("argazkiID");
+				res[2] = rs.getString("bildumaID");
+				emaitza.add(res);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return emaitza;
+	}
+	
 	public  void bildumakGorde(String id, String titulua, String deskripzioa, int argazkiKop, String email){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		String kontsulta = "INSERT INTO bilduma (id,titulua,deskripzioa,argazkiKopurua,erabiltzaileEmail) VALUES ('" + id + "','" + titulua + "','" + deskripzioa + "'"
@@ -211,6 +229,13 @@ public class Kudeatzailea {
 	public void erlazioakEgin(String erabiltzailea, String bildumaID, String argazkiID){
 		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
 		String kontsulta = "INSERT INTO erlazioa (erabiltzailea,argazkiID,bildumaID) VALUES ('" + erabiltzailea + "','" + argazkiID + "','" + bildumaID + "');";
+		System.out.println(kontsulta);
+		dbkud.execSQL(kontsulta);
+	}
+	
+	public void erabiltzaileaGehitu(String email, String pasahitza){
+		DBKudeatzaile dbkud = DBKudeatzaile.getInstantzia();
+		String kontsulta = "INSERT INTO erabiltzaile (email,pasahitza) VALUES ('" + email + "','" + pasahitza + "');";
 		System.out.println(kontsulta);
 		dbkud.execSQL(kontsulta);
 	}

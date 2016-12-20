@@ -42,9 +42,9 @@ public class ArgazkiakIgo extends JPanel{
 		this.desktop = desktopPane;
 		this.erabiltzaile = email;
 		this.setupProperties = path;
-		InputStream in = null;
+		FileInputStream in = null;
 		try {
-			in = new ByteArrayInputStream(setupProperties.getBytes());
+			in = new FileInputStream(setupProperties);
 			properties = new Properties();
 			properties.load(in);
 		} finally {

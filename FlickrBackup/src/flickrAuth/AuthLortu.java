@@ -11,6 +11,8 @@ import com.flickr4java.flickr.util.IOUtilities;
 import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 
+import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -30,9 +32,9 @@ public class AuthLortu {
 
     public static void auth(String helbidea) throws IOException, FlickrException {
         Properties properties;
-        InputStream in = null;
+        FileInputStream in = null;
         try {
-            in = AuthLortu.class.getResourceAsStream(helbidea);
+            in = new FileInputStream(helbidea);
             properties = new Properties();
             properties.load(in);
         } finally {
@@ -73,7 +75,7 @@ public class AuthLortu {
 
     public static void main(String[] args) {
         try {
-            AuthLortu.auth("/setup.properties");
+            AuthLortu.auth("/Users/alexander/Dropbox/setup.properties");
         } catch (Exception e) {
             e.printStackTrace();
         }

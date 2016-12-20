@@ -1,6 +1,5 @@
 package flickrJava;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -44,9 +43,9 @@ public class Argazkiak {
 	public Argazkiak(String email, String path) throws IOException {
 		this.setupProperties = path;
 		this.erabiltzaile = email;
-		InputStream in = null;
+		FileInputStream in = null;
 		try {
-			in = new ByteArrayInputStream(setupProperties.getBytes());
+			in = new FileInputStream(setupProperties);
 			properties = new Properties();
 			properties.load(in);
 		} finally {

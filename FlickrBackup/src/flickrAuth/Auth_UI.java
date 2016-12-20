@@ -4,9 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -115,9 +114,9 @@ public class Auth_UI extends JFrame {
 		System.out.println(setupProperties);
 		
 		Properties properties;
-        InputStream in = null;
+        FileInputStream in = null;
         try {
-            in = new ByteArrayInputStream(setupProperties.getBytes());
+            in = new FileInputStream(setupProperties);
             properties = new Properties();
             properties.load(in);
         } finally {

@@ -48,7 +48,6 @@ public class PantailaNagusia extends JFrame {
 		this.setContentPane(desktop);
 		desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktop.setBackground(Color.LIGHT_GRAY);
-		this.setupPropertiesLortu();
 	}
 
 	public void eraikiFrame() {
@@ -216,7 +215,7 @@ public class PantailaNagusia extends JFrame {
 	}
 	
 	public void setupPropertiesLortu(){
-		int resp = JOptionPane.showConfirmDialog(null, "Esan no dagoen zure setup.properties", "Aplikazioa hasi baino lehen", JOptionPane.YES_NO_OPTION);
+		int resp = JOptionPane.showConfirmDialog(null, "Esan non dagoen zure setup.properties", "Aplikazioa hasi baino lehen", JOptionPane.YES_NO_OPTION);
 		if (resp==0){
 			fc.showOpenDialog(this);
 			File fitxategia = fc.getSelectedFile();

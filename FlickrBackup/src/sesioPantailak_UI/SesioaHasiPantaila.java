@@ -114,22 +114,29 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 		char[] pass = this.pasahitzaText.getPassword();
 		String passString = new String(pass);
 		
+		MD5 md5 = new MD5();
+
 		if (emailText.getText().isEmpty() || pass.length==0){
 			JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 		else{
-			MD5 md5 = new MD5();
 			for (String[] erabiltzaile : emaitzak){
 				if (emailText.getText().equals(erabiltzaile[0])) {
 					if (md5.MD5Hashing(passString).equals(erabiltzaile[1])){
 						pantailaNagusia.dispose();
 						PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
 						nagusia.eraikiFrame();
-					}
-					else {
-						JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
-					}
+						nagusia.setupPropertiesLortu();
+					}	
 				}	
+				else {
+					//JOptionPane.showMessageDialog(pantailaNagusia, "Datuak txarto daude", "ERROR", JOptionPane.ERROR_MESSAGE);
+					Kudeatzailea.getInstantzia().erabiltzaileaGehitu(emailText.getText(), md5.MD5Hashing(passString));
+					pantailaNagusia.dispose();
+					PantailaNagusia nagusia = new PantailaNagusia(this.emailText.getText());
+					nagusia.eraikiFrame();
+					nagusia.setupPropertiesLortu();
+				}
 			}
 		}
 	}
