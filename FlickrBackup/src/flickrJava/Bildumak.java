@@ -123,7 +123,7 @@ public class Bildumak {
 		Vector<String> elementuak = new Vector<String>();
 		List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumak(erabiltzaile);
 		for (String[] bilduma : emaitzak) {
-			elementuak.add(bilduma[0]);
+			elementuak.add(bilduma[1]);
 		}
 		JComboBox<String> elementuenBox = new JComboBox<String>(elementuak);	
 		panela.add(elementuenBox);
@@ -134,7 +134,7 @@ public class Bildumak {
 				internalFrame.dispose();
 				Argazkiak argazkiak = new Argazkiak(erabiltzaile);
 				String bildumaID = Kudeatzailea.getInstantzia().getBilduma(elementuenBox.getSelectedItem().toString());
-				if (argazkiaBadago(elementuenBox.getSelectedItem().toString(), imageFile)==true)
+				if (argazkiaBadago(bildumaID, imageFile))
 					JOptionPane.showMessageDialog(null, "Argazki hori badago bilduma horretan", "WARNING", JOptionPane.WARNING_MESSAGE);
 				else
 					argazkiak.igoArgazkia(imageFile, bildumaID);
@@ -152,19 +152,17 @@ public class Bildumak {
 		internalFrame.setVisible(true);
 	}
 		
-	public boolean argazkiaBadago(String bilduma, File irudia){
+	public boolean argazkiaBadago(String bildumaID, File irudia){
 		 boolean badago = false;
-		 MD5 md5 = new MD5();
-		 List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenIDGuztiak(bilduma);
-		 for (String[] argazkia : emaitzak){
-			 try {
-				if (md5.MD5CheckSum(irudia).equals(argazkia[0]))
-					 badago = true;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		 }
+		 List<String[]> emaitzak = Kudeatzailea.getInstantzia().getBildumaBatenIDGuztiak(bildumaID);
+		 String argazkiID = Kudeatzailea.getInstantzia().getArgazki(irudia.getName());
+		 	if (emaitzak.contains(argazkiID))
+		 		badago = true;
 		 return badago;
+	}
+	
+	public  PhotosetsInterface bildumaGuztiakLortu() {
+          return f.getPhotosetsInterface();
 	}
 	
 }

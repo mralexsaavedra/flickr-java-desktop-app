@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import kudeatzaileak.Kudeatzailea;
+import com.flickr4java.flickr.FlickrException;
 
 public class BildumenTaula extends JPanel{
 	
@@ -23,9 +23,7 @@ public class BildumenTaula extends JPanel{
 		this.add(scrollPanela);
 	}
 	
-	public void eguneratu(){
-		Kudeatzailea.getInstantzia().deleteErlazioak();
-		Kudeatzailea.getInstantzia().deleteBildumak();
+	public void eguneratu() throws FlickrException{
 		model.datuakEguneratu();
 	}
 	

@@ -19,6 +19,7 @@ import com.flickr4java.flickr.auth.Auth;
 import com.flickr4java.flickr.auth.Permission;
 import com.flickr4java.flickr.photos.Photo;
 import com.flickr4java.flickr.photos.PhotoList;
+import com.flickr4java.flickr.photos.PhotosInterface;
 import com.flickr4java.flickr.photosets.Photoset;
 import com.flickr4java.flickr.photosets.Photosets;
 import com.flickr4java.flickr.photosets.PhotosetsInterface;
@@ -248,7 +249,7 @@ public class Argazkiak {
 	public void igoArgazkia(File imageFile, String bildumaID) throws IOException, FlickrException{
 		InputStream in = null;
 		Uploader uploader = f.getUploader();
-		//PhotosInterface pint = f.getPhotosInterface();
+		PhotosInterface pint = f.getPhotosInterface();
 		try {
 			in = new FileInputStream(imageFile);
 			UploadMetaData metaData = buildPrivatePhotoMetadata();
@@ -256,7 +257,14 @@ public class Argazkiak {
 			metaData.setTitle(imageFile.getName());
 			String photoId = uploader.upload(in, metaData);
 			PhotosetsInterface iface = f.getPhotosetsInterface();
-	        iface.addPhoto(bildumaID, photoId);	
+	        iface.addPhoto(bildumaID, photoId);
+	        Photo photo = pint.getPhoto(photoId);
+	        try {
+				this.saveImage(photo);
+				Kudeatzailea.getInstantzia().erlazioakEgin(erabiltzaile, bildumaID, photoId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} finally {
 			IOUtilities.close(in);
 		}

@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import com.flickr4java.flickr.FlickrException;
+
 import flickrJava.Argazkiak;
 import flickrJava.Bildumak;
 import sesioPantailak_UI.SesioaItxiPantaila;
@@ -147,9 +149,10 @@ public class PantailaNagusia extends JFrame {
 		JButton eguneratuBotoia = new JButton("Eguneratu");
 		JButton ezabatuBotoia = new JButton("Ezabatu");
 		internalFrame.add(taula, BorderLayout.CENTER);
-		eguneratuBotoia.addActionListener(actionListener -> argazkiakEguneratu());
+		botoienPanela.add(eguneratuBotoia);
+		//eguneratuBotoia.addActionListener(actionListener -> argazkiakEguneratu());
 		botoienPanela.add(ezabatuBotoia);
-		ezabatuBotoia.addActionListener(actionListener -> argazkiakEzabatu());
+		//ezabatuBotoia.addActionListener(actionListener -> argazkiakEzabatu());
 		internalFrame.add(botoienPanela, BorderLayout.SOUTH);		
 		internalFrame.pack();
 		try {
@@ -169,9 +172,15 @@ public class PantailaNagusia extends JFrame {
 		JButton ezabatuBotoia = new JButton("Ezabatu");
 		internalFrame.add(taula, BorderLayout.CENTER);
 		botoienPanela.add(eguneratuBotoia);
-		eguneratuBotoia.addActionListener(actionListener -> bildumakEguneratu());
+		eguneratuBotoia.addActionListener(actionListener -> {
+			try {
+				taula.eguneratu();
+			} catch (FlickrException e1) {
+				e1.printStackTrace();
+			}
+		});
 		botoienPanela.add(ezabatuBotoia);
-		ezabatuBotoia.addActionListener(actionListener -> bildumakEzabatu());
+		ezabatuBotoia.addActionListener(actionListener -> taula.ezabatu());
 		internalFrame.add(botoienPanela, BorderLayout.SOUTH);
 		internalFrame.pack();
 		try {
@@ -215,22 +224,6 @@ public class PantailaNagusia extends JFrame {
 		argazkiak.erlazioakGordeDB();
 		JOptionPane.showMessageDialog(null, "Dena eguneratu egin da", "ABISUA", JOptionPane.DEFAULT_OPTION,
 				new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
-	}
-	
-	private void bildumakEguneratu(){
-		
-	}
-	
-	private void bildumakEzabatu(){
-		
-	}
-	
-	private void argazkiakEguneratu(){
-		
-	}
-	
-	private void argazkiakEzabatu(){
-		
 	}
 
 }
