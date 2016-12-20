@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -50,6 +51,8 @@ public class Auth_UI extends JFrame {
 	private JButton sortuBotoia = new JButton("setup.properties sortu");
 	private JButton kodeaBotoia = new JButton("Kodea");
 	private JButton hurrengoaBotoia = new JButton("Hurrengoa");
+	
+	private String setupProperties;
 	
 	public Auth_UI(){
 		this.tituluaeraiki();
@@ -105,14 +108,16 @@ public class Auth_UI extends JFrame {
 	
 	private void fitxategiaSortu(){
 		Fitxategia fitxategia = new Fitxategia();
-		fitxategia.fitxategiaSortu();
+		setupProperties = fitxategia.fitxategiaSortu();
 	}
 	
-	private void kodeaLortu() throws IOException, FlickrException{		
+	private void kodeaLortu() throws IOException, FlickrException{	
+		System.out.println(setupProperties);
+		
 		Properties properties;
         InputStream in = null;
         try {
-            in = AuthLortu.class.getResourceAsStream("/setup.properties");
+            in = new ByteArrayInputStream(setupProperties.getBytes());
             properties = new Properties();
             properties.load(in);
         } finally {

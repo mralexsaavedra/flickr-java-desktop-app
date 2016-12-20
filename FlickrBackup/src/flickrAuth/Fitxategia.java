@@ -20,7 +20,7 @@ public class Fitxategia extends JFrame {
 
 	}
 
-	public void fitxategiaSortu() {
+	public String fitxategiaSortu() {
 		String text = "apiKey = \n" + "email = \n" + "secret = \n" + "token = \n" + "tokensecret = \n" + "nsid = \n"
 				+ "username = ";
 
@@ -35,7 +35,7 @@ public class Fitxategia extends JFrame {
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Fitxategia ezin da gorde", "WARNING", JOptionPane.WARNING_MESSAGE);
 		}
-
+		return gorde.getAbsolutePath();
 	}
 
 }

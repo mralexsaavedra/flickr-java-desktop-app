@@ -39,12 +39,15 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 
 	private static boolean playWithLineStyle = false;
 	private static String lineStyle = "Horizontal";
+	
+	private String setupProperties;
 
 	// private static boolean useSystemLookAndFeel = false;
 
-	public Zuhaitza(String email) {
+	public Zuhaitza(String email, String path) {
 		super(new GridLayout(1, 0));
 		this.erabiltzaile = email;
+		this.setupProperties = path;
 
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Flickr");
 		createNodes(top);
@@ -98,7 +101,7 @@ public class Zuhaitza extends JPanel implements TreeSelectionListener {
 			argazkiPanela.removeAll();
 			Bildumak bildumak;
 			try {
-				bildumak = new Bildumak(erabiltzaile);
+				bildumak = new Bildumak(erabiltzaile, setupProperties);
 				Photoset bilduma = bildumak.bildumaLortu(nodeInfo.toString());
 				List<String> emaitza = Kudeatzailea.getInstantzia().getBildumaFile(bilduma.getId(), erabiltzaile);
 				for (int i = 0; i < emaitza.size(); i++) {

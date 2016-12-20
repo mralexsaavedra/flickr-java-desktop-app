@@ -6,11 +6,13 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -35,6 +37,8 @@ public class PantailaNagusia extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private String erabiltzaile;
 	private JDesktopPane desktop;
+	private String setupProperties;
+	JFileChooser fc = new JFileChooser();
 
 	public PantailaNagusia(String email) {
 		this.erabiltzaile = email;
@@ -44,6 +48,7 @@ public class PantailaNagusia extends JFrame {
 		this.setContentPane(desktop);
 		desktop.setDragMode(JDesktopPane.LIVE_DRAG_MODE);
 		desktop.setBackground(Color.LIGHT_GRAY);
+		this.setupPropertiesLortu();
 	}
 
 	public void eraikiFrame() {
@@ -194,7 +199,7 @@ public class PantailaNagusia extends JFrame {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		internalFrame.setSize(300, 300);
-		internalFrame.add(new ArgazkiakIgo(erabiltzaile, desktop));
+		internalFrame.add(new ArgazkiakIgo(erabiltzaile, desktop, setupProperties));
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -206,7 +211,7 @@ public class PantailaNagusia extends JFrame {
 		MyInternalFrame internalFrame = new MyInternalFrame();
 		desktop.add(internalFrame);
 		internalFrame.setSize(1000, 500);
-		internalFrame.add(new Zuhaitza(erabiltzaile));
+		internalFrame.add(new Zuhaitza(erabiltzaile, setupProperties));
 		try {
 			internalFrame.setSelected(true);
 		} catch (java.beans.PropertyVetoException e) {
@@ -217,13 +222,25 @@ public class PantailaNagusia extends JFrame {
 	private void sinkronizatu() throws Exception {
 		Bildumak bildumak;
 		Argazkiak argazkiak;
-		bildumak = new Bildumak(erabiltzaile);
+		bildumak = new Bildumak(erabiltzaile, setupProperties);
 		bildumak.bildumakGordeDB();
-		argazkiak = new Argazkiak(erabiltzaile);
+		argazkiak = new Argazkiak(erabiltzaile, setupProperties);
 		argazkiak.argazkiakGorde();
 		argazkiak.erlazioakGordeDB();
 		JOptionPane.showMessageDialog(null, "Dena eguneratu egin da", "ABISUA", JOptionPane.DEFAULT_OPTION,
 				new ImageIcon(getClass().getResource("/icons/accept-tick-icon-12.png")));
+	}
+	
+	public void setupPropertiesLortu(){
+		int resp = JOptionPane.showConfirmDialog(null, "Esan no dagoen zure setup.properties", "Aplikazioa hasi baino lehen", JOptionPane.YES_NO_OPTION);
+		if (resp==0){
+			fc.showOpenDialog(this);
+			File fitxategia = fc.getSelectedFile();
+			setupProperties = fitxategia.getAbsolutePath();
+		}
+		else{
+			this.dispose();
+		}
 	}
 
 }

@@ -35,14 +35,16 @@ public class ArgazkiakIgo extends JPanel{
 	Properties properties = null;
 	private String erabiltzaile;
 	private JDesktopPane desktop;
+	private String setupProperties;
 
-	public ArgazkiakIgo(String email, JDesktopPane desktopPane) throws IOException {
+	public ArgazkiakIgo(String email, JDesktopPane desktopPane, String path) throws IOException {
 		super(new BorderLayout());
 		this.desktop = desktopPane;
 		this.erabiltzaile = email;
+		this.setupProperties = path;
 		InputStream in = null;
 		try {
-			in = getClass().getResourceAsStream("/setup.properties");
+			in = new ByteArrayInputStream(setupProperties.getBytes());
 			properties = new Properties();
 			properties.load(in);
 		} finally {
@@ -87,7 +89,7 @@ public class ArgazkiakIgo extends JPanel{
 
 	private void igoArgazkia() throws IOException, FlickrException {
 		File imageFile = fc.getSelectedFile();
-		Bildumak bildumak = new Bildumak(erabiltzaile);
+		Bildumak bildumak = new Bildumak(erabiltzaile, setupProperties);
 		bildumak.argazkiaIgoBildumaBatean(desktop, imageFile);
 		log.append("Igota: " + imageFile.getName() + "." + newline);
 	}

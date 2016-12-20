@@ -1,5 +1,6 @@
 package flickrJava;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,12 +40,14 @@ public class Bildumak {
 	RequestContext requestContext;
 	Properties properties = null;
 	private String erabiltzaile;
+	private String setupProperties;
 
-	public Bildumak(String email) throws IOException {
+	public Bildumak(String email, String path) throws IOException {
+		this.setupProperties = path;
 		this.erabiltzaile = email;
 		InputStream in = null;
 		try {
-			in = getClass().getResourceAsStream("/setup.properties");
+			in = new ByteArrayInputStream(setupProperties.getBytes());
 			properties = new Properties();
 			properties.load(in);
 		} finally {
@@ -132,7 +135,7 @@ public class Bildumak {
 		okBotoia.addActionListener(actionListener -> {
 			try {
 				internalFrame.dispose();
-				Argazkiak argazkiak = new Argazkiak(erabiltzaile);
+				Argazkiak argazkiak = new Argazkiak(erabiltzaile, setupProperties);
 				String bildumaID = Kudeatzailea.getInstantzia().getBilduma(elementuenBox.getSelectedItem().toString());
 				if (argazkiaBadago(bildumaID, imageFile))
 					JOptionPane.showMessageDialog(null, "Argazki hori badago bilduma horretan", "WARNING", JOptionPane.WARNING_MESSAGE);

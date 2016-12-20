@@ -36,6 +36,7 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 	public SesioaHasiPantaila() {
 		super(new BorderLayout());
 		
+		
 		pantailaNagusia = new JFrame("FlickrBackup");
 		
 		picture = new JLabel(new ImageIcon(getClass().getResource("images/FlickrLogo.jpg")));
@@ -72,6 +73,7 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 		goikoPanela();
 		pantailaNagusia.getContentPane().add(picture, BorderLayout.CENTER);
 		behekoPanela();
+		
 	}
 
 	public void goikoPanela() {
@@ -130,11 +132,6 @@ public class SesioaHasiPantaila extends JPanel implements KeyListener {
 				}	
 			}
 		}
-	}
-
-	public static void main(String[] args) {
-		SesioaHasiPantaila h = new SesioaHasiPantaila();
-		h.panelaEraikitzen();
 	}
 
 	public void keyTyped(KeyEvent e) {
