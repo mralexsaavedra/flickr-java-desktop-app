@@ -28,11 +28,11 @@ import java.util.Scanner;
  */
 public class AuthLortu {
 
-    public static void auth() throws IOException, FlickrException {
+    public static void auth(String helbidea) throws IOException, FlickrException {
         Properties properties;
         InputStream in = null;
         try {
-            in = AuthLortu.class.getResourceAsStream("/setup.properties");
+            in = AuthLortu.class.getResourceAsStream(helbidea);
             properties = new Properties();
             properties.load(in);
         } finally {
@@ -73,10 +73,12 @@ public class AuthLortu {
 
     public static void main(String[] args) {
         try {
-            AuthLortu.auth();
+            AuthLortu.auth("/setup.properties");
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.exit(0);
     }
+    
+    
 }
